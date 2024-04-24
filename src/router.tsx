@@ -6,6 +6,7 @@ import { NotFoundPage } from "./pages/NotFoundPage.js";
 import { useAuth } from "./AuthContext.js";
 import { Admin } from "./pages/Admin.js";
 import { Login } from "./pages/Login.js";
+import { Register } from "./pages/Register.js";
 
 const publicRoutes = createBrowserRouter([
   {
@@ -16,10 +17,10 @@ const publicRoutes = createBrowserRouter([
     path: "/login",
     element: <Login />,
   },
-  //   {
-  //     path: "/register",
-  //     element: <Register />,
-  //   },
+  {
+    path: "/register",
+    element: <Register />,
+  },
   {
     path: "/*",
     element: <NotFoundPage />,
