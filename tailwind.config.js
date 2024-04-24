@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./src/**/*.{html,ts,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -11,8 +11,7 @@ export default {
           800: "#984408",
           900: "#7C380B",
           950: "#481C00"
-        },
-        white: "#FFFFFF"
+        }
       },
       transitionProperty: {
         'modal': 'opacity',

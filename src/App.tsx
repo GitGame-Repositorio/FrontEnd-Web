@@ -1,5 +1,7 @@
+import Router from "./router";
+
 function App() {
-  return <div className="flex justify-content align-center h-screen">GIT GAME</div>;
+  return <Router />;
 }
 
 export default App;
