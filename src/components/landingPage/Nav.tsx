@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const Nav = () => {
   const classLink = "text-xs h-20 relative content-center nav-link";
   return (
@@ -18,9 +20,9 @@ export const Nav = () => {
           </div>
         </div>
         <div className="content-center">
-          <button className="btn bg-primary-50 text-primary-600">
+          <Link to="/login" className="btn bg-primary-50 text-primary-600">
             FAZER LOGIN
-          </button>
+          </Link>
         </div>
       </div>
     </nav>

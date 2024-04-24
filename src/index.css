@@ -47,6 +47,18 @@
   .btn {
     @apply py-3 px-6 rounded text-xs;
   }
+  
+  .btn-primary {
+    @apply text-base font-bold;
+  }
+
+  .title {
+    @apply flex justify-center text-center text-5xl font-bold;
+  }
+
+  .form-style {
+    @apply space-y-9 p-8 rounded-2xl max-w-[40rem] w-full bg-primary-900 text-primary-100 shadow-common
+  }
 
   .content-center {
     @apply flex justify-center items-center;

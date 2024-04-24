@@ -26,7 +26,6 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const login = (token: string) => {
-    setUser(user);
     Cookies.set("token", token);
     api.defaults.headers.common.Authorization = `Bearer ${token}`;
   };
