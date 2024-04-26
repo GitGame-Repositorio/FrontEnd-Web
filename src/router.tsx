@@ -8,6 +8,7 @@ import { Admin } from "./pages/Admin.js";
 import { Login } from "./pages/Login.js";
 import { Register } from "./pages/Register.js";
 import { Activity } from "./pages/Activity.js";
+import { ListCapters } from "./pages/ListCapters.js";
 
 const publicRoutes = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const publicRoutes = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/all-capters",
+    element: <ListCapters />,
   },
   {
     path: "/activity",

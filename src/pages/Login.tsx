@@ -30,11 +30,9 @@ export const Login = () => {
     try {
       const response = await api.post<LoginScheme>("/login", fields);
       const { token } = response.data;
-
-      if (token) {
-        registerToken(token);
-        navigate("/capter?actual=true")
-      }
+      
+      // registerToken(token);
+      navigate("/all-capters")
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
