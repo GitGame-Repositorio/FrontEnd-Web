@@ -33,9 +33,12 @@ export const Register = () => {
 
   const callbackLogin = async (fields: LoginScheme) => {
     try {
-      const responseRegister = await api.post<LoginScheme>("/register", fields);
-      const { id: id_player } = responseRegister;
-      const response = await api.post("/player", { id_player });
+      const responseRegister = await api.post<LoginScheme>("/register", {
+        ...fields,
+        confirm_password: undefined,
+      });
+      const { id: id_user } = responseRegister.data;
+      const response = await api.post("/player", { id_user });
       if (response) {
         navigate("/login");
       }
@@ -43,7 +46,10 @@ export const Register = () => {
       if (error instanceof AxiosError) {
         const { data, status } = error.response;
         if (status === 409) {
-          setError("email", { type: "customn", message: "Esse email já está em uso" });
+          setError("email", {
+            type: "customn",
+            message: "Esse email já está em uso",
+          });
         } else {
           const field = data.field;
           setError(field, { type: "customn", message: data.message });
@@ -69,7 +75,7 @@ export const Register = () => {
             error={errors.name}
             {...register("name")}
           />
-          
+
           <Input
             max="125"
             type="email"
@@ -87,7 +93,7 @@ export const Register = () => {
             error={errors.password}
             {...register("password")}
           />
-          
+
           <Input
             max="125"
             label="Confirme a Senha"

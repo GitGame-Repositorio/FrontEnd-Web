@@ -66,6 +66,10 @@
     @apply flex justify-center text-center text-5xl font-bold;
   }
 
+  .div-game {
+    @apply bg-primary-100 text-primary-950 rounded-2xl inline-block p-4;
+  }
+
   .form-style {
     @apply space-y-9 p-8 rounded-2xl max-w-[40rem] w-full bg-primary-900 text-primary-100 shadow-common
   }

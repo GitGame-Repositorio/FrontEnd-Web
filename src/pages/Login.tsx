@@ -5,7 +5,7 @@ import { useAuth } from "../AuthContext.js";
 
 import { Input } from "../components/Input.js";
 import { api } from "../api.js";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 
 const schema = z.object({
@@ -24,6 +24,7 @@ export const Login = () => {
   } = useForm<LoginScheme>({ resolver: zodResolver(schema) });
 
   const { login: registerToken } = useAuth();
+  const navigate = useNavigate()
 
   const callbackLogin = async (fields: LoginScheme) => {
     try {
@@ -32,7 +33,7 @@ export const Login = () => {
 
       if (token) {
         registerToken(token);
-        window.location.reload();
+        navigate("/capter?actual=true")
       }
     } catch (error) {
       if (error instanceof AxiosError) {
