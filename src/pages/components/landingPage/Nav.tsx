@@ -20,7 +20,7 @@ export const Nav = () => {
           </div>
         </div>
         <div className="content-center">
-          <Link to="/login" className="btn bg-primary-50 text-primary-600">
+          <Link to="/login" className="btn text-xs bg-primary-50 text-primary-600">
             FAZER LOGIN
           </Link>
         </div>

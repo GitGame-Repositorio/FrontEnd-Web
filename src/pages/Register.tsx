@@ -7,7 +7,8 @@ import { api } from "../api.js";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { DivButton } from "./components/Login/DivButton";
-import { Header } from "./components/Login/Header"
+import { Header } from "./components/Login/Header";
+import { DivLinks } from "./components/Login/DivLinks.js";
 
 const schema = z
   .object({
@@ -63,53 +64,47 @@ export const Register = () => {
   return (
     <main className="page-auth">
       <div className="form-style">
-        <Header title="Registrar" />
+        <h1 className="title">LOGIN</h1>
         <form
           noValidate
-          className="space-y-2"
+          className="space-y-6 2xl:space-y-8"
           onSubmit={handleSubmit(callbackLogin)}
         >
-          <Input
-            max="125"
-            type="text"
-            label="Name"
-            data-cy="login-name"
-            error={errors.name}
-            {...register("name")}
-          />
+          <div className="space-y-4 2xl:space-y-6">
+            <Input
+              max="125"
+              type="email"
+              label="E-mail"
+              data-cy="login-email"
+              error={errors.email}
+              {...register("email")}
+            />
 
-          <Input
-            max="125"
-            type="email"
-            label="E-mail"
-            data-cy="login-email"
-            error={errors.email}
-            {...register("email")}
-          />
+            <Input
+              max="125"
+              label="Senha"
+              type="password"
+              data-cy="login-password"
+              error={errors.password}
+              {...register("password")}
+            />
 
-          <Input
-            max="125"
-            label="Senha"
-            type="password"
-            data-cy="login-password"
-            error={errors.password}
-            {...register("password")}
-          />
-
-          <Input
-            max="125"
-            label="Confirme a Senha"
-            type="password"
-            data-cy="login-confirm_password"
-            error={errors.confirm_password}
-            {...register("confirm_password")}
-          />
+            <Input
+              max="125"
+              label="Confirme a Senha"
+              type="password"
+              data-cy="login-confirm_password"
+              error={errors.confirm_password}
+              {...register("confirm_password")}
+            />
+          </div>
 
           <DivButton
             page="register"
-            textCancel="Cancelar"
-            textButton="Cadastrar"
+            textCancel="LOGIN"
+            textButton="CADASTRAR"
           />
+          <DivLinks />
         </form>
       </div>
     </main>

@@ -8,7 +8,7 @@ import { api } from "../api";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { DivButton } from "./components/Login/DivButton";
-import { Header } from "./components/Login/Header";
+import { DivLinks } from "./components/Login/DivLinks";
 
 const schema = z.object({
   email: z.string().email(),
@@ -48,36 +48,39 @@ export const Login = () => {
       }
     }
   };
-<h1 className="title">Login</h1>
+  <h1 className="title">Login</h1>;
   return (
     <main className="page-auth">
       <div className="form-style">
-        <Header title="Login" />
+        <h1 className="title">LOGIN</h1>
 
         <form
           noValidate
-          className="space-y-2"
+          className="space-y-6 md:space-y-8"
           onSubmit={handleSubmit(callbackLogin)}
         >
-          <Input
-            max="125"
-            type="email"
-            label="E-mail"
-            data-cy="login-email"
-            error={errors.email}
-            {...register("email")}
-          />
+          <div className="space-y-4 2xl:space-y-6">
+            <Input
+              max="125"
+              type="email"
+              label="E-mail"
+              data-cy="login-email"
+              error={errors.email}
+              {...register("email")}
+            />
 
-          <Input
-            max="125"
-            label="Senha"
-            type="password"
-            data-cy="login-password"
-            error={errors.password}
-            {...register("password")}
-          />
+            <Input
+              max="125"
+              label="Senha"
+              type="password"
+              data-cy="login-password"
+              error={errors.password}
+              {...register("password")}
+            />
+          </div>
 
-          <DivButton page="login" textCancel="Cadastro" textButton="Entrar" />
+          <DivButton page="login" textCancel="CADASTRAR" textButton="ENTRAR" />
+          <DivLinks />
         </form>
       </div>
     </main>
