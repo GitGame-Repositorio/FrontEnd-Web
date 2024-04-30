@@ -2,10 +2,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { Input } from "../components/Input.js";
+import { Input } from "../common/Input";
 import { api } from "../api.js";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import { DivButton } from "./components/Login/DivButton";
+import { Header } from "./components/Login/Header"
 
 const schema = z
   .object({
@@ -59,9 +61,9 @@ export const Register = () => {
   };
 
   return (
-    <main className="h-screen w-full content-center bg-primary-100">
+    <main className="page-auth">
       <div className="form-style">
-        <h1 className="title">Registrar</h1>
+        <Header title="Registrar" />
         <form
           noValidate
           className="space-y-2"
@@ -103,21 +105,11 @@ export const Register = () => {
             {...register("confirm_password")}
           />
 
-          <div className="space-x-4 pt-4">
-            <button
-              className="btn btn-primary bg-primary-600 text-primary-100 duration-300 hover:bg-primary-700"
-              data-cy="register-redirect_login"
-            >
-              Enviar
-            </button>
-            <Link
-              to="/login"
-              className="btn btn-primary border-2 border-solid border-primary-600 text-primary-600 duration-300 hover:bg-primary-700 hover:border-primary-700 hover:text-primary-100"
-              data-cy="register-save"
-            >
-              Login
-            </Link>
-          </div>
+          <DivButton
+            page="register"
+            textCancel="Cancelar"
+            textButton="Cadastrar"
+          />
         </form>
       </div>
     </main>

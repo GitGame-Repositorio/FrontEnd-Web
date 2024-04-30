@@ -1,10 +1,9 @@
-import { BackendErrorModal } from "./components/modal/modalCustomn/ModalBackendError";
-import { useModal } from "./components/modal/useModal";
+import { BackendErrorModal } from "./common/modal/modalCustomn/ModalBackendError";
+import { useModal } from "./common/modal/useModal";
 import { vocabulary } from "./translator";
 import Router from "./router";
 import { api } from "./api";
 import { AxiosError } from "axios";
-import { useEffect } from "react";
 
 function App() {
   const { Modal: ModalServerError, openModal } = useModal({
@@ -30,7 +29,7 @@ function App() {
 
   return (
     <>
-      <Router />;
+      <Router />
       <ModalServerError />
     </>
   );

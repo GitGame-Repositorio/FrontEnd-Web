@@ -10,7 +10,7 @@
 }
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Space-Grotesk, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -22,6 +22,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: Inter;
+  src: url('/fonts/Inter-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Space-Grotesk;
+  src: url('/fonts/SpaceGrotesk.ttf') format('truetype');
 }
 
 .container {
@@ -52,12 +62,13 @@
 
 @layer base {
   body {
-    @apply text-primary-950
+    @apply text-primary-950;
   }
+  
   .btn {
     @apply py-3 px-6 rounded text-xs;
   }
-  
+
   .btn-primary {
     @apply text-base font-bold;
   }
@@ -71,7 +82,11 @@
   }
 
   .form-style {
-    @apply space-y-9 p-8 rounded-2xl max-w-[40rem] w-full bg-primary-900 text-primary-100 shadow-common
+    @apply space-y-9 p-8 rounded-2xl max-w-[40rem] w-full bg-primary-900 text-primary-100 shadow-common;
+  }
+
+  .page-auth {
+    @apply min-h-screen min-w-full content-center bg-primary-100 font-secondary px-4;
   }
 
   .content-center {

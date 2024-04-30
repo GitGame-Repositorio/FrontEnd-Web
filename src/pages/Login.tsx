@@ -1,12 +1,14 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useAuth } from "../AuthContext.js";
+import { useAuth } from "../AuthContext";
 
-import { Input } from "../components/Input.js";
-import { api } from "../api.js";
-import { Link, useNavigate } from "react-router-dom";
+import { Input } from "../common/Input";
+import { api } from "../api";
+import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import { DivButton } from "./components/Login/DivButton";
+import { Header } from "./components/Login/Header";
 
 const schema = z.object({
   email: z.string().email(),
@@ -24,15 +26,15 @@ export const Login = () => {
   } = useForm<LoginScheme>({ resolver: zodResolver(schema) });
 
   const { login: registerToken } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const callbackLogin = async (fields: LoginScheme) => {
     try {
       const response = await api.post<LoginScheme>("/login", fields);
       const { token } = response.data;
-      
+
       // registerToken(token);
-      navigate("/all-capters")
+      navigate("/all-capters");
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
@@ -46,11 +48,12 @@ export const Login = () => {
       }
     }
   };
-
+<h1 className="title">Login</h1>
   return (
-    <main className="h-screen w-full content-center bg-primary-100">
+    <main className="page-auth">
       <div className="form-style">
-        <h1 className="title">Login</h1>
+        <Header title="Login" />
+
         <form
           noValidate
           className="space-y-2"
@@ -74,21 +77,7 @@ export const Login = () => {
             {...register("password")}
           />
 
-          <div className="space-x-4 pt-4">
-            <button
-              className="btn btn-primary bg-primary-600 text-primary-100 duration-300 hover:bg-primary-700"
-              data-cy="login-redirect_register"
-            >
-              Entrar
-            </button>
-            <Link
-              to="/register"
-              className="btn btn-primary border-2 border-solid border-primary-600 text-primary-600 duration-300 hover:bg-primary-700 hover:border-primary-700 hover:text-primary-100"
-              data-cy="login-save"
-            >
-              Cadastro
-            </Link>
-          </div>
+          <DivButton page="login" textCancel="Cadastro" textButton="Entrar" />
         </form>
       </div>
     </main>

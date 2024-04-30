@@ -1,4 +1,4 @@
-import { HeaderGame } from "../components/HeaderLevel";
+import { HeaderGame } from "../common/HeaderLevel";
 
 export const Activity = () => {
   const data = {

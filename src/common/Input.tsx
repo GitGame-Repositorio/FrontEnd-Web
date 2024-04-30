@@ -8,7 +8,7 @@ type InputProps = {
 
 export const Input = forwardRef(
   ({ label, error, ...rest }: InputProps, ref) => {
-    const classInput = "h-[3.125rem] w-full bg-primary px-4 rounded-lg text-black";
+    const classInput = "h-[3.125rem] w-full bg-primary px-4 rounded-lg text-black outline-1 outline-primary-600";
 
     return (
       <div className="space-y-2">

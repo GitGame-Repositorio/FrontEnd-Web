@@ -3,6 +3,10 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        primary: "Space-Grotesk, sans-serif",
+        secondary: "Inter, system-ui, Avenir, Helvetica, Arial, sans-serif",
+      },
       colors: {
         primary: {
           DEFAULT: "#FFFDEA",
