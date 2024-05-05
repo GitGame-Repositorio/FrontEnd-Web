@@ -1,14 +1,16 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useAuth } from "../AuthContext";
-
-import { Input } from "../common/Input";
-import { api } from "../api";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
-import { DivButton } from "./components/Login/DivButton";
-import { DivLinks } from "./components/Login/DivLinks";
+import { z } from "zod";
+
+import { api } from "../api";
+import { useAuth } from "../AuthContext";
+import { DivInput } from "../common/Input/DivInput";
+import { DivLinks } from "./components/Auth/DivLinks";
+import { DivButton } from "./components/Auth/DivButton";
+import { InputText } from "../common/Input/inputCustom/InputText";
+import { InputPassword } from "../common/Input/inputCustom/InputPassword";
 
 const schema = z.object({
   email: z.string().email(),
@@ -48,7 +50,7 @@ export const Login = () => {
       }
     }
   };
-  <h1 className="title">Login</h1>;
+
   return (
     <main className="page-auth">
       <div className="form-style">
@@ -60,26 +62,24 @@ export const Login = () => {
           onSubmit={handleSubmit(callbackLogin)}
         >
           <div className="space-y-4 2xl:space-y-6">
-            <Input
-              max="125"
-              type="email"
-              label="E-mail"
-              data-cy="login-email"
-              error={errors.email}
-              {...register("email")}
-            />
+            <DivInput label="E-mail" error={errors.email}>
+              <InputText
+                type="email"
+                placeholder="Digite seu e-mail..."
+                {...register("email")}
+              />
+            </DivInput>
 
-            <Input
-              max="125"
-              label="Senha"
-              type="password"
-              data-cy="login-password"
-              error={errors.password}
-              {...register("password")}
-            />
+            <DivInput label="Senha" error={errors.password}>
+              <InputPassword key="password" {...register("password")} />
+            </DivInput>
           </div>
 
-          <DivButton page="login" textCancel="CADASTRAR" textButton="ENTRAR" />
+          <DivButton
+            linkCancel="/register"
+            textCancel="CADASTRAR"
+            textButton="ENTRAR"
+          />
           <DivLinks />
         </form>
       </div>

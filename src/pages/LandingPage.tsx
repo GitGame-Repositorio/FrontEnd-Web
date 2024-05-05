@@ -1,4 +1,4 @@
-import { Nav } from "./components/landingPage/Nav"
+import { Nav } from "./components/LandingPage/Nav"
 
 export const LandingPage = () => {
   return (

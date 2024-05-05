@@ -1,4 +1,4 @@
-import { BackendErrorModal } from "./common/modal/modalCustomn/ModalBackendError";
+import { BackendErrorModal } from "./common/modal/modalCustom/ModalBackendError";
 import { useModal } from "./common/modal/useModal";
 import { vocabulary } from "./translator";
 import Router from "./router";

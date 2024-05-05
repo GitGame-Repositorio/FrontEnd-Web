@@ -2,13 +2,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { Input } from "../common/Input";
 import { api } from "../api.js";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
-import { DivButton } from "./components/Login/DivButton";
-import { Header } from "./components/Login/Header";
-import { DivLinks } from "./components/Login/DivLinks.js";
+import { DivButton } from "./components/Auth/DivButton.js";
+import { DivLinks } from "./components/Auth/DivLinks.js";
+import { DivInput } from "../common/Input/DivInput.js";
+import { InputText } from "../common/Input/inputCustomn/InputText.js";
+import { InputPassword } from "../common/Input/inputCustomn/InputPassword.js";
 
 const schema = z
   .object({
@@ -34,7 +35,7 @@ export const Register = () => {
 
   const navigate = useNavigate();
 
-  const callbackLogin = async (fields: LoginScheme) => {
+  const callbackRegister = async (fields: LoginScheme) => {
     try {
       const responseRegister = await api.post<LoginScheme>("/register", {
         ...fields,
@@ -64,39 +65,35 @@ export const Register = () => {
   return (
     <main className="page-auth">
       <div className="form-style">
-        <h1 className="title">LOGIN</h1>
+        <h1 className="title">REGISTRAR</h1>
         <form
           noValidate
           className="space-y-6 2xl:space-y-8"
-          onSubmit={handleSubmit(callbackLogin)}
+          onSubmit={handleSubmit(callbackRegister)}
         >
           <div className="space-y-4 2xl:space-y-6">
-            <Input
-              max="125"
-              type="email"
-              label="E-mail"
-              data-cy="login-email"
-              error={errors.email}
-              {...register("email")}
-            />
+            <DivInput label="E-mail" error={errors.email}>
+              <InputText
+                type="email"
+                placeholder="Digite seu e-mail..."
+                data-cy="login-email"
+                {...register("email")}
+              />
+            </DivInput>
 
-            <Input
-              max="125"
-              label="Senha"
-              type="password"
-              data-cy="login-password"
-              error={errors.password}
-              {...register("password")}
-            />
+            <DivInput label="Senha" error={errors.password}>
+              <InputPassword
+                data-cy="login-password"
+                {...register("password")}
+              />
+            </DivInput>
 
-            <Input
-              max="125"
-              label="Confirme a Senha"
-              type="password"
-              data-cy="login-confirm_password"
-              error={errors.confirm_password}
-              {...register("confirm_password")}
-            />
+            <DivInput label="Confirme a Senha" error={errors.confirm_password}>
+              <InputPassword
+                data-cy="login-confirm_password"
+                {...register("confirm_password")}
+              />
+            </DivInput>
           </div>
 
           <DivButton

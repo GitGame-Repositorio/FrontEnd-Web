@@ -7,7 +7,7 @@ export const Nav = () => {
       <div className="container flex justify-between">
         <div className="text-white font-normal flex items-center">
           <h1 className="text-2xl mr-20">GIT GAME</h1>
-          <div className="flex gap-6">
+          <div className="hidden md:flex gap-6">
             <a href="#" className={classLink}>
               RECURSOS
             </a>

@@ -9,6 +9,7 @@ import { Login } from "./pages/Login.js";
 import { Register } from "./pages/Register.js";
 import { Activity } from "./pages/Activity.js";
 import { ListCapters } from "./pages/ListCapters.js";
+import { ForgotPassword } from "./pages/ForgotPassword.js";
 
 const publicRoutes = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const publicRoutes = createBrowserRouter([
   {
     path: "/register",
     element: <Register />,
+  },
+  {
+    path: "/recovery-password",
+    element: <ForgotPassword />,
   },
   {
     path: "/all-capters",

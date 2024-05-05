@@ -7,6 +7,9 @@ export default {
         primary: "Space-Grotesk, sans-serif",
         secondary: "Inter, system-ui, Avenir, Helvetica, Arial, sans-serif",
       },
+      spacing: {
+        128: '32rem',
+      },
       colors: {
         primary: {
           DEFAULT: "#FFFDEA",
