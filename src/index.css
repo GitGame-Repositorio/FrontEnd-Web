@@ -35,6 +35,7 @@
 }
 
 .container {
+  width: 90%;
   max-width: 1280px;
   margin: 0 auto;
   text-align: center;
@@ -90,7 +91,7 @@
   }
 
   .form-style {
-    @apply space-y-9 p-8 rounded-2xl max-w-[32rem] w-full bg-primary-900 text-primary-100 shadow-common;
+    @apply space-y-8 p-8 rounded-2xl max-w-128 w-full bg-primary-900 text-primary-100 shadow-common;
   }
 
   .page-auth {

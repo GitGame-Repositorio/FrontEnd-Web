@@ -1,3 +1,5 @@
+import { transform } from "typescript";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -8,7 +10,8 @@ export default {
         secondary: "Inter, system-ui, Avenir, Helvetica, Arial, sans-serif",
       },
       spacing: {
-        128: '32rem',
+        18: "4.5rem",
+        128: "32rem",
       },
       colors: {
         primary: {
@@ -29,6 +32,21 @@ export default {
       },
       transitionProperty: {
         modal: "opacity",
+      },
+      keyframes: {
+        sliderRight: {
+          "0%": { transform: "translate(50%)" },
+          "100%": { transform: "translate(0)" },
+        },
+        opacity: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+      },
+      animation: {
+        "slider-right": "sliderRight .65s ease-in",
+        "opacity": "opacity .65s ease-in",
+        "message": "sliderRight .75s ease-in, opacity .75s ease-in"
       },
     },
     boxShadow: {

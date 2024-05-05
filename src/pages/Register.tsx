@@ -1,15 +1,15 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 import { z } from "zod";
 
 import { api } from "../api.js";
-import { useNavigate } from "react-router-dom";
-import { AxiosError } from "axios";
-import { DivButton } from "./components/Auth/DivButton.js";
-import { DivLinks } from "./components/Auth/DivLinks.js";
 import { DivInput } from "../common/Input/DivInput.js";
-import { InputText } from "../common/Input/inputCustomn/InputText.js";
-import { InputPassword } from "../common/Input/inputCustomn/InputPassword.js";
+import { DivLinks } from "./components/Auth/DivLinks.js";
+import { DivButton } from "./components/Auth/DivButton.js";
+import { InputText } from "../common/Input/inputCustom/InputText.js";
+import { InputPassword } from "../common/Input/inputCustom/InputPassword.js";
 
 const schema = z
   .object({
@@ -76,28 +76,24 @@ export const Register = () => {
               <InputText
                 type="email"
                 placeholder="Digite seu e-mail..."
-                data-cy="login-email"
                 {...register("email")}
               />
             </DivInput>
 
             <DivInput label="Senha" error={errors.password}>
-              <InputPassword
-                data-cy="login-password"
-                {...register("password")}
-              />
+              <InputPassword key="password" {...register("password")} />
             </DivInput>
 
             <DivInput label="Confirme a Senha" error={errors.confirm_password}>
               <InputPassword
-                data-cy="login-confirm_password"
+                key="confirm_password"
                 {...register("confirm_password")}
               />
             </DivInput>
           </div>
 
           <DivButton
-            page="register"
+            linkCancel="/login"
             textCancel="LOGIN"
             textButton="CADASTRAR"
           />
