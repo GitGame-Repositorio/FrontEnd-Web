@@ -10,6 +10,8 @@ import { Register } from "./pages/Register.js";
 import { Activity } from "./pages/Activity.js";
 import { ListCapters } from "./pages/ListCapters.js";
 import { ForgotPassword } from "./pages/ForgotPassword.js";
+import { VerifyCode } from "./pages/VerifyCode.js";
+import { ChangePassword } from "./pages/ChangePassword.js";
 
 const publicRoutes = createBrowserRouter([
   {
@@ -27,6 +29,14 @@ const publicRoutes = createBrowserRouter([
   {
     path: "/recovery-password",
     element: <ForgotPassword />,
+  },
+  {
+    path: "/verify-code",
+    element: <VerifyCode />,
+  },
+  {
+    path: "/change-password",
+    element: <ChangePassword />,
   },
   {
     path: "/all-capters",

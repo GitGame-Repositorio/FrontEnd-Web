@@ -16,7 +16,7 @@ const schema = z.object({
   password: z.string(),
 });
 
-type LoginScheme = z.infer<typeof schema>;
+type PropsScheme = z.infer<typeof schema>;
 
 export const ForgotPassword = () => {
   const {
@@ -24,13 +24,13 @@ export const ForgotPassword = () => {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<LoginScheme>({ resolver: zodResolver(schema) });
+  } = useForm<PropsScheme>({ resolver: zodResolver(schema) });
 
-  const [messageVisible, setMessageVisible] = useState(true);
+  const [messageVisible, setMessageVisible] = useState(false);
 
-  const callbackLogin = async (fields: LoginScheme) => {
+  const callbackSubmit = async (fields: PropsScheme) => {
     try {
-      const response = await api.post<LoginScheme>("/send-email", fields);
+      const response = await api.post<PropsScheme>("/send-email", fields);
       if (response.status === 200) setMessageVisible(true);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -56,7 +56,7 @@ export const ForgotPassword = () => {
           <form
             noValidate
             className="space-y-6 md:space-y-8"
-            onSubmit={handleSubmit(callbackLogin)}
+            onSubmit={handleSubmit(callbackSubmit)}
           >
             <DivInput label="E-mail" error={errors.email}>
               <InputText

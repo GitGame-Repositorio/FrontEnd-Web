@@ -61,9 +61,18 @@
   transform: scaleX(110%);
 }
 
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 @layer base {
   html {
-    @apply text-base sm:text-sm md:text-xs lg:text-base xl:text-lg;
+    @apply text-base sm:text-lg lg:text-base xl:text-lg;
   }
 
   body {
@@ -86,12 +95,16 @@
     @apply h-12 w-full bg-primary-100 px-4 rounded-lg text-primary-950 focus:outline focus:outline-primary-600 placeholder:text-primary-600;
   }
 
+  .input-code {
+    @apply h-11 w-11 md:h-12 md:w-12 appearance-none text-center text-primary-800;
+  }
+
   .div-game {
     @apply bg-primary-100 text-primary-950 rounded-2xl inline-block p-4;
   }
 
   .form-style {
-    @apply space-y-8 p-8 rounded-2xl max-w-128 w-full bg-primary-900 text-primary-100 shadow-common;
+    @apply space-y-8 p-6 md:p-8 rounded-2xl max-w-128 w-full bg-primary-900 text-primary-100 shadow-common;
   }
 
   .page-auth {

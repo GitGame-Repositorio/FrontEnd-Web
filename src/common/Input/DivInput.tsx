@@ -10,7 +10,7 @@ type InputProps = {
 export const DivInput = ({ label, children, error }: InputProps) => {
   return (
     <div className="space-y-2">
-      <h1 className="text-xl">{label}</h1>
+      <h1 className="text-xl font-bold">{label}</h1>
       {children}
       {error && <p className="text-tertiary">{error.message}</p>}
     </div>
