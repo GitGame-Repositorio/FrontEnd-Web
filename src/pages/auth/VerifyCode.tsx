@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { z } from "zod";
 
-import { InputCode } from "../common/Input/inputCustom/InputCode";
-import { DivButton } from "./components/Auth/DivButton";
-import { DivInput } from "../common/Input/DivInput";
-import { api } from "../api";
+import { InputCode } from "../../common/Input/inputCustom/InputCode";
+import { DivButton } from "./components/DivButton";
+import { DivInput } from "../../common/Input/DivInput";
+import { api } from "../../api";
 
-const schema = z.object({ code: z.number().min(0).max(9) });
+const schema = z.object({
+  code: z.string().min(1, "Necessário repassar o código"),
+});
 
 type PropsScheme = z.infer<typeof schema>;
 
@@ -25,7 +27,7 @@ export const VerifyCode = () => {
 
   const callbackSubmit = async (fields: PropsScheme) => {
     try {
-      console.log(fields)
+      console.log(fields);
       const response = await api.post<PropsScheme>("/verify-code", fields);
       if (response.status === 200)
         navigate("/change-password?token=" + response.data.token);

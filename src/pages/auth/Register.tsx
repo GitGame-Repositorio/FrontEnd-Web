@@ -4,18 +4,18 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { z } from "zod";
 
-import { api } from "../api.js";
-import { DivInput } from "../common/Input/DivInput.js";
-import { DivLinks } from "./components/Auth/DivLinks.js";
-import { DivButton } from "./components/Auth/DivButton.js";
-import { InputText } from "../common/Input/inputCustom/InputText.js";
-import { InputPassword } from "../common/Input/inputCustom/InputPassword.js";
+import { api } from "../../api.js";
+import { DivInput } from "../../common/Input/DivInput.js";
+import { DivLinks } from "./components/DivLinks.js";
+import { DivButton } from "./components/DivButton.js";
+import { InputText } from "../../common/Input/inputCustom/InputText.js";
+import { InputPassword } from "../../common/Input/inputCustom/InputPassword.js";
+import { schemaPassword, schemeEmail } from "../../common/zodScheme.js";
 
 const schema = z
   .object({
-    name: z.string(),
-    email: z.string().email(),
-    password: z.string(),
+    email: schemeEmail,
+    password: schemaPassword,
     confirm_password: z.string(),
   })
   .refine((data) => data.password === data.confirm_password, {
@@ -75,20 +75,18 @@ export const Register = () => {
             <DivInput label="E-mail" error={errors.email}>
               <InputText
                 type="email"
+                value={undefined}
                 placeholder="Digite seu e-mail..."
                 {...register("email")}
               />
             </DivInput>
 
             <DivInput label="Senha" error={errors.password}>
-              <InputPassword key="password" {...register("password")} />
+              <InputPassword {...register("password")} />
             </DivInput>
 
             <DivInput label="Confirme a Senha" error={errors.confirm_password}>
-              <InputPassword
-                key="confirm_password"
-                {...register("confirm_password")}
-              />
+              <InputPassword {...register("confirm_password")} />
             </DivInput>
           </div>
 

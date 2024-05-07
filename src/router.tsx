@@ -1,17 +1,17 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import { LandingPage } from "./pages/LandingPage";
-import { NotFoundPage } from "./pages/NotFoundPage.js";
+import { NotFoundPage } from "./pages/NotFoundPage";
 
-import { useAuth } from "./AuthContext.js";
-import { Admin } from "./pages/Admin.js";
-import { Login } from "./pages/Login.js";
-import { Register } from "./pages/Register.js";
-import { Activity } from "./pages/Activity.js";
-import { ListCapters } from "./pages/ListCapters.js";
-import { ForgotPassword } from "./pages/ForgotPassword.js";
-import { VerifyCode } from "./pages/VerifyCode.js";
-import { ChangePassword } from "./pages/ChangePassword.js";
+import { useAuth } from "./AuthContext";
+import { Admin } from "./pages/Admin";
+import { Login } from "./pages/auth/Login";
+import { Register } from "./pages/auth/Register";
+import { Activity } from "./pages/Activity";
+import { ListCapters } from "./pages/ListCapters";
+import { ForgotPassword } from "./pages/auth/ForgotPassword";
+import { VerifyCode } from "./pages/auth/VerifyCode";
+import { ChangePassword } from "./pages/auth/ChangePassword";
 
 const publicRoutes = createBrowserRouter([
   {

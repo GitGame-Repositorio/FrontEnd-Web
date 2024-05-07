@@ -4,17 +4,18 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { z } from "zod";
 
-import { api } from "../api";
-import { useAuth } from "../AuthContext";
-import { DivInput } from "../common/Input/DivInput";
-import { DivLinks } from "./components/Auth/DivLinks";
-import { DivButton } from "./components/Auth/DivButton";
-import { InputText } from "../common/Input/inputCustom/InputText";
-import { InputPassword } from "../common/Input/inputCustom/InputPassword";
+import { api } from "../../api";
+import { useAuth } from "../../AuthContext";
+import { DivInput } from "../../common/Input/DivInput";
+import { DivLinks } from "./components/DivLinks";
+import { DivButton } from "./components/DivButton";
+import { InputText } from "../../common/Input/inputCustom/InputText";
+import { InputPassword } from "../../common/Input/inputCustom/InputPassword";
+import { schemaPassword, schemeEmail } from "../../common/zodScheme";
 
 const schema = z.object({
-  email: z.string().email(),
-  password: z.string(),
+  email: schemeEmail,
+  password: schemaPassword,
 });
 
 type LoginScheme = z.infer<typeof schema>;
@@ -71,7 +72,7 @@ export const Login = () => {
             </DivInput>
 
             <DivInput label="Senha" error={errors.password}>
-              <InputPassword key="password" {...register("password")} />
+              <InputPassword {...register("password")} />
             </DivInput>
           </div>
 

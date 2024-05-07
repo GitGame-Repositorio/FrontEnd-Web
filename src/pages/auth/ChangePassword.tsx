@@ -4,14 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { z } from "zod";
 
-import { api } from "../api.js";
-import { DivInput } from "../common/Input/DivInput.js";
-import { DivButton } from "./components/Auth/DivButton.js";
-import { InputPassword } from "../common/Input/inputCustom/InputPassword.js";
+import { api } from "../../api.js";
+import { DivInput } from "../../common/Input/DivInput.js";
+import { DivButton } from "./components/DivButton.js";
+import { InputPassword } from "../../common/Input/inputCustom/InputPassword.js";
+import { schemaPassword } from "../../common/zodScheme.js";
 
 const schema = z
   .object({
-    password: z.string(),
+    password: schemaPassword,
     confirm_password: z.string(),
   })
   .refine((data) => data.password === data.confirm_password, {
@@ -43,7 +44,7 @@ export const ChangePassword = () => {
     } catch (error) {
       if (error instanceof AxiosError) {
         const { data } = error.response;
-        const { field, message } = data
+        const { field, message } = data;
         setError(field, { type: "customn", message });
       }
     }
@@ -60,14 +61,11 @@ export const ChangePassword = () => {
         >
           <div className="space-y-4 2xl:space-y-6">
             <DivInput label="Senha" error={errors.password}>
-              <InputPassword key="password" {...register("password")} />
+              <InputPassword {...register("password")} />
             </DivInput>
 
             <DivInput label="Confirme a Senha" error={errors.confirm_password}>
-              <InputPassword
-                key="confirm_password"
-                {...register("confirm_password")}
-              />
+              <InputPassword {...register("confirm_password")} />
             </DivInput>
           </div>
 

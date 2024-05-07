@@ -1,20 +1,18 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
+import { useState } from "react";
 import { z } from "zod";
 
-import { InputText } from "../common/Input/inputCustom/InputText";
-import { DivButton } from "./components/Auth/DivButton";
-import { DivInput } from "../common/Input/DivInput";
-import { vocabulary } from "../translator";
-import { api } from "../api";
-import { Message } from "../common/Message";
-import { useState } from "react";
+import { InputText } from "../../common/Input/inputCustom/InputText";
+import { DivButton } from "./components/DivButton";
+import { DivInput } from "../../common/Input/DivInput";
+import { vocabulary } from "../../translator";
+import { api } from "../../api";
+import { Message } from "../../common/Message";
+import { schemeEmail } from "../../common/zodScheme";
 
-const schema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-});
+const schema = z.object({ email: schemeEmail });
 
 type PropsScheme = z.infer<typeof schema>;
 
