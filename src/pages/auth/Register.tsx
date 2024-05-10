@@ -46,8 +46,9 @@ export const Register = () => {
       if (response) {
         navigate("/login");
       }
-    } catch (error) {
-      if (error instanceof AxiosError) {
+    } catch (err) {
+      const error = err as AxiosError
+      if (error.name === "AxiosError") {
         const { data, status } = error.response;
         if (status === 409) {
           setError("email", {

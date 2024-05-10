@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { AxiosError } from "axios";
 import { z } from "zod";
 
@@ -9,6 +9,7 @@ import { DivInput } from "../../common/Input/DivInput.js";
 import { DivButton } from "./components/DivButton.js";
 import { InputPassword } from "../../common/Input/inputCustom/InputPassword.js";
 import { schemaPassword } from "../../common/zodScheme.js";
+import { useEffect } from "react";
 
 const schema = z
   .object({
@@ -31,21 +32,38 @@ export const ChangePassword = () => {
   } = useForm<PropsScheme>({ resolver: zodResolver(schema) });
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const key = searchParams.get("key");
+
+  useEffect(() => {
+    const main = async () => {
+      try {
+        if (!key) return navigate("/login");
+        const response = await api.post(`/key-exists`, { key });
+        if (!response.data.chagePass) throw new Error();
+      } catch (error) {
+        navigate("/login");
+      }
+    };
+
+    main();
+  }, []);
 
   const callbackSubmit = async (fields: PropsScheme) => {
     try {
       const { password } = fields;
       const response = await api.post<PropsScheme>("/change-password", {
+        key,
         password,
       });
-      if (response.status === 201) {
+      if (response.status === 203) {
         navigate("/login");
       }
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        const { data } = error.response;
-        const { field, message } = data;
-        setError(field, { type: "customn", message });
+    } catch (err) {
+      const error = err as AxiosError;
+      if (error.name === "AxiosError") {
+        const data = error.response?.request.response;
+        setError("password", { type: "customn", message: data });
       }
     }
   };

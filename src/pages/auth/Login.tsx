@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import Cookies from "js-cookie";
 import { z } from "zod";
 
 import { api } from "../../api";
@@ -11,11 +12,11 @@ import { DivLinks } from "./components/DivLinks";
 import { DivButton } from "./components/DivButton";
 import { InputText } from "../../common/Input/inputCustom/InputText";
 import { InputPassword } from "../../common/Input/inputCustom/InputPassword";
-import { schemaPassword, schemeEmail } from "../../common/zodScheme";
+import { schemeEmail } from "../../common/zodScheme";
 
 const schema = z.object({
   email: schemeEmail,
-  password: schemaPassword,
+  password: z.string().min(1, "É necessário passar a senha"),
 });
 
 type LoginScheme = z.infer<typeof schema>;
@@ -28,18 +29,17 @@ export const Login = () => {
     setError,
   } = useForm<LoginScheme>({ resolver: zodResolver(schema) });
 
-  const { login: registerToken } = useAuth();
   const navigate = useNavigate();
 
   const callbackLogin = async (fields: LoginScheme) => {
     try {
       const response = await api.post<LoginScheme>("/login", fields);
       const { token } = response.data;
-
-      // registerToken(token);
+      Cookies.set("token", token);
       navigate("/all-capters");
-    } catch (error) {
-      if (error instanceof AxiosError) {
+    } catch (err) {
+      const error = err as AxiosError;
+      if (error.name === "AxiosError") {
         if (error.response?.status === 401) {
           const config = {
             type: "customn",

@@ -1,39 +1,58 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useNavigate } from "react-router-dom";
-import { AxiosError } from "axios";
-import { z } from "zod";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { InputCode } from "../../common/Input/inputCustom/InputCode";
 import { DivButton } from "./components/DivButton";
 import { DivInput } from "../../common/Input/DivInput";
 import { api } from "../../api";
+import { useEffect, useRef, useState } from "react";
+import { AxiosError } from "axios";
 
-const schema = z.object({
-  code: z.string().min(1, "Necessário repassar o código"),
-});
-
-type PropsScheme = z.infer<typeof schema>;
+type PropsCode = {
+  value: string;
+};
 
 export const VerifyCode = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setError,
-  } = useForm<PropsScheme>({ resolver: zodResolver(schema) });
+  const [error, setError] = useState({});
+
+  const codeRef = useRef<PropsCode>();
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const key = searchParams.get("key");
 
-  const callbackSubmit = async (fields: PropsScheme) => {
+  useEffect(() => {
+    const main = async () => {
+      try {
+        if (!key) return navigate("/login");
+        const response = await api.post(`/key-exists`, { key });
+        if (!response.data.verifyCode) throw new Error();
+      } catch (error) {
+        navigate("/login");
+      }
+    };
+
+    main();
+  }, []);
+
+  const callbackSubmit = async (e) => {
     try {
-      console.log(fields);
-      const response = await api.post<PropsScheme>("/verify-code", fields);
+      e.preventDefault();
+      const code = codeRef.current.value;
+
+      if (!code) return setError({ message: "Necessário repassar o código" });
+      else if (String(code).length < 6)
+        return setError({
+          message: "Necessário repassar o código por completo",
+        });
+
+      const response = await api.post<PropsCode>("/verify-code", { code, key });
+
       if (response.status === 200)
-        navigate("/change-password?token=" + response.data.token);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        setError("code", {
+        navigate("/change-password?key=" + response.data.key);
+    } catch (err) {
+      const error = err as AxiosError;
+      if (error.name === "AxiosError") {
+        setError({
           type: "customn",
           message: "Código incorreto",
         });
@@ -54,10 +73,10 @@ export const VerifyCode = () => {
         <form
           noValidate
           className="space-y-6 md:space-y-8"
-          onSubmit={handleSubmit(callbackSubmit)}
+          onSubmit={callbackSubmit}
         >
-          <DivInput label="Código" error={errors.code}>
-            <InputCode count={6} {...register("code")} />
+          <DivInput label="Código" error={error}>
+            <InputCode count={6} ref={codeRef} />
           </DivInput>
 
           <DivButton

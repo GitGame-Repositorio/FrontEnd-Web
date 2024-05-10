@@ -11,6 +11,7 @@ import { vocabulary } from "../../translator";
 import { api } from "../../api";
 import { Message } from "../../common/Message";
 import { schemeEmail } from "../../common/zodScheme";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({ email: schemeEmail });
 
@@ -25,16 +26,24 @@ export const ForgotPassword = () => {
   } = useForm<PropsScheme>({ resolver: zodResolver(schema) });
 
   const [messageVisible, setMessageVisible] = useState(false);
+  const navigate = useNavigate();
 
   const callbackSubmit = async (fields: PropsScheme) => {
     try {
       const response = await api.post<PropsScheme>("/send-email", fields);
-      if (response.status === 200) setMessageVisible(true);
-    } catch (error) {
-      if (error instanceof AxiosError) {
+      if (response.status === 200) {
+        setMessageVisible(true);
+        const { key } = response.data;
+        // navigate(`/verify-code?key=${key}`)
+        await setTimeout(() => navigate(`/verify-code?key=${key}`), 3000);
+      }
+    } catch (err) {
+      const error = err as AxiosError;
+      if (error.name === "AxiosError") {
+        const { data } = error.response;
         setError("email", {
           type: "customn",
-          message: vocabulary[error.response?.data],
+          message: vocabulary[data],
         });
       }
     }
