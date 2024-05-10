@@ -87,6 +87,14 @@ input[type="number"] {
     @apply text-base font-bold;
   }
 
+  .text-linear {
+    @apply bg-gradient-to-r from-primary-600 to-primary-500 inline-block text-transparent bg-clip-text;
+  }
+
+  .btn-presentation {
+    @apply border border-solid border-primary-600 bg-primary-100 outline-none uppercase py-2 px-4 rounded-lg text-base cursor-default;
+  }
+
   .title {
     @apply flex justify-center text-center text-2xl font-medium;
   }
