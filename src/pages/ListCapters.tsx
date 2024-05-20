@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../api";
 import { Capter } from "../@types/capter";
 import { Link } from "react-router-dom";
+import { HeaderAllCapters } from "./components/HeaderAllCapters";
 
 type OrderProps = {
   numberOrder: number;
@@ -23,9 +24,10 @@ export const ListCapters = () => {
 
   return (
     <main className="py-14 px-24 bg-primary-800 text-primary space-y-12 min-h-screen">
+      <HeaderAllCapters />
       <h1 className="text-4xl font-bold">Capítulos:</h1>
       <div className="space-y-4">
-        {capters.sort(organizateOrder).map((data: Capter) => (
+        {capters?.sort(organizateOrder).map((data: Capter) => (
           <div className="space-y-4" key={data.id}>
             <h2>
               {data.numberOrder} - {data.title}

@@ -1,10 +1,18 @@
 import Cookies from "js-cookie";
-import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { api } from "./api";
 
 type User = {
+  id: string;
   email: string;
   name: string;
+  type: "anonymous" | "logged";
 };
 
 type AuthContext = {
@@ -16,8 +24,8 @@ type AuthContext = {
 };
 
 type ContextProps = {
-  children: ReactNode
-}
+  children: ReactNode;
+};
 
 const authContext = createContext({} as AuthContext);
 
@@ -25,19 +33,19 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
   const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
-  const login = (token: string) => {
-    Cookies.set("token", token);
-    api.defaults.headers.common.Authorization = `Bearer ${token}`;
-  };
-
   const getUser = async () => {
     try {
-      const res = await api.get<User | undefined>("/users/me");
+      const res = await api.get<User | undefined>("/user/me");
       setUser(res.data);
     } catch {
       setUser(undefined);
     }
     setIsLoading(false);
+  };
+
+  const login = (token: string) => {
+    Cookies.set("token", token);
+    api.defaults.headers.common.Authorization = `Bearer ${token}`;
   };
 
   const setTokenFromCookies = () => {
@@ -52,11 +60,23 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
     setUser(undefined);
   };
 
-  const isLogged = !!user;
+  const isLogged = user?.type === "logged";
 
   useEffect(() => {
-    setTokenFromCookies();
-    getUser();
+    const main = async () => {
+      setTokenFromCookies();
+      try {
+        await api.get("/user/me");
+      } catch {
+        const response = await api.post("/register/anonymous");
+        const { token } = response.data;
+        login(token);
+      }
+
+      await getUser();
+    };
+
+    main();
   }, []);
 
   return (

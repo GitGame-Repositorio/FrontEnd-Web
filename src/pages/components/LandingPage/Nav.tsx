@@ -14,7 +14,7 @@ export const Nav = () => {
             <a href="#" className={classLink}>
               SOBRE
             </a>
-            <a href="#" className={classLink}>
+            <a href="/all-capters" className={classLink}>
               JOGAR
             </a>
           </div>

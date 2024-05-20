@@ -4,6 +4,7 @@ import { vocabulary } from "./translator";
 import Router from "./router";
 import { api } from "./api";
 import { AxiosError } from "axios";
+import { AuthContextProvider } from "./AuthContext";
 
 function App() {
   const { Modal: ModalServerError, openModal } = useModal({
@@ -28,10 +29,10 @@ function App() {
   api.interceptors.response.use(null, handleError);
 
   return (
-    <>
+    <AuthContextProvider>
       <Router />
       <ModalServerError />
-    </>
+    </AuthContextProvider>
   );
 }
 
