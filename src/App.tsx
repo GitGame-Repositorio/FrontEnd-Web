@@ -29,10 +29,12 @@ function App() {
   api.interceptors.response.use(null, handleError);
 
   return (
-    <AuthContextProvider>
+    <>
       <Router />
-      <ModalServerError />
-    </AuthContextProvider>
+      <AuthContextProvider>
+        <ModalServerError />
+      </AuthContextProvider>
+    </>
   );
 }
 

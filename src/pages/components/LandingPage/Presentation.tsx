@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const Presentation = () => {
   return (
     <div className="my-20 text-center space-y-5">
@@ -13,9 +15,13 @@ export const Presentation = () => {
           com Nosso Jogo Interativo de Git!
         </p>
       </span>
-      <button className="btn border border-solid border-primary-600 text-primary-600 uppercase font-bold text-base">
-        Let’s Go To Play
-      </button>
+      <div>
+        <Link to="/all-capters">
+          <button className="btn border border-solid border-primary-600 text-primary-600 uppercase font-bold text-base">
+            Let’s Go To Play
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };

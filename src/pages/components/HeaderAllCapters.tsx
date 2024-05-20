@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAuth } from "../../AuthContext";
 
 export const HeaderAllCapters = () => {
@@ -8,9 +9,13 @@ export const HeaderAllCapters = () => {
       <div>
         <p>{isLogged ? "Logado" : "Anonimo"}</p>
         {isLogged && (
-          <p className="text-tertiary cursor-pointer" onClick={logout}>
+          <Link
+            to="/login"
+            onClick={logout}
+            className="text-tertiary cursor-pointer"
+          >
             logout
-          </p>
+          </Link>
         )}
       </div>
     </div>

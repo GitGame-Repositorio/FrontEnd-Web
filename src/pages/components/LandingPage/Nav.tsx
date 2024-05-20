@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../AuthContext";
 
 export const Nav = () => {
   const classLink = "text-xs h-20 relative content-center nav-link";
+  const { isLogged } = useAuth();
+
   return (
     <nav className="bg-primary-600 w-full h-20 content-center">
       <div className="container flex justify-between">
@@ -20,8 +23,11 @@ export const Nav = () => {
           </div>
         </div>
         <div className="content-center">
-          <Link to="/login" className="btn text-xs bg-primary-50 text-primary-600">
-            FAZER LOGIN
+          <Link
+            to={isLogged ? "/all-capters" : "/login"}
+            className="btn text-xs bg-primary-50 text-primary-600"
+          >
+            {isLogged ? "ENTRAR NO JOGO" : "FAZER LOGIN"}
           </Link>
         </div>
       </div>

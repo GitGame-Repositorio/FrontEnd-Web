@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
-import Cookies from "js-cookie";
 import { z } from "zod";
 
 import { api } from "../../api";
@@ -30,12 +29,13 @@ export const Login = () => {
   } = useForm<LoginScheme>({ resolver: zodResolver(schema) });
 
   const navigate = useNavigate();
+  const { login } = useAuth()
 
   const callbackLogin = async (fields: LoginScheme) => {
     try {
       const response = await api.post<LoginScheme>("/login", fields);
       const { token } = response.data;
-      Cookies.set("token", token);
+      await login(token)
       navigate("/all-capters");
     } catch (err) {
       const error = err as AxiosError;

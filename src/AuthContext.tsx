@@ -43,9 +43,14 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
     setIsLoading(false);
   };
 
-  const login = (token: string) => {
+  const registerToken = (token: string) => {
     Cookies.set("token", token);
     api.defaults.headers.common.Authorization = `Bearer ${token}`;
+  }
+
+  const login = async (token: string) => {
+    registerToken(token)
+    await getUser();
   };
 
   const setTokenFromCookies = () => {
@@ -58,7 +63,7 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
   const logout = async () => {
     Cookies.set("token", "");
     setUser(undefined);
-    api.defaults.headers.common.Authorization = undefined
+    api.defaults.headers.common.Authorization = undefined;
   };
 
   const isLogged = user?.type === "logged";
@@ -71,13 +76,12 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
       } catch {
         const response = await api.post("/register/anonymous");
         const { token } = response.data;
-        login(token);
+        registerToken(token);
       }
-
-      await getUser();
     };
 
     main();
+    getUser();
   }, []);
 
   return (
