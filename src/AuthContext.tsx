@@ -58,6 +58,7 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
   const logout = async () => {
     Cookies.set("token", "");
     setUser(undefined);
+    api.defaults.headers.common.Authorization = undefined
   };
 
   const isLogged = user?.type === "logged";

@@ -11,7 +11,7 @@ type OrderProps = {
 const organizateOrder = (data: OrderProps, dataPrev: OrderProps) =>
   data.numberOrder - dataPrev.numberOrder;
 
-export const ListCapters = () => {
+export const AllCapters = () => {
   const [capters, setCapters] = useState<Capter[]>([]);
 
   useEffect(() => {

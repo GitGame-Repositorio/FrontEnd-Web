@@ -1,4 +1,9 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouteObject,
+  RouterProvider,
+} from "react-router-dom";
 
 import { LandingPage } from "./pages/LandingPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
@@ -8,15 +13,15 @@ import { Admin } from "./pages/Admin";
 import { Login } from "./pages/auth/Login";
 import { Register } from "./pages/auth/Register";
 import { Activity } from "./pages/Activity";
-import { ListCapters } from "./pages/ListCapters";
+import { AllCapters } from "./pages/AllCapters";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import { VerifyCode } from "./pages/auth/VerifyCode";
 import { ChangePassword } from "./pages/auth/ChangePassword";
 
-const publicRoutes = createBrowserRouter([
+const publicRoutes: RouteObject[] = [
   {
     path: "/",
-    element: <LandingPage />,
+    element: <Navigate to="/main" />,
   },
   {
     path: "/login",
@@ -39,33 +44,49 @@ const publicRoutes = createBrowserRouter([
     element: <ChangePassword />,
   },
   {
-    path: "/all-capters",
-    element: <ListCapters />,
-  },
-  {
     path: "/activity",
     element: <Activity />,
+  },
+];
+
+const commonRouters: RouteObject[] = [
+  {
+    path: "/main",
+    element: <LandingPage />,
   },
   {
     path: "/*",
     element: <NotFoundPage />,
   },
-]);
+];
 
-const privateRoutes = createBrowserRouter([
+const gameRouters: RouteObject[] = [
+  {
+    path: "/",
+    element: <Navigate to="/all-capters" />,
+  },
+  {
+    path: "/all-capters",
+    element: <AllCapters />,
+  },
+];
+
+const adminRouters: RouteObject[] = [
   {
     path: "/",
     element: <Admin />,
   },
-  {
-    path: "/*",
-    element: <NotFoundPage />,
-  },
-]);
+];
 
 const Router = () => {
-  //   const { isLogged } = useAuth();
-  return <RouterProvider router={publicRoutes} />;
+  const { isLogged } = useAuth();
+
+  const routerAuth = isLogged
+    ? [...commonRouters, ...gameRouters]
+    : [...commonRouters, ...publicRoutes, ...gameRouters];
+
+  const router = createBrowserRouter(routerAuth);
+  return <RouterProvider router={router} />;
 };
 
 export default Router;
