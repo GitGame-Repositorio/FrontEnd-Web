@@ -9,6 +9,7 @@ export const useModal = ({ modal: ModalComponent }: ModalType) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const openModal = () => {
+    // document.querySelector("body")?.style.overflow = "hidden";
     setIsVisible(true);
   };
 
