@@ -11,6 +11,7 @@ import { DivButton } from "./components/DivButton.js";
 import { InputText } from "../../common/Input/inputCustom/InputText.js";
 import { InputPassword } from "../../common/Input/inputCustom/InputPassword.js";
 import { schemaPassword, schemeEmail } from "../../common/zodScheme.js";
+import { useAuth } from "../../AuthContext.js";
 
 const schema = z
   .object({
@@ -34,20 +35,21 @@ export const Register = () => {
   } = useForm<RegisterScheme>({ resolver: zodResolver(schema) });
 
   const navigate = useNavigate();
+  const { login } = useAuth()
 
   const callbackRegister = async (fields: RegisterScheme) => {
     try {
-      const responseRegister = await api.post<RegisterScheme>("/register", {
+      const response = await api.post<RegisterScheme>("/register", {
         ...fields,
         confirm_password: undefined,
       });
-      const { id: id_user } = responseRegister.data;
-      const response = await api.post("/player", { id_user });
-      if (response) {
+      const { token } = response.data
+      if (token) {
+        login(token)
         navigate("/login");
       }
     } catch (err) {
-      const error = err as AxiosError
+      const error = err as AxiosError;
       if (error.name === "AxiosError") {
         const { data, status } = error.response;
         if (status === 409) {

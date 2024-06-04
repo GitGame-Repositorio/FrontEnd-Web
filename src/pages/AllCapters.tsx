@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import { api } from "../api";
-import { Capter } from "../@types/capter";
 import { Link } from "react-router-dom";
 import { HeaderAllCapters } from "./components/HeaderAllCapters";
+import { useResource } from "../common/useResource";
+import { Capter, GroupCapter, Level } from "../@types/game";
+import { UserProgress } from "../@types/userProgress";
+import { LevelProgress, StatusProgress } from "../@types/progress.d";
 
 type OrderProps = {
   numberOrder: number;
@@ -11,40 +12,102 @@ type OrderProps = {
 const organizateOrder = (data: OrderProps, dataPrev: OrderProps) =>
   data.numberOrder - dataPrev.numberOrder;
 
-export const AllCapters = () => {
-  const [capters, setCapters] = useState<Capter[]>([]);
+type PropsLevelComponent = {
+  level: Level;
+  levelProgress: LevelProgress | undefined;
+};
 
-  useEffect(() => {
-    const main = async () => {
-      const response = await api.get<Capter[]>("/capter");
-      setCapters(response.data);
-    };
-    main();
-  }, []);
+const bgForStatus = {
+  TO_DO: "bg-primary-800",
+  IN_PROGRESS: "bg-primary-600",
+  COMPLETED: "bg-primary-400",
+};
+
+const bgForHover = {
+  TO_DO: "bg-primary-700",
+  IN_PROGRESS: "bg-primary-500",
+  COMPLETED: "bg-primary-600",
+};
+
+const LevelComponent = ({ level, levelProgress }: PropsLevelComponent) => {
+  const status: StatusProgress = levelProgress?.status || StatusProgress.TO_DO;
+
+  const colorBG = bgForStatus[status];
+  const hoverBG = bgForHover[status];
 
   return (
-    <main className="py-14 px-24 bg-primary-800 text-primary space-y-12 min-h-screen">
-      <HeaderAllCapters />
-      <h1 className="text-4xl font-bold">Capítulos:</h1>
-      <div className="space-y-4">
-        {capters?.sort(organizateOrder).map((data: Capter) => (
-          <div className="space-y-4" key={data.id}>
-            <h2>
-              {data.numberOrder} - {data.title}
-            </h2>
-            <ul className="flex gap-4">
-              {data.Level.sort(organizateOrder).map((levelData) => (
-                <li key={levelData.id}>
-                  <Link
-                    to="/activity"
-                    className="btn bg-primary-600 inline-block text-base"
-                  >
-                    {levelData.numberOrder}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+    <li key={level.id}>
+      <Link
+        to="/activity"
+        className={`text-size h-12 w-20 content-center ${colorBG} ${hoverBG} text-primary rounded-xl inline-block hover:bg-primary-700 duration-300`}
+      >
+        {level.numberOrder}
+      </Link>
+    </li>
+  );
+};
+
+export const AllCapters = () => {
+  const groupCapter = useResource<GroupCapter[]>("/capter");
+  const progress = useResource<UserProgress>("/user/me/progress");
+
+  return (
+    <main className="py-14 bg-primary-100 text-primary-800 space-y-12 min-h-screen">
+      <div className="container flex flex-col gap-6">
+        <HeaderAllCapters />
+        {groupCapter?.map((group) => (
+          <>
+            <h1 className="text-4xl font-bold text-start">
+              {group.titleGroup}
+            </h1>
+            <div className="h-px w-full bg-primary-600" />
+            <div className="space-y-6 w-full">
+              {group.listCapter?.sort(organizateOrder).map((capter: Capter) => {
+                const { capterProgress, percentCapter } =
+                  progress?.allCapterRemap.find(
+                    (data) => capter.id === data.capterProgress.id_capter
+                  ) || {};
+                const statusCapter: StatusProgress =
+                  capterProgress?.status || StatusProgress.TO_DO;
+
+                const colorCapter = bgForStatus[statusCapter];
+
+                return (
+                  <div className="flex justify-between w-full">
+                    <div className="space-y-4 w-full" key={capter.id}>
+                      <h2 className="text-2xl font-bold text-start">
+                        {capter.numberOrder} - {capter.title}
+                      </h2>
+                      <div className="flex justify-between w-full">
+                        <ul className="flex gap-8">
+                          {capter?.level
+                            .sort(organizateOrder)
+                            .map((level: Level) => {
+                              const levelProgress =
+                                capterProgress?.levelProgress.find(
+                                  (data) => level.id === data.id_level
+                                );
+                              return (
+                                <LevelComponent
+                                  level={level}
+                                  levelProgress={levelProgress}
+                                />
+                              );
+                            })}
+                        </ul>
+                        <div
+                          className={`h-12 w-12 rounded-full ${colorCapter} text-white text-base font-bold content-center`}
+                        >
+                          {/* {percentCapter === 100 ? <img src="/check"> : percentCapter} */}
+                          {percentCapter || 0}%
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </>
         ))}
       </div>
     </main>

@@ -1,13 +1,21 @@
 type HeaderProps = {
   capter: number;
   level: number;
+  onReportCallback: () => void;
 };
 
-export const HeaderGame = ({ capter, level }: HeaderProps) => {
+export const HeaderGame = ({
+  onReportCallback,
+  capter,
+  level,
+}: HeaderProps) => {
   const classDivButton = "py-2.5 px-4 rounded bg-primary-100 text-primary-800";
   return (
     <header className="flex justify-between">
-      <button className="btn bg-primary-100 text-primary-600">
+      <button
+        onClick={onReportCallback}
+        className="btn bg-primary-100 text-primary-600"
+      >
         RELATAR PROBLEMAS
       </button>
 

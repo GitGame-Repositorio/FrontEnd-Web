@@ -83,7 +83,7 @@ input[type="number"] {
     @apply py-3 px-6 rounded;
   }
 
-  .btn-primary {
+  .text-size {
     @apply text-base font-bold;
   }
 
@@ -99,12 +99,28 @@ input[type="number"] {
     @apply flex justify-center text-center text-2xl font-medium;
   }
 
+  .input::selection {
+    @apply bg-primary-600;
+  }
+
   .input {
     @apply h-12 w-full bg-primary-100 px-4 rounded-lg text-primary-950 focus:outline focus:outline-primary-600 placeholder:text-primary-600;
   }
 
   .input-code {
     @apply h-11 w-11 md:h-12 md:w-12 appearance-none text-center text-primary-800;
+  }
+
+  .input-textarea {
+    @apply h-28 py-2;
+  }
+
+  .input-textarea::-webkit-scrollbar {
+    @apply bg-primary-600 w-3 rounded-r-md;
+  }
+
+  .input-textarea::-webkit-scrollbar-thumb {
+    @apply bg-primary-800 rounded-r-md;
   }
 
   .div-game {

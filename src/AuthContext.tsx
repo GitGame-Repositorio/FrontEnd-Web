@@ -7,13 +7,7 @@ import {
   useState,
 } from "react";
 import { api } from "./api";
-
-type User = {
-  id: string;
-  email: string;
-  name: string;
-  type: "anonymous" | "logged";
-};
+import { User } from "./@types/auth";
 
 type AuthContext = {
   user?: User;
@@ -30,7 +24,7 @@ type ContextProps = {
 const authContext = createContext({} as AuthContext);
 
 export const AuthContextProvider = ({ children }: ContextProps) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User>();
   const [isLoading, setIsLoading] = useState(true);
 
   const getUser = async () => {
@@ -52,6 +46,8 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
     registerToken(token)
     await getUser();
   };
+
+  console.log("render")
 
   const setTokenFromCookies = () => {
     const token = Cookies.get("token");
@@ -79,7 +75,7 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
         registerToken(token);
       }
     };
-
+    
     main();
     getUser();
   }, []);
