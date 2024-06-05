@@ -28,26 +28,24 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const getUser = async () => {
-    try {
-      const res = await api.get<User | undefined>("/user/me");
-      setUser(res.data);
-    } catch {
-      setUser(undefined);
-    }
+    const res = await api.get<User | undefined>("/user/me");
+    setUser(res.data);
     setIsLoading(false);
+    // try {
+    // } catch {
+    //   setUser(undefined);
+    // }
   };
 
   const registerToken = (token: string) => {
     Cookies.set("token", token);
     api.defaults.headers.common.Authorization = `Bearer ${token}`;
-  }
-
-  const login = async (token: string) => {
-    registerToken(token)
-    await getUser();
   };
 
-  console.log("render")
+  const login = async (token: string) => {
+    registerToken(token);
+    await getUser();
+  };
 
   const setTokenFromCookies = () => {
     const token = Cookies.get("token");
@@ -68,16 +66,15 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
     const main = async () => {
       setTokenFromCookies();
       try {
-        await api.get("/user/me");
+        await getUser()
       } catch {
         const response = await api.post("/register/anonymous");
         const { token } = response.data;
         registerToken(token);
       }
     };
-    
+
     main();
-    getUser();
   }, []);
 
   return (

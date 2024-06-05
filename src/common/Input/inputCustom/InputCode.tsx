@@ -11,7 +11,6 @@ export const InputCode = forwardRef(
     );
 
     const valueCode = inputValues.join("");
-    console.log(valueCode);
 
     const handleInputChange = (index: number, value: string, type: string) => {
       const newInputValues = [...inputValues];

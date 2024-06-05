@@ -30,10 +30,10 @@ function App() {
 
   return (
     <>
-      <Router />
       <AuthContextProvider>
-        <ModalServerError />
+        <Router />
       </AuthContextProvider>
+      <ModalServerError />
     </>
   );
 }

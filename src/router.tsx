@@ -17,6 +17,7 @@ import { AllCapters } from "./pages/AllCapters";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import { VerifyCode } from "./pages/auth/VerifyCode";
 import { ChangePassword } from "./pages/auth/ChangePassword";
+import { Loading } from "./pages/Loading";
 
 const publicRoutes: RouteObject[] = [
   {
@@ -79,11 +80,13 @@ const adminRouters: RouteObject[] = [
 ];
 
 const Router = () => {
-  const { isLogged } = useAuth();
+  const { isLogged, isLoading } = useAuth();
 
   const routerAuth = isLogged
     ? [...commonRouters, ...gameRouters]
     : [...commonRouters, ...publicRoutes, ...gameRouters];
+
+  if (isLoading) return <Loading />;
 
   const router = createBrowserRouter(routerAuth);
   return <RouterProvider router={router} />;
