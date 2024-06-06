@@ -19,21 +19,21 @@ export const HeaderAllCapters = ({
   const colorStatus = "h-6 w-6 rounded-full";
 
   return (
-    <div className="flex justify-between items-center">
-      <div>
-        <p>{isLogged ? "Logado" : "Anonimo"}</p>
-        {isLogged && (
-          <Link
-            to="/login"
-            onClick={logout}
-            className="text-tertiary cursor-pointer"
-          >
-            logout
-          </Link>
-        )}
+    <div className="grid grid-cols-3 items-center gap-4">
+      <div className="justify-self-start bg-primary-600 p-3 space-y-3 rounded-xl">
+        <span className="flex justify-between text-primary-50 text-base font-bold">
+          <p>Progresso</p>
+          <p>{percentComplete}%</p>
+        </span>
+        <div className="h-2.5 w-50 bg-primary-100 rounded-lg">
+          <div
+            style={{ width: `${percentComplete}%` }}
+            className={`h-full rounded-lg bg-primary-300`}
+          />
+        </div>
       </div>
 
-      <div className="flex items-center border border-solid border-primary-600 rounded-xl p-4 2xl:p-6">
+      <div className="flex items-center border border-solid border-primary-600 rounded-xl p-4 2xl:p-6 justify-self-center">
         <span className="flex items-center gap-1 pr-4">
           <p className={textStatus}>A fazer</p>
           <div className={`${colorStatus} ${objColors["TO_DO"]}`} />
@@ -48,15 +48,18 @@ export const HeaderAllCapters = ({
         </span>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex items-center gap-4 justify-self-end">
+        {user?.name && (
+          <p className="text-base text-primary-800 font-bold">{user?.name}</p>
+        )}
+        {user?.type && (
+          <p className="text-base text-primary-800 font-bold">{"Anonimo"}</p>
+        )}
         <img
           src={imgUrl}
           alt="Imagem de Perfil"
           className="h-14 w-14 rounded-full"
         />
-        {user?.name && (
-          <p className="text-base text-primary-800 font-bold">{user?.name}</p>
-        )}
       </div>
     </div>
   );

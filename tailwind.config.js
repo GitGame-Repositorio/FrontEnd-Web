@@ -11,6 +11,7 @@ export default {
       },
       spacing: {
         18: "4.5rem",
+        50: "12.5rem",
         128: "32rem",
       },
       colors: {
@@ -45,8 +46,8 @@ export default {
       },
       animation: {
         "slider-right": "sliderRight .65s ease-in",
-        "opacity": "opacity .65s ease-in",
-        "message": "sliderRight .75s ease-in, opacity .75s ease-in"
+        opacity: "opacity .65s ease-in",
+        message: "sliderRight .75s ease-in, opacity .75s ease-in",
       },
     },
     boxShadow: {
