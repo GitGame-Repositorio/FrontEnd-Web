@@ -40,7 +40,7 @@ const LevelComponent = ({ level, levelProgress }: PropsLevelComponent) => {
   return (
     <li key={level.id}>
       <Link
-        to="/activity"
+        to={`/level/${level.id}`}
         className={`text-size h-12 w-20 content-center ${colorBG} ${hoverBG} text-primary rounded-xl inline-block hover:bg-primary-700 duration-300`}
       >
         {level.numberOrder}

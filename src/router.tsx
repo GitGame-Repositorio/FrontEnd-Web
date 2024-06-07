@@ -12,12 +12,13 @@ import { useAuth } from "./AuthContext";
 import { Admin } from "./pages/Admin";
 import { Login } from "./pages/auth/Login";
 import { Register } from "./pages/auth/Register";
-import { Activity } from "./pages/Activity";
+import { Activity } from "./pages/game/Activity";
 import { AllCapters } from "./pages/AllCapters";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import { VerifyCode } from "./pages/auth/VerifyCode";
 import { ChangePassword } from "./pages/auth/ChangePassword";
 import { Loading } from "./pages/Loading";
+import { Level } from "./pages/game/Level";
 
 const publicRoutes: RouteObject[] = [
   {
@@ -69,6 +70,10 @@ const gameRouters: RouteObject[] = [
   {
     path: "/all-capters",
     element: <AllCapters />,
+  },
+  {
+    path: "/level/:id",
+    element: <Level />,
   },
 ];
 
