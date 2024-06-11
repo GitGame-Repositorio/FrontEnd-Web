@@ -45,10 +45,6 @@ const publicRoutes: RouteObject[] = [
     path: "/change-password",
     element: <ChangePassword />,
   },
-  {
-    path: "/activity",
-    element: <Activity />,
-  },
 ];
 
 const commonRouters: RouteObject[] = [

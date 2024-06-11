@@ -8,7 +8,7 @@ export const HeaderGame = ({
   onReportCallback,
   capter,
   level,
-}: HeaderProps) => {
+}: Partial<HeaderProps>) => {
   const classDivButton = "py-2.5 px-4 rounded bg-primary-100 text-primary-800";
   return (
     <header className="flex justify-between">

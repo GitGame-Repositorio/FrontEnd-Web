@@ -24,7 +24,7 @@ export type LevelProgress = {
 
 export type ContentProgress = {
   id: string;
-  id_orderLevel: string;
+  id_order_level: string;
   id_level_progress: string;
   status: StatusProgress;
   levelProgress: LevelProgress[];

@@ -8,6 +8,17 @@ import { ContentProgress } from "../../@types/progress";
 import { HeaderGame } from "../../common/HeaderLevel";
 import { useModal } from "../../common/modal/useModal";
 import { ModalReport } from "../../common/modal/modalCustom/ModalReport";
+import { api } from "../../api";
+
+const completeContent = async ({
+  id_level_progress,
+  id_order_level,
+}: Partial<ContentProgress>) => {
+  await api.post<ContentProgress>("/content_progress", {
+    id_level_progress,
+    id_order_level,
+  });
+};
 
 export const Level = () => {
   const { id } = useParams();
@@ -27,7 +38,8 @@ export const Level = () => {
 
     const isProgressIncompleted = levelProgress?.contentProgress.some(
       (progress: ContentProgress) =>
-        progress.id_orderLevel === content.id && progress.status !== "COMPLETED"
+        progress.id_order_level === content.id &&
+        progress.status !== "COMPLETED"
     );
 
     return isProgressIncompleted;
@@ -41,6 +53,7 @@ export const Level = () => {
           capter={level?.capter?.numberOrder}
           level={level?.numberOrder}
         />
+
         <div className="space-y-4">
           <h1 className="text-primary text-4xl font-bold">
             {level?.capter?.numberOrder} - {level?.capter?.title}
@@ -49,11 +62,13 @@ export const Level = () => {
             {level?.title}
           </div>
         </div>
-        {content?.activity.length ? (
+
+        {content?.activity?.length ? (
           <Activity />
         ) : (
           <Subject {...content?.subject[0]} />
         )}
+
         <div className="flex justify-end gap-4">
           <Link
             to="/all-capters"
@@ -61,11 +76,20 @@ export const Level = () => {
           >
             Retornar
           </Link>
-          <button className="btn bg-primary-600 font-bold text-primary-100">
+          <button
+            onClick={() =>
+              completeContent({
+                id_order_level: content?.id,
+                id_level_progress: levelProgress?.id,
+              })
+            }
+            className="btn bg-primary-600 font-bold text-primary-100"
+          >
             Proximo
           </button>
         </div>
       </main>
+
       <ModalReportComponent />
     </>
   );

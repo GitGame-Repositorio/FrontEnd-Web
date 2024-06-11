@@ -31,10 +31,6 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
     const res = await api.get<User | undefined>("/user/me");
     setUser(res.data);
     setIsLoading(false);
-    // try {
-    // } catch {
-    //   setUser(undefined);
-    // }
   };
 
   const registerToken = (token: string) => {
@@ -66,7 +62,7 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
     const main = async () => {
       setTokenFromCookies();
       try {
-        await getUser()
+        await getUser();
       } catch {
         const response = await api.post("/register/anonymous");
         const { token } = response.data;

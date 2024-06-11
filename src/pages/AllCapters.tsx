@@ -73,7 +73,7 @@ type PropsCapterComponent = {
 };
 
 const CapterComponent = ({ group, progress }: PropsCapterComponent) => {
-  return group.listCapter?.sort(organizateOrder).map((capter: Capter) => {
+  return group?.listCapter?.sort(organizateOrder).map((capter: Capter) => {
     const progressFind = progress?.allCapterRemap.find(
       (data) => capter.id === data?.capterProgress?.id_capter
     );
@@ -128,7 +128,7 @@ export const AllCapters = () => {
             Nenhum capitulo foi registrado
           </h1>
         )}
-        {groupCapter?.map((group, index) => (
+        {groupCapter?.map?.((group, index) => (
           <>
             <h1 className="text-4xl font-bold text-start">
               {index + 1} - {group.titleGroup}
