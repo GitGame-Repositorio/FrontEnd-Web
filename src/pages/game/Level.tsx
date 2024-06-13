@@ -1,14 +1,16 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useResource } from "../../common/useResource";
 import { Level as LevelType, OrderLevel } from "../../@types/game";
 import { NotFoundPage } from "../NotFoundPage";
 import { Activity } from "./Activity";
 import { Subject } from "./Subject";
-import { ContentProgress } from "../../@types/progress";
 import { HeaderGame } from "../../common/HeaderLevel";
 import { useModal } from "../../common/modal/useModal";
 import { ModalReport } from "../../common/modal/modalCustom/ModalReport";
+import { ContentProgress, LevelProgress } from "../../@types/progress.d";
 import { api } from "../../api";
+import { Loading } from "../Loading";
+import { useRef, useState } from "react";
 
 const completeContent = async ({
   id_level_progress,
@@ -17,6 +19,24 @@ const completeContent = async ({
   await api.post<ContentProgress>("/content_progress", {
     id_level_progress,
     id_order_level,
+    complete: true,
+  });
+  api.post("/user/me/progress");
+};
+
+const findContentLevel = (
+  level: LevelType | undefined,
+  levelProgress: LevelProgress | undefined
+): OrderLevel | undefined => {
+  const { contentProgress } = levelProgress || {};
+  return level?.orderLevel?.find((content: OrderLevel) => {
+    if (!contentProgress) return true;
+
+    const progressFind = contentProgress?.find(
+      (progress: ContentProgress) => progress.id_order_level === content.id
+    );
+
+    return !progressFind || !progressFind?.complete;
   });
 };
 
@@ -25,25 +45,22 @@ export const Level = () => {
 
   const level = useResource<LevelType>(`/level/${id}`, [id]);
 
+  const navigate = useNavigate();
+
   const { Modal: ModalReportComponent, openModal } = useModal({
     modal: ModalReport,
   });
 
   if (!id) return <NotFoundPage />;
+  if (!level) return <Loading />;
 
   const levelProgress = level?.levelProgress[0];
+  const content = findContentLevel(level, levelProgress);
 
-  const content = level?.orderLevel.find((content: OrderLevel) => {
-    if (!levelProgress?.contentProgress) return true;
-
-    const isProgressIncompleted = levelProgress?.contentProgress.some(
-      (progress: ContentProgress) =>
-        progress.id_order_level === content.id &&
-        progress.status !== "COMPLETED"
-    );
-
-    return isProgressIncompleted;
-  });
+  if (!content) {
+    navigate("/all-capters");
+    api.post("/user/me/progress");
+  }
 
   return (
     <>
@@ -63,6 +80,8 @@ export const Level = () => {
           </div>
         </div>
 
+        {/* <p>{content.id}</p> */}
+
         {content?.activity?.length ? (
           <Activity />
         ) : (
@@ -77,12 +96,13 @@ export const Level = () => {
             Retornar
           </Link>
           <button
-            onClick={() =>
+            onClick={() => {
               completeContent({
                 id_order_level: content?.id,
                 id_level_progress: levelProgress?.id,
-              })
-            }
+              });
+              window.location.reload()
+            }}
             className="btn bg-primary-600 font-bold text-primary-100"
           >
             Proximo

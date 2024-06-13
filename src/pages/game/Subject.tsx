@@ -1,4 +1,4 @@
-import { Subject as SubjectType } from "../@types/game";
+import { Subject as SubjectType } from "../../@types/game";
 
 export const Subject = ({ title, text }: SubjectType) => {
   return (

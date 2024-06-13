@@ -37,10 +37,12 @@ const LevelComponent = ({ level, levelProgress }: PropsLevelComponent) => {
   const colorBG = bgForStatus[status];
   const hoverBG = bgForHover[status];
 
+  const link = status === StatusProgress.COMPLETED ? "" : `/level/${level.id}`;
+
   return (
     <li key={level.id}>
       <Link
-        to={`/level/${level.id}`}
+        to={link}
         className={`text-size h-12 w-20 content-center ${colorBG} ${hoverBG} text-primary rounded-xl inline-block hover:bg-primary-700 duration-300`}
       >
         {level.numberOrder}

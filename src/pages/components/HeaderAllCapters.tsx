@@ -52,7 +52,7 @@ export const HeaderAllCapters = ({
         {user?.name && (
           <p className="text-base text-primary-800 font-bold">{user?.name}</p>
         )}
-        {user?.type && (
+        {user?.type == "anonymous" && (
           <p className="text-base text-primary-800 font-bold">{"Anonimo"}</p>
         )}
         <img
