@@ -21,7 +21,7 @@ const completeContent = async ({
     id_order_level,
     complete: true,
   });
-  api.post("/user/me/progress");
+  api.post("/progress/me");
 };
 
 const findContentLevel = (
@@ -43,7 +43,13 @@ const findContentLevel = (
 export const Level = () => {
   const { id } = useParams();
 
+  const [count, setCount] = useState(0);
+
   const level = useResource<LevelType>(`/level/${id}`, [id]);
+  const levelProgress = useResource<LevelProgress>(
+    `progress/level_progress/me?id_level=${id}&limit=1`,
+    [id, count]
+  );
 
   const navigate = useNavigate();
 
@@ -54,12 +60,11 @@ export const Level = () => {
   if (!id) return <NotFoundPage />;
   if (!level) return <Loading />;
 
-  const levelProgress = level?.levelProgress[0];
   const content = findContentLevel(level, levelProgress);
 
   if (!content) {
     navigate("/all-capters");
-    api.post("/user/me/progress");
+    api.post("/progress/me");
   }
 
   return (
@@ -80,8 +85,6 @@ export const Level = () => {
           </div>
         </div>
 
-        {/* <p>{content.id}</p> */}
-
         {content?.activity?.length ? (
           <Activity />
         ) : (
@@ -101,7 +104,7 @@ export const Level = () => {
                 id_order_level: content?.id,
                 id_level_progress: levelProgress?.id,
               });
-              window.location.reload()
+              setCount(count + 1);
             }}
             className="btn bg-primary-600 font-bold text-primary-100"
           >

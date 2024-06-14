@@ -18,7 +18,7 @@ export type LevelProgress = {
   id_capter_progress: string;
   id_level: string;
   status: StatusProgress;
-  capterProgress: CapterProgress[];
+  capterProgress: CapterProgress;
   contentProgress: ContentProgress[];
 };
 
@@ -28,5 +28,5 @@ export type ContentProgress = {
   id_level_progress: string;
   status: StatusProgress;
   complete: boolean;
-  levelProgress: LevelProgress[];
+  levelProgress: LevelProgress;
 };

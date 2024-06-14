@@ -63,7 +63,13 @@ const ListLevel = ({ listLevel, listLevelProgress }: TypeListLevel) => {
         const levelProgress = listLevelProgress?.find(
           (data) => level.id === data.id_level
         );
-        return <LevelComponent level={level} levelProgress={levelProgress} />;
+        return (
+          <LevelComponent
+            key={level.id + level.id_capter}
+            level={level}
+            levelProgress={levelProgress}
+          />
+        );
       })}
     </ul>
   );
@@ -96,6 +102,7 @@ const CapterComponent = ({ group, progress }: PropsCapterComponent) => {
             <ListLevel
               listLevel={capter?.level}
               listLevelProgress={capterProgress?.levelProgress}
+              key={capter.id + capter.numberOrder}
             />
             <div
               className={`h-12 w-12 rounded-full ${colorCapter} text-white text-base font-bold content-center`}
@@ -114,7 +121,7 @@ export const AllCapters = () => {
   const { isLoading } = useAuth();
 
   const groupCapter = useResource<GroupCapter[]>("/capter");
-  const progress = useResource<UserProgress>("/user/me/progress");
+  const progress = useResource<UserProgress>("/progress/me");
 
   if (isLoading) return <Loading />;
 
