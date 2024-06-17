@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { LevelProgress, StatusProgress } from "../../../@types/progress.d";
 import { Level } from "../../../@types/game.d";
-import { bgForHover, bgForStatus } from "./service";
+import { bgForHover, bgForStatus } from "../services/services";
 
 type PropsLevelButton = {
   level: Level;

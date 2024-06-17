@@ -1,6 +1,6 @@
 import { Level } from "../../../@types/game.d";
 import { LevelProgress } from "../../../@types/progress.d";
-import { organizateOrder } from "./service";
+import { organizateOrder } from "../services/services";
 import { LevelButton } from "./LevelButton";
 
 type TypeListLevel = {

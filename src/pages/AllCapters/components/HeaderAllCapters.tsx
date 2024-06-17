@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../AuthContext";
 import { VITE_API_URL } from "../../../env";
-import { bgForStatus } from "./service";
+import { bgForStatus } from "../services/services";
 
 type PropsHeader = {
   percentComplete: number | undefined;

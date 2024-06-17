@@ -1,8 +1,8 @@
-import { Capter, GroupCapter } from "../../../@types/game";
+import { Capter, GroupCapter } from "../../../@types/game.d";
 import { StatusProgress } from "../../../@types/progress.d";
 import { UserProgress } from "../../../@types/userProgress.d";
 import { ListLevel } from "./ListLevel";
-import { bgForStatus, organizateOrder } from "./service";
+import { bgForStatus, organizateOrder } from "../services/services";
 
 type PropsCapterSection = {
   group: GroupCapter;

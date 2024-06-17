@@ -1,16 +1,16 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useResource } from "../../common/useResource";
-import { Level as LevelType, OrderLevel } from "../../@types/game";
+import { Level as LevelType, OrderLevel } from "../../@types/game.d";
 import { NotFoundPage } from "../NotFoundPage";
-import { Activity } from "./Activity";
-import { Subject } from "./Subject";
+import { Activity } from "./components/Activity";
+import { Subject } from "./components/Subject";
 import { HeaderGame } from "../../common/HeaderLevel";
 import { useModal } from "../../common/modal/useModal";
 import { ModalReport } from "../../common/modal/modalCustom/ModalReport";
 import { ContentProgress, LevelProgress } from "../../@types/progress.d";
 import { api } from "../../api";
 import { Loading } from "../Loading";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const completeContent = async ({
   id_level_progress,

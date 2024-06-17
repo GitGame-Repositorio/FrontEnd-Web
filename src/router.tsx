@@ -5,20 +5,20 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import { LandingPage } from "./pages/LandingPage";
+import { LandingPage } from "./pages/LandingPage/LandingPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 
 import { useAuth } from "./AuthContext";
 import { Admin } from "./pages/Admin";
 import { Login } from "./pages/auth/Login";
 import { Register } from "./pages/auth/Register";
-import { Activity } from "./pages/game/Activity";
-import { AllCapters } from "./pages/AllCapters";
+import { Activity } from "./pages/Level/components/Activity";
+import { AllCapters } from "./pages/AllCapters/AllCapters";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import { VerifyCode } from "./pages/auth/VerifyCode";
 import { ChangePassword } from "./pages/auth/ChangePassword";
 import { Loading } from "./pages/Loading";
-import { Level } from "./pages/game/Level";
+import { Level } from "./pages/Level/Level";
 
 const publicRoutes: RouteObject[] = [
   {

@@ -1,10 +1,10 @@
-import { HeaderAllCapters } from "./components/AllCapters/HeaderAllCapters";
-import { useResource } from "../common/useResource";
-import { GroupCapter } from "../@types/game.d";
-import { UserProgress } from "../@types/userProgress.d";
-import { useAuth } from "../AuthContext";
-import { Loading } from "./Loading";
-import { CapterSection } from "./components/AllCapters/CapterSection";
+import { HeaderAllCapters } from "./components/HeaderAllCapters";
+import { CapterSection } from "./components/CapterSection";
+import { UserProgress } from "../../@types/userProgress.d";
+import { useResource } from "../../common/useResource";
+import { GroupCapter } from "../../@types/game.d";
+import { useAuth } from "../../AuthContext";
+import { Loading } from "../Loading";
 
 export const AllCapters = () => {
   const { isLoading } = useAuth();
