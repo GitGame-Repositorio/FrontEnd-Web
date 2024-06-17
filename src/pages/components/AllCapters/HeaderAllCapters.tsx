@@ -1,17 +1,13 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../../AuthContext";
-import { VITE_API_URL } from "../../env";
-import { StatusProgress } from "../../@types/progress";
+import { useAuth } from "../../../AuthContext";
+import { VITE_API_URL } from "../../../env";
+import { bgForStatus } from "./service";
 
 type PropsHeader = {
-  objColors: Record<StatusProgress, string>;
   percentComplete: number | undefined;
 };
 
-export const HeaderAllCapters = ({
-  objColors,
-  percentComplete,
-}: PropsHeader) => {
+export const HeaderAllCapters = ({ percentComplete }: PropsHeader) => {
   const { user, isLogged, logout } = useAuth();
   const imgUrl = VITE_API_URL + user?.picture;
 
@@ -36,15 +32,15 @@ export const HeaderAllCapters = ({
       <div className="flex items-center border border-solid border-primary-600 rounded-xl p-4 2xl:p-6 justify-self-center">
         <span className="flex items-center gap-1 pr-4">
           <p className={textStatus}>A fazer</p>
-          <div className={`${colorStatus} ${objColors["TO_DO"]}`} />
+          <div className={`${colorStatus} ${bgForStatus["TO_DO"]}`} />
         </span>
         <span className="flex items-center gap-1 px-4 border-x border-solid border-primary-600">
           <p className={textStatus}>Fazendo</p>
-          <div className={`${colorStatus} ${objColors["IN_PROGRESS"]}`}></div>
+          <div className={`${colorStatus} ${bgForStatus["IN_PROGRESS"]}`}></div>
         </span>
         <span className="flex items-center gap-1 pl-4">
           <p className={textStatus}>Feito</p>
-          <div className={`${colorStatus} ${objColors["COMPLETED"]}`}></div>
+          <div className={`${colorStatus} ${bgForStatus["COMPLETED"]}`}></div>
         </span>
       </div>
 
