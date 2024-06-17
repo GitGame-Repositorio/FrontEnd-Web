@@ -6,6 +6,7 @@ import { UserProgress } from "../@types/userProgress";
 import { LevelProgress, StatusProgress } from "../@types/progress.d";
 import { useAuth } from "../AuthContext";
 import { Loading } from "./Loading";
+import { useRef } from "react";
 
 type OrderProps = {
   numberOrder: number;
@@ -17,6 +18,7 @@ const organizateOrder = (data: OrderProps, dataPrev: OrderProps) =>
 type PropsLevelComponent = {
   level: Level;
   levelProgress: LevelProgress | undefined;
+  isOpen: boolean;
 };
 
 const bgForStatus = {
@@ -31,13 +33,18 @@ const bgForHover = {
   COMPLETED: "hover:bg-primary-700",
 };
 
-const LevelComponent = ({ level, levelProgress }: PropsLevelComponent) => {
+const LevelComponent = ({
+  level,
+  isOpen,
+  levelProgress,
+}: PropsLevelComponent) => {
   const status: StatusProgress = levelProgress?.status || StatusProgress.TO_DO;
 
-  const colorBG = bgForStatus[status];
-  const hoverBG = bgForHover[status];
+  const colorBG = isOpen ? bgForStatus[status] : "bg-gray-500";
+  const hoverBG = isOpen ? bgForHover[status] : "hover:bg-gray-600";
 
-  const link = status === StatusProgress.COMPLETED ? "" : `/level/${level.id}`;
+  const link =
+    status === StatusProgress.COMPLETED || !isOpen ? "" : `/level/${level.id}`;
 
   return (
     <li key={level.id}>
@@ -57,17 +64,23 @@ type TypeListLevel = {
 };
 
 const ListLevel = ({ listLevel, listLevelProgress }: TypeListLevel) => {
+  let isOpen = true;
   return (
     <ul className="flex gap-8">
       {listLevel.sort(organizateOrder).map((level: Level) => {
         const levelProgress = listLevelProgress?.find(
           (data) => level.id === data.id_level
         );
+        const prevIsOpen = isOpen;
+        if (levelProgress?.status !== "COMPLETED" && isOpen) {
+          isOpen = false;
+        }
         return (
           <LevelComponent
             key={level.id + level.id_capter}
             level={level}
             levelProgress={levelProgress}
+            isOpen={prevIsOpen}
           />
         );
       })}
@@ -107,8 +120,11 @@ const CapterComponent = ({ group, progress }: PropsCapterComponent) => {
             <div
               className={`h-12 w-12 rounded-full ${colorCapter} text-white text-base font-bold content-center`}
             >
-              {/* {percentCapter === 100 ? <img src="/check"> : percentCapter} */}
-              {percentCapter || 0}%
+              {percentCapter === 100 ? (
+                <img src="/check" />
+              ) : (
+                `${percentCapter || 0}%`
+              )}
             </div>
           </div>
         </div>
