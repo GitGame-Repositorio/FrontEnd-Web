@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api } from "../api";
 
-export function useResource<T>(path: string, list = []) {
+export const useResource = <T>(path: string, list = []) => {
   const [resource, setResource] = useState<T>();
 
   async function getResource() {
@@ -14,4 +14,4 @@ export function useResource<T>(path: string, list = []) {
   }, list);
 
   return resource;
-}
+};

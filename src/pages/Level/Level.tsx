@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useResource } from "../../common/useResource";
 import { Level as LevelType, OrderLevel } from "../../@types/game.d";
 import { NotFoundPage } from "../NotFoundPage";
@@ -11,6 +11,7 @@ import { ContentProgress, LevelProgress } from "../../@types/progress.d";
 import { api } from "../../api";
 import { Loading } from "../Loading";
 import { useState } from "react";
+import { useNavigateRefresh } from "../../common/navigateRefresh";
 
 const completeContent = async ({
   id_level_progress,
@@ -51,8 +52,6 @@ export const Level = () => {
     [id, count]
   );
 
-  const navigate = useNavigate();
-
   const { Modal: ModalReportComponent, openModal } = useModal({
     modal: ModalReport,
   });
@@ -63,8 +62,7 @@ export const Level = () => {
   const content = findContentLevel(level, levelProgress);
 
   if (!content) {
-    navigate("/all-capters");
-    api.post("/progress/me");
+    useNavigateRefresh("/all-capters");
   }
 
   return (
