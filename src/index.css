@@ -107,6 +107,10 @@ input[type="number"] {
     @apply h-12 w-full bg-primary-100 px-4 rounded-lg text-primary-950 focus:outline focus:outline-primary-600 placeholder:text-primary-600;
   }
 
+  .input-icon {
+    @apply pr-10;
+  }
+
   .input-code {
     @apply h-11 w-11 md:h-12 md:w-12 appearance-none text-center text-primary-800;
   }

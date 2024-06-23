@@ -34,7 +34,6 @@ export const ForgotPassword = () => {
       if (response.status === 200) {
         setMessageVisible(true);
         const { key } = response.data;
-        // navigate(`/verify-code?key=${key}`)
         await setTimeout(() => navigate(`/verify-code?key=${key}`), 3000);
       }
     } catch (err) {

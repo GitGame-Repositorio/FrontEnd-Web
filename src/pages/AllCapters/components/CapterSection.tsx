@@ -3,6 +3,8 @@ import { StatusProgress } from "../../../@types/progress.d";
 import { UserProgress } from "../../../@types/userProgress.d";
 import { ListLevel } from "./ListLevel";
 import { bgForStatus, organizateOrder } from "../services/services";
+import { FaCheck } from "react-icons/fa6";
+import theme from "../../../service/tailwindTheme";
 
 type PropsCapterSection = {
   group: GroupCapter;
@@ -37,7 +39,7 @@ export const CapterSection = ({ group, progress }: PropsCapterSection) => {
               className={`h-12 w-12 rounded-full ${colorCapter} text-white text-base font-bold content-center`}
             >
               {percentCapter === 100 ? (
-                <img src="/check" />
+                <FaCheck size={21} color={theme.colors.primary[100]} />
               ) : (
                 `${percentCapter || 0}%`
               )}
