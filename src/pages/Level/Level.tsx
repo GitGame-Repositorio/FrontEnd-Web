@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useResource } from "../../common/useResource";
 import { Level as LevelType, OrderLevel } from "../../@types/game.d";
 import { NotFoundPage } from "../NotFoundPage";
@@ -11,7 +11,6 @@ import { ContentProgress, LevelProgress } from "../../@types/progress.d";
 import { api } from "../../api";
 import { Loading } from "../Loading";
 import { useState } from "react";
-import { useNavigateRefresh } from "../../common/navigateRefresh";
 
 const completeContent = async ({
   id_level_progress,
@@ -22,7 +21,7 @@ const completeContent = async ({
     id_order_level,
     complete: true,
   });
-  api.post("/progress/me");
+  await api.post("/progress/me");
 };
 
 const findContentLevel = (
@@ -45,6 +44,7 @@ export const Level = () => {
   const { id } = useParams();
 
   const [count, setCount] = useState(0);
+  const navigate = useNavigate();
 
   const level = useResource<LevelType>(`/level/${id}`, [id]);
   const levelProgress = useResource<LevelProgress>(
@@ -62,7 +62,7 @@ export const Level = () => {
   const content = findContentLevel(level, levelProgress);
 
   if (!content) {
-    useNavigateRefresh("/all-capters");
+    navigate("/all-capters");
   }
 
   return (
