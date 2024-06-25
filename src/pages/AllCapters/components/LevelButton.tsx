@@ -16,7 +16,9 @@ export const LevelButton = ({
   isOpen,
   levelProgress,
 }: PropsLevelButton) => {
-  const status: StatusProgress = levelProgress?.status || StatusProgress.TO_DO;
+  const status: StatusProgress = isOpen
+    ? levelProgress?.status || StatusProgress.TO_DO
+    : StatusProgress.BLOCK;
 
   const link =
     status === StatusProgress.COMPLETED || !isOpen ? "" : `/level/${level.id}`;

@@ -15,9 +15,9 @@ export const AllCapters = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <main className="py-14 bg-primary-100 text-primary-800 space-y-12 min-h-screen">
+    <main className="bg-primary-100 lg:pt-8 text-primary-800 space-y-12 min-h-screen">
+      <HeaderAllCapters percentComplete={progress?.completeGamePercentage} />
       <div className="container flex flex-col gap-6">
-        <HeaderAllCapters percentComplete={progress?.completeGamePercentage} />
         {groupCapter?.length === 0 && (
           <h1 className="text-4xl font-bold text-start">
             Nenhum capitulo foi registrado
@@ -29,7 +29,7 @@ export const AllCapters = () => {
               {index + 1} - {group.titleGroup}
             </h1>
             <div className="h-px w-full bg-primary-600" />
-            <div className="space-y-6 w-full">
+            <div className="space-y-6 w-full pb-14">
               <CapterSection group={group} progress={progress} />
             </div>
           </>
