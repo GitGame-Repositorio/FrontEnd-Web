@@ -14,6 +14,9 @@ export default {
         50: "12.5rem",
         128: "32rem",
       },
+      fontSize: {
+        "2.5xl": ["1.6875rem", "2.125rem"],
+      },
       colors: {
         primary: {
           DEFAULT: "#FFFDEA",

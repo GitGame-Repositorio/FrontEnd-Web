@@ -24,9 +24,9 @@ export const CapterSection = ({ group, progress }: PropsCapterSection) => {
     const colorCapter = bgForStatus[statusCapter];
 
     return (
-      <div className="flex justify-between w-full" key={capter.id}>
+      <div className="flex justify-between w-full items-center" key={capter.id}>
         <div className="space-y-4 w-full">
-          <h2 className="text-2xl font-bold text-start">
+          <h2 className="text-lg md:text-2xl font-bold text-start">
             {capter.numberOrder} - {capter.title}
           </h2>
           <div className="flex justify-between w-full">
@@ -35,16 +35,16 @@ export const CapterSection = ({ group, progress }: PropsCapterSection) => {
               listLevelProgress={capterProgress?.levelProgress}
               key={capter.id + capter.numberOrder}
             />
-            <div
-              className={`h-12 w-12 rounded-full ${colorCapter} text-white text-base font-bold content-center`}
-            >
-              {percentCapter === 100 ? (
-                <FaCheck size={21} color={theme.colors.primary[100]} />
-              ) : (
-                `${percentCapter || 0}%`
-              )}
-            </div>
           </div>
+        </div>
+        <div
+          className={`min-h-12 min-w-12 rounded-full ${colorCapter} text-white text-sm md:text-base font-bold content-center`}
+        >
+          {percentCapter === 100 ? (
+            <FaCheck size={21} color={theme.colors.primary[100]} />
+          ) : (
+            `${percentCapter || 0}%`
+          )}
         </div>
       </div>
     );

@@ -19,13 +19,13 @@ export const AllCapters = () => {
       <HeaderAllCapters percentComplete={progress?.completeGamePercentage} />
       <div className="container flex flex-col gap-6">
         {groupCapter?.length === 0 && (
-          <h1 className="text-4xl font-bold text-start">
+          <h1 className="text-2xl md:text-4xl font-bold text-start">
             Nenhum capitulo foi registrado
           </h1>
         )}
         {groupCapter?.map?.((group, index) => (
           <>
-            <h1 className="text-4xl font-bold text-start">
+            <h1 className="text-2.5xl md:text-4xl font-bold text-start">
               {index + 1} - {group.titleGroup}
             </h1>
             <div className="h-px w-full bg-primary-600" />

@@ -27,7 +27,7 @@ export const LevelButton = ({
     <li key={level.id}>
       <Link
         to={link}
-        className={`text-size h-12 w-20 content-center ${bgForStatus[status]} ${bgForHover[status]} text-primary rounded-xl inline-block hover:bg-primary-700 duration-300`}
+        className={`text-size h-12 w-20 content-center ${bgForStatus[status]} ${bgForHover[status]} text-primary rounded-xl inline-block duration-300`}
       >
         {level.numberOrder}
         {!isOpen && <IoMdLock className="ml-1" color={theme.colors.primary} />}

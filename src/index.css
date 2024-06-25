@@ -71,9 +71,9 @@ input[type="number"] {
 }
 
 @layer base {
-  html {
+  /* html {
     @apply text-base lg:text-base xl:text-lg;
-  }
+  } */
 
   body {
     @apply text-primary-950;
