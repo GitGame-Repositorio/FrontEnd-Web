@@ -29,7 +29,7 @@ export const AllCapters = () => {
               {index + 1} - {group.titleGroup}
             </h1>
             <div className="h-px w-full bg-primary-600" />
-            <div className="space-y-6 w-full pb-14">
+            <div className="space-y-6 pb-14">
               <CapterSection group={group} progress={progress} />
             </div>
           </>

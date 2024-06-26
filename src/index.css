@@ -127,6 +127,23 @@ input[type="number"] {
     @apply bg-primary-800 rounded-r-md;
   }
 
+  /* .scroll-custom {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.primary.800') theme('colors.primary.400');
+  } */
+
+  .scroll-custom::-webkit-scrollbar {
+    @apply w-3 mt-4;
+  }
+
+  .scroll-custom::-webkit-scrollbar-track {
+    @apply bg-primary-400 rounded-lg;
+  }
+
+  .scroll-custom::-webkit-scrollbar-thumb {
+    @apply bg-primary-800 rounded-lg border-3 border-solid border-primary-400;
+  }
+
   .div-game {
     @apply bg-primary-100 text-primary-950 rounded-2xl inline-block p-4;
   }

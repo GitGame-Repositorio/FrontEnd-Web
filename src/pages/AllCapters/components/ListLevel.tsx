@@ -11,7 +11,7 @@ type TypeListLevel = {
 export const ListLevel = ({ listLevel, listLevelProgress }: TypeListLevel) => {
   let isOpen = true;
   return (
-    <ul className="flex gap-4 md:gap-8">
+    <ul className="flex gap-4 md:gap-8 overflow-x-auto scroll-custom">
       {listLevel.sort(organizateOrder).map((level: Level) => {
         const levelProgress = listLevelProgress?.find(
           (data) => level.id === data.id_level

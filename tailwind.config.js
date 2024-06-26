@@ -17,6 +17,9 @@ export default {
       fontSize: {
         "2.5xl": ["1.6875rem", "2.125rem"],
       },
+      borderWidth: {
+        '3': '3px'
+      },
       colors: {
         primary: {
           DEFAULT: "#FFFDEA",

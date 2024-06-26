@@ -24,18 +24,16 @@ export const CapterSection = ({ group, progress }: PropsCapterSection) => {
     const colorCapter = bgForStatus[statusCapter];
 
     return (
-      <div className="flex justify-between w-full items-center" key={capter.id}>
-        <div className="space-y-4 w-full">
+      <div className="flex justify-between items-center gap-5" key={capter.id}>
+        <div className="space-y-4 w-[85%]">
           <h2 className="text-lg md:text-2xl font-bold text-start">
             {capter.numberOrder} - {capter.title}
           </h2>
-          <div className="flex justify-between w-full">
-            <ListLevel
-              listLevel={capter?.level}
-              listLevelProgress={capterProgress?.levelProgress}
-              key={capter.id + capter.numberOrder}
-            />
-          </div>
+          <ListLevel
+            listLevel={capter?.level}
+            listLevelProgress={capterProgress?.levelProgress}
+            key={capter.id + capter.numberOrder}
+          />
         </div>
         <div
           className={`min-h-12 min-w-12 rounded-full ${colorCapter} text-white text-sm md:text-base font-bold content-center`}
