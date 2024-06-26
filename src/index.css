@@ -127,17 +127,19 @@ input[type="number"] {
     @apply bg-primary-800 rounded-r-md;
   }
 
-  /* .scroll-custom {
-    scrollbar-width: thin;
-    scrollbar-color: theme('colors.primary.800') theme('colors.primary.400');
-  } */
+  .scroll-custom {
+    /* scrollbar-width: thin;
+    scrollbar-color: theme('colors.primary.800') theme('colors.primary.400'); */
+  }
 
   .scroll-custom::-webkit-scrollbar {
     @apply w-3 mt-4;
+    box-shadow: 10px 0 20px -10px rgba(0, 0, 0, 0.5);
   }
 
   .scroll-custom::-webkit-scrollbar-track {
     @apply bg-primary-400 rounded-lg;
+    box-shadow: 10px 0 20px -10px rgba(0, 0, 0, 0.5);
   }
 
   .scroll-custom::-webkit-scrollbar-thumb {

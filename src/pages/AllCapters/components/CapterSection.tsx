@@ -25,7 +25,7 @@ export const CapterSection = ({ group, progress }: PropsCapterSection) => {
 
     return (
       <div className="flex justify-between items-center gap-5" key={capter.id}>
-        <div className="space-y-4 w-[85%]">
+        <div className="space-y-4 w-[82%]">
           <h2 className="text-lg md:text-2xl font-bold text-start">
             {capter.numberOrder} - {capter.title}
           </h2>
