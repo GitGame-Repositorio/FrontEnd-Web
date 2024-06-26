@@ -22,9 +22,8 @@ export const HeaderAllCapters = ({ percentComplete }: PropsHeader) => {
   const textStatus = "text-primary-950 text-base font-bold";
   const colorStatus = "h-6 w-6 rounded-full";
 
-  const styleItemMenu = "flex gap-1 items-center rounded-md p-1.5 hover:bg-primary-300";
-  const styleBorderMenu =
-    "w-full pb-3 border-b border-solid border-primary-500";
+  const styleItemMenu =
+    "flex gap-1 items-center rounded-md p-1.5 hover:bg-primary-300";
 
   return (
     <div className="bg-primary-600 lg:bg-primary-100 py-5 md:py-10 lg:py-5">
@@ -79,31 +78,29 @@ export const HeaderAllCapters = ({ percentComplete }: PropsHeader) => {
             <img
               src={imgUrl}
               alt="Imagem de Perfil"
-              className="h-14 w-14 rounded-full cursor-pointer"
+              className="h-14 w-14 rounded-full cursor-pointer img-menu"
               onClick={() => setMenuVisible(!menuVisible)}
             />
 
             {menuVisible && (
-              <div className="absolute top-18 right-0 min-w-50 z-10 flex flex-col text-start gap-4 py-4 px-3 font-bold bg-primary-200 rounded-2xl border border-solid border-primary-500">
+              <div className="absolute top-18 right-0 min-w-50 z-10 flex flex-col text-start gap-2 py-4 px-3 font-bold bg-primary-200 rounded-2xl border border-solid border-primary-500">
                 {isAdmin && user?.admin?.canManageContentGame && (
-                  <Link
-                    to="/dashboard"
-                    className={`${styleItemMenu} ${styleBorderMenu}`}
-                  >
-                    <LuLayoutDashboard
-                      size={22}
-                      color={theme.colors.primary[500]}
-                    />
-                    Dashboard
-                  </Link>
+                  <>
+                    <Link to="/dashboard" className={styleItemMenu}>
+                      <LuLayoutDashboard
+                        size={22}
+                        color={theme.colors.primary[500]}
+                      />
+                      Dashboard
+                    </Link>
+                    <hr className="h-px w-full bg-primary-500" />
+                  </>
                 )}
-                <Link
-                  to="/user"
-                  className={`${styleItemMenu} ${styleBorderMenu}`}
-                >
+                <Link to="/user" className={styleItemMenu}>
                   <GoGear size={22} color={theme.colors.primary[500]} />
                   Configurações
                 </Link>
+                <hr className="h-px w-full bg-primary-500" />
                 <Link to="/main" onClick={logout} className={styleItemMenu}>
                   <MdExitToApp size={22} color={theme.colors.primary[500]} />
                   Sair
