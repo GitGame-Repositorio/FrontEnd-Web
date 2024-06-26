@@ -4,6 +4,7 @@ export type User = {
   picture: string;
   password: string;
   name: string | null;
+  admin: Privilegies;
   type: "anonymous" | "logged";
 };
 
@@ -14,6 +15,7 @@ export type Anonymous = {
 export type Admin = {
   id_userLogged: string;
   second_password: string;
+  privilegies: Privilegies;
 };
 
 export type Privilegies = {

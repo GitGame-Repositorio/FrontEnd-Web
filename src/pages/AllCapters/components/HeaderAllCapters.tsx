@@ -14,13 +14,17 @@ type PropsHeader = {
 };
 
 export const HeaderAllCapters = ({ percentComplete }: PropsHeader) => {
-  const { user, logout } = useAuth();
+  const { user, logout, isAdmin } = useAuth();
   const imgUrl = VITE_API_URL + user?.picture;
 
   const [menuVisible, setMenuVisible] = useState(false);
 
   const textStatus = "text-primary-950 text-base font-bold";
   const colorStatus = "h-6 w-6 rounded-full";
+
+  const styleItemMenu = "flex gap-1 items-center rounded-md p-1.5 hover:bg-primary-300";
+  const styleBorderMenu =
+    "w-full pb-3 border-b border-solid border-primary-500";
 
   return (
     <div className="bg-primary-600 lg:bg-primary-100 py-5 md:py-10 lg:py-5">
@@ -81,25 +85,26 @@ export const HeaderAllCapters = ({ percentComplete }: PropsHeader) => {
 
             {menuVisible && (
               <div className="absolute top-18 right-0 min-w-50 z-10 flex flex-col text-start gap-4 py-4 px-3 font-bold bg-primary-200 rounded-2xl border border-solid border-primary-500">
-                <Link to="/dashboard" className="flex gap-1 items-center">
-                  <LuLayoutDashboard
-                    size={22}
-                    color={theme.colors.primary[500]}
-                  />
-                  Dashboard
-                </Link>
+                {isAdmin && user?.admin?.canManageContentGame && (
+                  <Link
+                    to="/dashboard"
+                    className={`${styleItemMenu} ${styleBorderMenu}`}
+                  >
+                    <LuLayoutDashboard
+                      size={22}
+                      color={theme.colors.primary[500]}
+                    />
+                    Dashboard
+                  </Link>
+                )}
                 <Link
                   to="/user"
-                  className="flex gap-1 items-center w-full py-3 border-y border-solid border-primary-500"
+                  className={`${styleItemMenu} ${styleBorderMenu}`}
                 >
                   <GoGear size={22} color={theme.colors.primary[500]} />
                   Configurações
                 </Link>
-                <Link
-                  to="/main"
-                  onClick={logout}
-                  className="flex gap-1 items-center"
-                >
+                <Link to="/main" onClick={logout} className={styleItemMenu}>
                   <MdExitToApp size={22} color={theme.colors.primary[500]} />
                   Sair
                 </Link>

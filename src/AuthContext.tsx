@@ -11,6 +11,7 @@ import { User } from "./@types/auth.d";
 
 type AuthContext = {
   user?: User;
+  isAdmin: boolean;
   isLogged: boolean;
   isLoading: boolean;
   logout: () => Promise<void>;
@@ -57,6 +58,7 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
   };
 
   const isLogged = user?.type === "logged";
+  const isAdmin = user?.admin || false;
 
   useEffect(() => {
     const main = async () => {
@@ -79,6 +81,7 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
         user,
         login,
         logout,
+        isAdmin,
         isLogged,
         isLoading,
       }}
