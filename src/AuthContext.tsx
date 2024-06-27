@@ -58,7 +58,7 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
   };
 
   const isLogged = user?.type === "logged";
-  const isAdmin = user?.admin || false;
+  const isAdmin = !!user?.admin;
 
   useEffect(() => {
     const main = async () => {
@@ -69,11 +69,14 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
         const response = await api.post("/register/anonymous");
         const { token } = response.data;
         registerToken(token);
+        getUser();
       }
     };
 
     main();
   }, []);
+
+  console.log(user);
 
   return (
     <authContext.Provider
