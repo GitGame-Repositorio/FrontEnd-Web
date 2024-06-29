@@ -6,16 +6,27 @@ import { GroupCapter } from "../../@types/game.d";
 import { useAuth } from "../../AuthContext";
 import { Loading } from "../Loading";
 
-export const AllCapters = () => {
+import { MenuContextProvider, useMenu } from "./context/MenuContext";
+
+const AllCaptersPage = () => {
   const { isLoading } = useAuth();
 
   const groupCapter = useResource<GroupCapter[]>("/capter");
   const progress = useResource<UserProgress>("/progress/me");
 
+  const { closeMenu } = useMenu();
+
   if (isLoading) return <Loading />;
 
   return (
-    <main className="bg-primary-100 lg:pt-8 text-primary-800 space-y-12 min-h-screen">
+    <main
+      className="bg-primary-100 lg:pt-8 text-primary-800 space-y-12 min-h-screen"
+      onClick={(e) => {
+        if (e.target.dataset.menu !== "menu") {
+          closeMenu();
+        }
+      }}
+    >
       <HeaderAllCapters percentComplete={progress?.completeGamePercentage} />
       <div className="container flex flex-col gap-6">
         {groupCapter?.length === 0 && (
@@ -36,5 +47,13 @@ export const AllCapters = () => {
         ))}
       </div>
     </main>
+  );
+};
+
+export const AllCapters = () => {
+  return (
+    <MenuContextProvider>
+      <AllCaptersPage />
+    </MenuContextProvider>
   );
 };
