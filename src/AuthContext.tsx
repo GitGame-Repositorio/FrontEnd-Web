@@ -76,8 +76,6 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
     main();
   }, []);
 
-  console.log(user);
-
   return (
     <authContext.Provider
       value={{
