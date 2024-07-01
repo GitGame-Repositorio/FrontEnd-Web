@@ -5,7 +5,7 @@ import { useResource } from "../../common/useResource";
 import { GroupCapter } from "../../@types/game.d";
 import { useAuth } from "../../AuthContext";
 import { Loading } from "../Loading";
-import { useMenu } from "../../common/MenuAction/useMenuAction";
+import { useMenu } from "../../common/menuAction/useMenuAction";
 
 export const AllCapters = () => {
   const { isLoading } = useAuth();
@@ -20,11 +20,7 @@ export const AllCapters = () => {
   return (
     <main
       className="bg-primary-100 lg:pt-8 text-primary-800 space-y-12 min-h-screen"
-      onClick={(e) => {
-        if (e.target.dataset.menu !== "menu") {
-          menuAction.closeMenu();
-        }
-      }}
+      onClick={menuAction.closeMenuPage}
     >
       <HeaderAllCapters
         menuActionHook={menuAction}

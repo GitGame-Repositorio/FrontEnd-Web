@@ -5,6 +5,7 @@ export type MenuProps = {
   MenuAction: ComponentType;
   openMenu: () => void;
   closeMenu: () => void;
+  closeMenuPage: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
   changeMenuVisible: () => void;
 };
 
@@ -15,6 +16,12 @@ export const useMenu = (): MenuProps => {
   const closeMenu = () => menuVisible && setMenuVisible(false);
   const changeMenuVisible = () => setMenuVisible(!menuVisible);
 
+  const closeMenuPage = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    if (e.target.dataset.menu !== "menu") {
+      closeMenu();
+    }
+  };
+
   const MenuAction = () => {
     return <>{menuVisible && <MenuActionUser />}</>;
   };
@@ -23,6 +30,7 @@ export const useMenu = (): MenuProps => {
     MenuAction,
     openMenu,
     closeMenu,
+    closeMenuPage,
     changeMenuVisible,
   };
 };
