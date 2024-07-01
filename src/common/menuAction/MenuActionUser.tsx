@@ -4,8 +4,8 @@ import { MdExitToApp } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { LuSaveAll } from "react-icons/lu";
 
-import theme from "../../../service/tailwindTheme";
-import { useAuth } from "../../../AuthContext";
+import theme from "../../service/tailwindTheme";
+import { useAuth } from "../../AuthContext";
 
 export const MenuActionUser = () => {
   const { user, logout, isAdmin, isLogged } = useAuth();

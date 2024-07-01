@@ -1,22 +1,24 @@
-import { useState } from "react";
 import { bgForStatus } from "../services/services";
 import { useAuth } from "../../../AuthContext";
 import { VITE_API_URL } from "../../../env";
-import { MenuActionUser } from "./MenuActionUser";
-import { useMenu } from "../context/MenuContext";
+import { MenuContext } from "../../../common/MenuAction/useMenuAction";
 
 type PropsHeader = {
   percentComplete: number | undefined;
+  menuActionHook: MenuContext;
 };
 
-export const HeaderAllCapters = ({ percentComplete }: PropsHeader) => {
+export const HeaderAllCapters = ({
+  percentComplete,
+  menuActionHook,
+}: PropsHeader) => {
   const { user } = useAuth();
   const imgUrl = VITE_API_URL + user?.picture;
 
-  const { menuVisible, openMenu, changeMenuVisible } = useMenu();
-
   const textStatus = "text-primary-950 text-base font-bold";
   const colorStatus = "h-6 w-6 rounded-full";
+
+  const { MenuAction, changeMenuVisible, openMenu } = menuActionHook;
 
   return (
     <div className="bg-primary-600 lg:bg-primary-100 py-5 md:py-10 lg:py-5">
@@ -77,7 +79,7 @@ export const HeaderAllCapters = ({ percentComplete }: PropsHeader) => {
               data-menu="active"
             />
 
-            {menuVisible && <MenuActionUser />}
+            <MenuAction />
           </div>
         </div>
       </div>
