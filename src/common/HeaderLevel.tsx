@@ -4,7 +4,7 @@ type HeaderProps = {
   onReportCallback: () => void;
 };
 
-export const HeaderGame = ({
+export const HeaderLevel = ({
   onReportCallback,
   capter,
   level,

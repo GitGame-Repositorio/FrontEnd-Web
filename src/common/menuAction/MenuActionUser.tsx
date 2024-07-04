@@ -11,10 +11,10 @@ export const MenuActionUser = () => {
   const { user, logout, isAdmin, isLogged } = useAuth();
 
   const styleItemMenu =
-    "flex gap-1 items-center rounded-md p-1.5 hover:bg-primary-300";
+    "flex gap-2 items-center rounded-md p-1.5 hover:bg-primary-300";
 
   return (
-    <div className="absolute top-18 right-0 min-w-50 z-10 flex flex-col text-start gap-2 py-4 px-3 font-bold bg-primary-200 rounded-2xl border border-solid border-primary-500">
+    <div className="absolute top-18 right-0 min-w-50 z-10 flex flex-col text-start gap-2 py-4 px-3 font-bold bg-primary-200 rounded-2xl border border-solid border-primary-500 text-primary-800">
       {isAdmin && user?.admin?.canManageContentGame && (
         <>
           <Link to="/dashboard" className={styleItemMenu}>
