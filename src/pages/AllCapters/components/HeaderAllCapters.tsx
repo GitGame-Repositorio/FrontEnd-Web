@@ -1,11 +1,11 @@
 import { bgForStatus } from "../services/services";
 import { useAuth } from "../../../AuthContext";
 import { VITE_API_URL } from "../../../env";
-import { MenuContext } from "../../../common/menuAction/useMenuAction";
+import { MenuProps } from "../../../common/menuAction/useMenuAction";
 
 type PropsHeader = {
   percentComplete: number | undefined;
-  menuActionHook: MenuContext;
+  menuActionHook: MenuProps;
 };
 
 export const HeaderAllCapters = ({
@@ -72,7 +72,7 @@ export const HeaderAllCapters = ({
 
             <img
               src={imgUrl}
-              alt="Imagem de Perfil"
+              alt="Perfil"
               className="h-14 w-14 rounded-full cursor-pointer"
               onClick={changeMenuVisible}
               onMouseOver={openMenu}

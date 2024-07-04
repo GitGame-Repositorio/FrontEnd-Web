@@ -4,7 +4,7 @@ import { Level as LevelType, OrderLevel } from "../../@types/game.d";
 import { NotFoundPage } from "../NotFoundPage";
 import { Activity } from "./components/Activity";
 import { Subject } from "./components/Subject";
-import { HeaderGame } from "../../common/HeaderLevel";
+import { HeaderLevel } from "../../common/HeaderLevel";
 import { useModal } from "../../common/modal/useModal";
 import { ModalReport } from "../../common/modal/modalCustom/ModalReport";
 import { ContentProgress, LevelProgress } from "../../@types/progress.d";
@@ -68,7 +68,7 @@ export const Level = () => {
   return (
     <>
       <main className="py-14 px-24 bg-primary-800 space-y-12 min-h-screen">
-        <HeaderGame
+        <HeaderLevel
           onReportCallback={openModal}
           capter={level?.capter?.numberOrder}
           level={level?.numberOrder}

@@ -12,7 +12,7 @@ import { useAuth } from "./AuthContext";
 import { Admin } from "./pages/Admin";
 import { Login } from "./pages/auth/Login";
 import { Register } from "./pages/auth/Register";
-import { Activity } from "./pages/Level/components/Activity";
+import { User } from "./pages/User/User";
 import { AllCapters } from "./pages/AllCapters/AllCapters";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import { VerifyCode } from "./pages/auth/VerifyCode";
@@ -51,6 +51,10 @@ const commonRouters: RouteObject[] = [
   {
     path: "/main",
     element: <LandingPage />,
+  },
+  {
+    path: "/user",
+    element: <User />,
   },
   {
     path: "/*",

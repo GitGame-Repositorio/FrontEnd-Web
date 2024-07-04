@@ -38,7 +38,7 @@
   width: 90%;
   max-width: 1280px;
   margin: 0 auto;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .nav-link::after {
@@ -80,7 +80,7 @@ input[type="number"] {
   }
 
   .btn {
-    @apply py-3 px-6 rounded;
+    @apply py-3 px-6 rounded-xl;
   }
 
   .text-size {
@@ -125,6 +125,26 @@ input[type="number"] {
 
   .input-textarea::-webkit-scrollbar-thumb {
     @apply bg-primary-800 rounded-r-md;
+  }
+
+  .input-check {
+    transition: 0.25s ease;
+  }
+
+  .input-check::after {
+    content: "";
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 100%;
+    background-color: theme("colors.primary.50");
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    transition: 0.25s ease;
+  }
+  
+  .input-check:checked:after {
+    left: 28px;
   }
 
   .scroll-custom {
