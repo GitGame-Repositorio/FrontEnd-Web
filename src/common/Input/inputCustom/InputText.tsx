@@ -2,7 +2,7 @@ import { InputHTMLAttributes, forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 export const InputText = forwardRef(
-  ({ className, value, ...rest }: InputHTMLAttributes, ref) => {
+  ({ className, value, ...rest }: InputHTMLAttributes<HTMLInputElement>, ref) => {
     return (
       <input
         max="125"

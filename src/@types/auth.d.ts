@@ -4,6 +4,11 @@ export type User = {
   picture: string;
   password: string;
   name: string | null;
+  phone: string;
+  appearance: "light" | "dark";
+  work: string;
+  language: string;
+  two_auth: boolean;
   admin: Privilegies;
   type: "anonymous" | "logged";
 };
