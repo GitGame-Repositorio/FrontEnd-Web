@@ -1,25 +1,19 @@
-import { VITE_API_URL } from "../env";
-import { useAuth } from "../AuthContext";
-import { MenuProps } from "./menuAction/useMenuAction";
 import { GoArrowLeft } from "react-icons/go";
-import theme from "../service/tailwindTheme";
 import { Link } from "react-router-dom";
 
+import { MenuActionUser as MenuAction } from "./MenuActionUser";
+import theme from "../service/tailwindTheme";
+import { useAuth } from "../AuthContext";
+import { VITE_API_URL } from "../env";
+
 type HeaderGameProps = {
-  menuActionHook: MenuProps;
   namePage: string;
   notRedirect?: boolean;
 };
 
-export const HeaderGame = ({
-  menuActionHook,
-  namePage,
-  notRedirect,
-}: HeaderGameProps) => {
+export const HeaderGame = ({ namePage, notRedirect }: HeaderGameProps) => {
   const { user } = useAuth();
   const imgUrl = VITE_API_URL + user?.picture;
-
-  const { MenuAction, changeMenuVisible, openMenu } = menuActionHook;
 
   return (
     <header className="bg-primary-600 text-primary-100 py-4">
@@ -42,16 +36,21 @@ export const HeaderGame = ({
               </p>
             ))}
 
-          <img
-            src={imgUrl}
-            alt="Perfil"
-            className="h-12 w-12 rounded-full cursor-pointer"
-            onClick={changeMenuVisible}
-            onMouseOver={openMenu}
-            data-menu="active"
-          />
+          <label htmlFor="toggle">
+            <img
+              src={imgUrl}
+              alt="Perfil"
+              className="h-12 w-12 rounded-full cursor-pointer img-menu-action"
+            />
 
-          <MenuAction />
+            <input
+              id="toggle"
+              type="checkbox"
+              className="checkbox-menu-action hidden"
+            />
+
+            <MenuAction />
+          </label>
         </div>
       </div>
     </header>

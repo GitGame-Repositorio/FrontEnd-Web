@@ -1,7 +1,6 @@
 import { useAuth } from "../../AuthContext";
 
 import { HeaderGame } from "../../common/HeaderGame";
-import { useMenu } from "../../common/menuAction/useMenuAction";
 import { Loading } from "../Loading";
 
 import { UserForm } from "./UserForm";
@@ -14,7 +13,6 @@ const submit = async (field: UserType) => {
 
 export const User = () => {
   const { user } = useAuth();
-  const menuAction = useMenu();
 
   const values = {
     phone: "11111",
@@ -24,16 +22,11 @@ export const User = () => {
     two_auth: false,
   };
 
-  console.log(user)
-
   if (!user) return <Loading />;
 
   return (
-    <div
-      className="bg-primary-100 text-primary-800"
-      onClick={menuAction.closeMenuPage}
-    >
-      <HeaderGame namePage="Configurações" menuActionHook={menuAction} />
+    <div className="bg-primary-100 text-primary-800">
+      <HeaderGame namePage="Configurações" />
       <UserForm user={{ ...user, ...values }} submit={submit} />
     </div>
   );

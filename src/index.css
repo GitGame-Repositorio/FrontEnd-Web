@@ -61,6 +61,23 @@
   transform: scaleX(110%);
 }
 
+.menu-action {
+  transition: opacity 0.25s ease;
+  animation: 0.25s ease-in opacity;
+}
+
+.menu-action,
+.checkbox-menu-action:not(:checked) ~ .menu-action,
+.checkbox-menu-action:not(:checked) ~ .menu-action:hover {
+  display: none;
+}
+
+.checkbox-menu-action:checked ~ .menu-action,
+.checkbox-menu-action:not(:checked) ~ .menu-action:hover,
+.img-menu-action:hover ~ .checkbox-menu-action:not(:checked) ~ .menu-action {
+  display: flex;
+}
+
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
@@ -142,7 +159,7 @@ input[type="number"] {
     left: 4px;
     transition: 0.25s ease;
   }
-  
+
   .input-check:checked:after {
     left: 28px;
   }
