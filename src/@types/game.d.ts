@@ -56,9 +56,16 @@ export type Subject = {
   text: string;
 };
 
-export type Reports = {
+export type Report = {
   id: string;
   id_user: string;
-  text: string;
-  resolved: boolean;
+  title: string;
+  description: string;
+  status: ReportStatus;
 };
+
+export enum ReportStatus {
+  OPENED = "OPENED",
+  CLOSED = "CLOSED",
+  RESOLVED = "RESOLVED",
+}

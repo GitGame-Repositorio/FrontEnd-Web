@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1795be12-50db-427d-bac2-b2d993b27a92",
+    "title": "Titulo",
+    "description": "Lorem ipsum dolor sit amet consectetur. Eget rhoncus tortor consequat in vitae sed mauris. Commodo odio venenatis ut nec mattis pharetra porttitor aliquet. Ultrices ac hendrerit pretium orci. Tempor eleifend ullamcorper ut ac fermentum.",
+    "status": "OPENED",
+    "id_user": "ffc34e75-5586-4cf0-ba16-bd92cc90222b"
+  },
+  {
+    "id": "222a79d9-ace8-4d05-9fbd-9ccc029bb344",
+    "title": "Titulo",
+    "description": "Lorem ipsum dolor sit amet consectetur. Eget rhoncus tortor consequat in vitae sed mauris. Commodo odio venenatis ut nec mattis pharetra porttitor aliquet. Ultrices ac hendrerit pretium orci. Tempor eleifend ullamcorper ut ac fermentum.",
+    "status": "RESOLVED",
+    "id_user": "ffc34e75-5586-4cf0-ba16-bd92cc90222b"
+  },
+  {
+    "id": "222a79d9-ace8-4d05-9fbd-9ccc029bb344",
+    "title": "Titulo",
+    "description": "Lorem ipsum dolor sit amet consectetur. Eget rhoncus tortor consequat in vitae sed mauris. Commodo odio venenatis ut nec mattis pharetra porttitor aliquet. Ultrices ac hendrerit pretium orci. Tempor eleifend ullamcorper ut ac fermentum.",
+    "status": "CLOSED",
+    "id_user": "ffc34e75-5586-4cf0-ba16-bd92cc90222b"
+  }
+]
