@@ -19,6 +19,7 @@ import { VerifyCode } from "./pages/auth/VerifyCode";
 import { ChangePassword } from "./pages/auth/ChangePassword";
 import { Loading } from "./pages/Loading";
 import { Level } from "./pages/Level/Level";
+import { Dashboard } from "./pages/Dashboard/Dashboard";
 
 const publicRoutes: RouteObject[] = [
   {
@@ -79,17 +80,21 @@ const gameRouters: RouteObject[] = [
 
 const adminRouters: RouteObject[] = [
   {
-    path: "/",
-    element: <Admin />,
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ];
 
 const Router = () => {
-  const { isLogged, isLoading } = useAuth();
+  const { isLogged, isLoading, isAdmin } = useAuth();
+
+  const mainRouters = [...commonRouters, ...gameRouters];
 
   const routerAuth = isLogged
-    ? [...commonRouters, ...gameRouters]
-    : [...commonRouters, ...publicRoutes, ...gameRouters];
+    ? isAdmin
+      ? [...mainRouters, ...adminRouters]
+      : [...mainRouters]
+    : [...mainRouters, ...publicRoutes];
 
   if (isLoading) return <Loading />;
 
