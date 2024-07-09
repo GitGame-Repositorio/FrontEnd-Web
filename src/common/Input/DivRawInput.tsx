@@ -20,8 +20,10 @@ export const DivRawInput = ({
         <h2 className="text-xl">{label}</h2>
         <p className="text-sm">{description}</p>
       </span>
-      {children}
-      {error && <p className="text-tertiary">{error.message}</p>}
+      <div className="flex flex-col items-end">
+        {children}
+        {error && <p className="text-tertiary">{error.message}</p>}
+      </div>
     </div>
   );
 };

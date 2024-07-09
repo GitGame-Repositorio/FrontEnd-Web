@@ -5,10 +5,10 @@ export const userSchema = z
   .object({
     name: z.string(),
     email: schemeEmail,
-    language: z.string().array(),
-    work: z.array(z.string()),
+    language: z.string(),
+    work: z.string(),
     phone: z.string(),
-    appearance: z.array(z.string()),
+    appearance: z.string(),
     two_auth: z.boolean(),
   })
   .refine((data) => data.two_auth && !data.phone, {

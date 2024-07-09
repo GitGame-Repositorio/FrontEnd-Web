@@ -97,7 +97,7 @@ input[type="number"] {
   }
 
   .btn {
-    @apply py-3 px-6 rounded-xl;
+    @apply py-3 px-6 rounded-xl duration-500 ease-in-out;
   }
 
   .text-size {

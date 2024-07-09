@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
-import { GoGear } from "react-icons/go";
-import { MdExitToApp } from "react-icons/md";
+import { MdExitToApp, MdOutlineSettings } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { LuSaveAll } from "react-icons/lu";
 
@@ -13,6 +12,8 @@ export const MenuActionUser = () => {
   const styleItemMenu =
     "flex gap-2 items-center rounded-md p-1.5 hover:bg-primary-300";
 
+  const colorIcons = theme.colors.primary[600];
+
   return (
     <div
       className={`absolute top-[2.58rem] right-0 menu-action items-end h-52`}
@@ -21,7 +22,7 @@ export const MenuActionUser = () => {
         {isAdmin && user?.admin?.canManageContentGame && (
           <>
             <Link to="/dashboard" className={styleItemMenu}>
-              <LuLayoutDashboard size={22} color={theme.colors.primary[500]} />
+              <LuLayoutDashboard size={22} color={colorIcons} />
               Dashboard
             </Link>
             <hr className="h-px w-full bg-primary-500" />
@@ -29,7 +30,7 @@ export const MenuActionUser = () => {
         )}
 
         <Link to="/user" className={styleItemMenu}>
-          <GoGear size={22} color={theme.colors.primary[500]} />
+          <MdOutlineSettings size={22} color={colorIcons} />
           Configurações
         </Link>
         <hr className="h-px w-full bg-primary-500" />
@@ -37,7 +38,7 @@ export const MenuActionUser = () => {
         {!isLogged && (
           <>
             <Link to="/add-email" onClick={() => {}} className={styleItemMenu}>
-              <LuSaveAll size={22} color={theme.colors.primary[500]} />
+              <LuSaveAll size={22} color={colorIcons} />
               Salvar Remoto
             </Link>
             <hr className="h-px w-full bg-primary-500" />
@@ -45,7 +46,7 @@ export const MenuActionUser = () => {
         )}
 
         <Link to="/" onClick={logout} className={styleItemMenu}>
-          <MdExitToApp size={22} color={theme.colors.primary[500]} />
+          <MdExitToApp size={22} color={colorIcons} />
           {isLogged ? "Sair" : "Sair e Resetar"}
         </Link>
       </div>

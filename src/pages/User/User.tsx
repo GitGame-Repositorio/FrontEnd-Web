@@ -7,8 +7,9 @@ import { UserForm } from "./UserForm";
 import { api } from "../../api";
 import { User as UserType } from "../../@types/auth";
 
-const submit = async (field: UserType) => {
-  await api.patch("/user", field);
+const submit = async (fields: UserType) => {
+  const { name, email } = fields;
+  await api.patch("/users/me", { name, email });
 };
 
 export const User = () => {

@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { MdEdit } from "react-icons/md";
+import { FaPen } from "react-icons/fa";
 
 import { User } from "../../@types/auth.d";
 import { DivInput } from "../../common/Input/DivInput";
@@ -13,6 +13,7 @@ import { UserSchemeType, userSchema } from "./userSchema";
 import { VITE_API_URL } from "../../env";
 
 import theme from "../../service/tailwindTheme";
+import { useState } from "react";
 
 type Props = {
   user: User;
@@ -30,49 +31,50 @@ export const UserForm = ({ user, submit }: Props) => {
   });
 
   const imgUrl = VITE_API_URL + user?.picture;
+  const [canEdit, setCanEdit] = useState(false);
 
   const classInput =
-    "bg-primary-200 text-primary-600 border border-solid border-primary-600 focus:outline-primary-400";
+    "bg-primary-200 border border-solid border-primary-600 focus:outline-primary-400";
 
   return (
     <form
       className="min-h-screen container flex flex-col justify-between gap-12 pb-20"
       onSubmit={handleSubmit(submit)}
     >
-      <div>
-        <div className="pt-8 mb-6 space-y-5">
+      <div className="pt-8 space-y-6">
+        <div className="space-y-5">
           <h2 className="text-xl font-bold">Foto de Perfil</h2>
           <div className="flex gap-8 items-center">
-            <img
-              src={imgUrl}
-              alt="Perfil"
-              className="h-15 w-15 rounded-full cursor-pointer hover:opacity-40"
-            />
+            <img src={imgUrl} alt="Perfil" className="h-15 w-15 rounded-full" />
 
-            <div className="font-medium leading-tight flex gap-4">
-              <button className="btn w-32 uppercase border border-solid border-primary-600 text-primary-600">
-                Remover
-              </button>
-              <button className="btn w-32 uppercase bg-primary-600 text-primary">
-                Upload
-              </button>
-            </div>
+            {canEdit && (
+              <div className="font-medium leading-tight flex gap-4">
+                <button className="btn w-32 uppercase border border-solid border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-primary-100">
+                  Remover
+                </button>
+                <button className="btn w-32 uppercase bg-primary-600 text-primary hover:bg-primary-700">
+                  Upload
+                </button>
+              </div>
+            )}
           </div>
         </div>
 
         <div className="space-y-8">
           <DivInput label="Nome" error={errors.name}>
             <InputText
-              className={classInput}
               placeholder="Digite seu nome..."
+              className={classInput}
+              disabled={!canEdit}
               {...register("name")}
             />
           </DivInput>
 
           <DivInput label="Email" error={errors.email}>
             <InputText
-              className={classInput}
               placeholder="Digite seu email..."
+              className={classInput}
+              disabled={!canEdit}
               {...register("email")}
             />
           </DivInput>
@@ -84,6 +86,7 @@ export const UserForm = ({ user, submit }: Props) => {
           >
             <PowerSelect
               list={["Professor", "Estudante", "Desenvolvedor", "QA"]}
+              disabled={!canEdit}
               {...register("work")}
             />
           </DivRawInput>
@@ -96,6 +99,7 @@ export const UserForm = ({ user, submit }: Props) => {
             <PowerSelect
               list={["Português", "Inglês"]}
               text="Liguagens"
+              disabled={!canEdit}
               {...register("language")}
             />
           </DivRawInput>
@@ -108,6 +112,7 @@ export const UserForm = ({ user, submit }: Props) => {
             <PowerSelect
               list={["Light", "Dark"]}
               text="Tema"
+              disabled={!canEdit}
               {...register("appearance")}
             />
           </DivRawInput>
@@ -117,25 +122,31 @@ export const UserForm = ({ user, submit }: Props) => {
             description="Mantenha sua conta segura habilitando 2FA via e-mail ou usando uma senha temporária (TOTP)"
             error={errors.two_auth}
           >
-            <Checkbox {...register("two_auth")} />
+            <Checkbox disabled={!canEdit} {...register("two_auth")} />
           </DivRawInput>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4 justify-between">
-        <button className="btn md:min-w-50 justify-center flex gap-2.5 items-center bg-primary-800 text-primary">
-          <MdEdit size={17.5} color={theme.colors.primary} />
-          {/* <p className="hidden md:inline">Editar</p> */}
-          Editar
-        </button>
+      <div className="flex flex-wrap gap-4 justify-end">
+        {!canEdit && (
+          <button
+            className="btn md:min-w-50 justify-center flex gap-2.5 items-center bg-primary-600 text-primary font-bold hover:bg-primary-500"
+            onClick={() => setCanEdit(true)}
+          >
+            <FaPen size={14.5} color={theme.colors.primary} />
+            Editar
+          </button>
+        )}
 
-        <DivButton
-          linkCancel="/all-capters"
-          textCancel="Cancelar"
-          classDiv="max-w-[25.5rem] w-full"
-          classButtonCancel="border-primary-600 text-primary-600"
-          textButton="Salvar"
-        />
+        {canEdit && (
+          <DivButton
+            linkCancel="/all-capters"
+            textCancel="Cancelar"
+            classDiv="max-w-[25.5rem] w-full"
+            classButtonCancel="border-primary-600 text-primary-600"
+            textButton="Salvar"
+          />
+        )}
       </div>
     </form>
   );
