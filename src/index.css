@@ -38,7 +38,6 @@
   width: 90%;
   max-width: 1280px;
   margin: 0 auto;
-  /* text-align: center; */
 }
 
 .nav-link::after {
@@ -88,16 +87,12 @@ input[type="number"] {
 }
 
 @layer base {
-  /* html {
-    @apply text-base lg:text-base xl:text-lg;
-  } */
-
   body {
     @apply text-primary-950;
   }
 
-  .btn {
-    @apply py-3 px-6 rounded-xl duration-500 ease-in-out;
+  .line-custom {
+    @apply h-px w-full bg-primary-600;
   }
 
   .text-size {
@@ -114,6 +109,46 @@ input[type="number"] {
 
   .title {
     @apply flex justify-center text-center text-2xl font-medium;
+  }
+
+  .scroll-custom::-webkit-scrollbar {
+    @apply w-3 mt-4;
+    box-shadow: 10px 0 20px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  .scroll-custom::-webkit-scrollbar-track {
+    @apply bg-primary-400 rounded-lg;
+    box-shadow: 10px 0 20px -10px rgba(0, 0, 0, 0.5);
+  }
+
+  .scroll-custom::-webkit-scrollbar-thumb {
+    @apply bg-primary-800 rounded-lg border-3 border-solid border-primary-400;
+  }
+
+  .div-game {
+    @apply bg-primary-100 text-primary-950 rounded-2xl inline-block p-4;
+  }
+
+  .form-style {
+    @apply space-y-8 p-6 md:p-8 rounded-2xl max-w-128 w-full bg-primary-900 text-primary-100 shadow-common;
+  }
+
+  .page-auth {
+    @apply min-h-screen min-w-full content-center bg-primary-100 px-4;
+  }
+
+  .content-center {
+    @apply flex justify-center items-center;
+  }
+
+  .nav-link::after {
+    @apply bg-primary-800;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply py-3 px-6 rounded-xl duration-500 ease-in-out;
   }
 
   .input::selection {
@@ -162,44 +197,5 @@ input[type="number"] {
 
   .input-check:checked:after {
     left: 28px;
-  }
-
-  .scroll-custom {
-    /* scrollbar-width: thin;
-    scrollbar-color: theme('colors.primary.800') theme('colors.primary.400'); */
-  }
-
-  .scroll-custom::-webkit-scrollbar {
-    @apply w-3 mt-4;
-    box-shadow: 10px 0 20px -10px rgba(0, 0, 0, 0.5);
-  }
-
-  .scroll-custom::-webkit-scrollbar-track {
-    @apply bg-primary-400 rounded-lg;
-    box-shadow: 10px 0 20px -10px rgba(0, 0, 0, 0.5);
-  }
-
-  .scroll-custom::-webkit-scrollbar-thumb {
-    @apply bg-primary-800 rounded-lg border-3 border-solid border-primary-400;
-  }
-
-  .div-game {
-    @apply bg-primary-100 text-primary-950 rounded-2xl inline-block p-4;
-  }
-
-  .form-style {
-    @apply space-y-8 p-6 md:p-8 rounded-2xl max-w-128 w-full bg-primary-900 text-primary-100 shadow-common;
-  }
-
-  .page-auth {
-    @apply min-h-screen min-w-full content-center bg-primary-100 px-4;
-  }
-
-  .content-center {
-    @apply flex justify-center items-center;
-  }
-
-  .nav-link::after {
-    @apply bg-primary-800;
   }
 }

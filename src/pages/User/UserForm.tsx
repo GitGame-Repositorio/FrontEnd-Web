@@ -17,7 +17,7 @@ import { useState } from "react";
 
 type Props = {
   user: User;
-  submit: (user: User) => void;
+  submit: () => void;
 };
 
 export const UserForm = ({ user, submit }: Props) => {
@@ -38,8 +38,9 @@ export const UserForm = ({ user, submit }: Props) => {
 
   return (
     <form
-      className="min-h-screen container flex flex-col justify-between gap-12 pb-20"
+      className="min-h-screen container flex flex-col justify-between gap-12 pb-24 sm:pb-12"
       onSubmit={handleSubmit(submit)}
+      noValidate
     >
       <div className="pt-8 space-y-6">
         <div className="space-y-5">
@@ -86,9 +87,15 @@ export const UserForm = ({ user, submit }: Props) => {
           >
             <PowerSelect
               list={["Professor", "Estudante", "Desenvolvedor", "QA"]}
+              text="Profissão"
+              disabled={!canEdit}
+              {...register("language")}
+            />
+            {/* <MultipleChoice
+              list={["Professor", "Estudante", "Desenvolvedor", "QA"]}
               disabled={!canEdit}
               {...register("work")}
-            />
+            /> */}
           </DivRawInput>
 
           <DivRawInput
@@ -127,26 +134,28 @@ export const UserForm = ({ user, submit }: Props) => {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4 justify-end">
-        {!canEdit && (
-          <button
-            className="btn md:min-w-50 justify-center flex gap-2.5 items-center bg-primary-600 text-primary font-bold hover:bg-primary-500"
-            onClick={() => setCanEdit(true)}
-          >
-            <FaPen size={14.5} color={theme.colors.primary} />
-            Editar
-          </button>
-        )}
+      <div className="py-5 sm:py-0 w-full fixed left-0 bottom-0 bg-primary-100 sm:static">
+        <div className="container sm:w-full flex gap-4 justify-end">
+          {!canEdit && (
+            <button
+              className="btn w-full sm:w-max sm:min-w-50 justify-center flex gap-2.5 items-center bg-primary-600 text-primary font-bold hover:bg-primary-500"
+              onClick={() => setCanEdit(true)}
+            >
+              <FaPen size={14.5} color={theme.colors.primary} />
+              Editar
+            </button>
+          )}
 
-        {canEdit && (
-          <DivButton
-            linkCancel="/all-capters"
-            textCancel="Cancelar"
-            classDiv="max-w-[25.5rem] w-full"
-            classButtonCancel="border-primary-600 text-primary-600"
-            textButton="Salvar"
-          />
-        )}
+          {canEdit && (
+            <DivButton
+              linkCancel="/all-capters"
+              textCancel="Cancelar"
+              classDiv="sm:max-w-[25.5rem] w-full"
+              classButtonCancel="border-primary-600 text-primary-600"
+              textButton="Salvar"
+            />
+          )}
+        </div>
       </div>
     </form>
   );

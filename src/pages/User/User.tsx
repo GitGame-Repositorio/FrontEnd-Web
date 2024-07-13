@@ -1,15 +1,16 @@
 import { useAuth } from "../../AuthContext";
 
 import { HeaderGame } from "../../common/HeaderGame";
+import { UserForm } from "./UserForm";
 import { Loading } from "../Loading";
 
-import { UserForm } from "./UserForm";
-import { api } from "../../api";
 import { User as UserType } from "../../@types/auth";
+import { api } from "../../api";
 
 const submit = async (fields: UserType) => {
   const { name, email } = fields;
-  await api.patch("/users/me", { name, email });
+  await api.patch("/user/me", { name, email });
+  window.location.reload();
 };
 
 export const User = () => {
