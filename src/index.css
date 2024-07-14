@@ -103,10 +103,6 @@ input[type="number"] {
     @apply bg-gradient-to-r from-primary-600 to-primary-500 inline-block text-transparent bg-clip-text;
   }
 
-  .btn-presentation {
-    @apply border border-solid border-primary-600 bg-primary-100 outline-none uppercase py-2 px-4 rounded-lg text-base cursor-default;
-  }
-
   .title {
     @apply flex justify-center text-center text-2xl font-medium;
   }
@@ -148,7 +144,11 @@ input[type="number"] {
 
 @layer components {
   .btn {
-    @apply py-3 px-6 rounded-xl duration-500 ease-in-out;
+    @apply py-3 px-6 cursor-pointer rounded-xl duration-500 ease-in-out flex items-center;
+  }
+
+  .btn-presentation {
+    @apply border border-solid border-primary-600 bg-primary-100 outline-none uppercase py-2 px-4 rounded-lg text-base cursor-default;
   }
 
   .input::selection {

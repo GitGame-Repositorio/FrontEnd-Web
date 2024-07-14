@@ -9,7 +9,6 @@ import { LandingPage } from "./pages/LandingPage/LandingPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 
 import { useAuth } from "./AuthContext";
-import { Admin } from "./pages/Admin";
 import { Login } from "./pages/auth/Login";
 import { Register } from "./pages/auth/Register";
 import { User } from "./pages/User/User";
@@ -25,6 +24,10 @@ const publicRoutes: RouteObject[] = [
   {
     path: "/",
     element: <Navigate to="/main" />,
+  },
+  {
+    path: "/main",
+    element: <LandingPage />,
   },
   {
     path: "/login",
@@ -48,18 +51,10 @@ const publicRoutes: RouteObject[] = [
   },
 ];
 
-const commonRouters: RouteObject[] = [
-  {
-    path: "/main",
-    element: <LandingPage />,
-  },
+const loggedRouters: RouteObject[] = [
   {
     path: "/user",
     element: <User />,
-  },
-  {
-    path: "/*",
-    element: <NotFoundPage />,
   },
 ];
 
@@ -86,19 +81,27 @@ const adminRouters: RouteObject[] = [
 ];
 
 const Router = () => {
-  const { isLogged, isLoading, isAdmin } = useAuth();
+  const { isLogged, isLoading, isAdmin, user } = useAuth();
 
-  const mainRouters = [...commonRouters, ...gameRouters];
+  const mainRouters = [
+    user ? gameRouters : publicRoutes,
+    {
+      path: "/*",
+      element: <NotFoundPage />,
+    },
+  ].flat();
 
   const routerAuth = isLogged
-    ? isAdmin
-      ? [...mainRouters, ...adminRouters]
-      : [...mainRouters]
-    : [...mainRouters, ...publicRoutes];
+    ? [...mainRouters, ...loggedRouters]
+    : mainRouters;
+
+  const routerPermission = isAdmin
+    ? [...adminRouters, ...routerAuth]
+    : routerAuth;
 
   if (isLoading) return <Loading />;
 
-  const router = createBrowserRouter(routerAuth);
+  const router = createBrowserRouter(routerPermission);
   return <RouterProvider router={router} />;
 };
 
