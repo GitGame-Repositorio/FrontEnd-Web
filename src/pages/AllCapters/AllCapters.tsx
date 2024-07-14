@@ -19,13 +19,10 @@ export const AllCapters = () => {
 
   return (
     <main
-      className="bg-primary-100 lg:pt-8 text-primary-800 space-y-12 min-h-screen"
+      className="bg-primary-100 text-primary-800 space-y-12 min-h-screen"
       onClick={menuAction.closeMenuPage}
     >
-      <HeaderAllCapters
-        menuActionHook={menuAction}
-        percentComplete={progress?.completeGamePercentage}
-      />
+      <HeaderAllCapters percentComplete={progress?.completeGamePercentage} />
 
       <div className="container flex flex-col gap-6">
         {groupCapter?.length === 0 && (
@@ -34,15 +31,18 @@ export const AllCapters = () => {
           </h1>
         )}
         {groupCapter?.map?.((group, index) => (
-          <>
+          <div
+            className="flex flex-col gap-6"
+            key={`${group.titleGroup}-${index}`}
+          >
             <h1 className="text-2.5xl md:text-4xl font-bold text-start">
               {index + 1} - {group.titleGroup}
             </h1>
-            <hr className="h-px w-full bg-primary-600" />
+            <hr className="line-custom" />
             <div className="space-y-6 pb-14">
               <CapterSection group={group} progress={progress} />
             </div>
-          </>
+          </div>
         ))}
       </div>
     </main>
