@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FaPen } from "react-icons/fa";
 import { MdAdd } from "react-icons/md";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { User } from "../../@types/auth.d";
 import { DivInput } from "../../common/Input/DivInput";
@@ -23,7 +23,18 @@ import { Label } from "../../common/Label";
 
 type Props = {
   user: User;
-  submit: (values: Partial<User>) => void;
+  submit: (values: any) => void;
+};
+
+const convert2base64 = async (
+  file: File,
+  updateImg: (value: string) => void
+) => {
+  const reader = new FileReader();
+  reader.onload = () => {
+    updateImg(reader.result?.toString());
+  };
+  reader.readAsDataURL(file);
 };
 
 export const UserForm = ({ user, submit }: Props) => {
@@ -36,11 +47,24 @@ export const UserForm = ({ user, submit }: Props) => {
     resolver: zodResolver(userSchema),
   });
 
+  const objFile = useRef<File>();
+
   const imgUrl = VITE_API_URL + user?.picture;
-  const [canEdit, setCanEdit] = useState(false);
+  const [imageSrc, setImageSrc] = useState(imgUrl);
+
+  const [canEdit, setCanEdit] = useState(true);
   const { Modal: ModalWorks, openModal } = useModal({
     modal: ModalMultipleChoice,
   });
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const listFiles = event.target.files as FileList;
+    const fileSelect = listFiles[0];
+    objFile.current = fileSelect;
+    await convert2base64(fileSelect, setImageSrc);
+  };
 
   const classInput =
     "bg-primary-200 border border-solid border-primary-600 focus:outline-primary-400";
@@ -51,7 +75,12 @@ export const UserForm = ({ user, submit }: Props) => {
     <form
       className="min-h-screen container flex flex-col justify-between gap-12 pb-24 sm:pb-12"
       onSubmit={handleSubmit((values) =>
-        submit({ ...values, works: selectWork })
+        submit({
+          ...values,
+          works: selectWork,
+          picture: objFile.current,
+          two_auth: undefined,
+        })
       )}
       noValidate
     >
@@ -59,16 +88,31 @@ export const UserForm = ({ user, submit }: Props) => {
         <div className="space-y-5">
           <h2 className="text-xl font-bold">Foto de Perfil</h2>
           <div className="flex gap-8 items-center">
-            <img src={imgUrl} alt="Perfil" className="h-15 w-15 rounded-full" />
+            <img
+              src={imageSrc}
+              alt="Perfil"
+              className="h-15 w-15 rounded-full"
+            />
 
             {canEdit && (
               <div className="font-medium leading-tight flex gap-4">
-                <button className="btn w-32 uppercase border border-solid border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-primary-100">
+                <button
+                  className="btn w-32 uppercase border border-solid border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-primary-100"
+                  onClick={() => {
+                    setImageSrc(imgUrl);
+                    objFile.current = undefined;
+                  }}
+                >
                   Remover
                 </button>
-                <button className="btn justify-center w-32 uppercase bg-primary-600 text-primary hover:bg-primary-700">
+                <label className="btn justify-center w-32 uppercase bg-primary-600 text-primary hover:bg-primary-700">
                   Upload
-                </button>
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={handleFileChange}
+                  />
+                </label>
               </div>
             )}
           </div>
