@@ -1,6 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FaPen } from "react-icons/fa";
+import { MdAdd } from "react-icons/md";
+import { useState } from "react";
 
 import { User } from "../../@types/auth.d";
 import { DivInput } from "../../common/Input/DivInput";
@@ -13,11 +15,15 @@ import { UserSchemeType, userSchema } from "./userSchema";
 import { VITE_API_URL } from "../../env";
 
 import theme from "../../service/tailwindTheme";
-import { useState } from "react";
+import { ModalMultipleChoice } from "../../common/modal/modalCustom/ModalMultipleChoice";
+import { useModal } from "../../common/modal/useModal";
+import { listAppearance, listLanguage, works } from "./service";
+import { ListLabels } from "../../common/ListLabels";
+import { Label } from "../../common/Label";
 
 type Props = {
   user: User;
-  submit: () => void;
+  submit: (values: Partial<User>) => void;
 };
 
 export const UserForm = ({ user, submit }: Props) => {
@@ -32,14 +38,21 @@ export const UserForm = ({ user, submit }: Props) => {
 
   const imgUrl = VITE_API_URL + user?.picture;
   const [canEdit, setCanEdit] = useState(false);
+  const { Modal: ModalWorks, openModal } = useModal({
+    modal: ModalMultipleChoice,
+  });
 
   const classInput =
     "bg-primary-200 border border-solid border-primary-600 focus:outline-primary-400";
 
+  const [selectWork, setSelectWork] = useState<string[]>(user.works);
+
   return (
     <form
       className="min-h-screen container flex flex-col justify-between gap-12 pb-24 sm:pb-12"
-      onSubmit={handleSubmit(submit)}
+      onSubmit={handleSubmit((values) =>
+        submit({ ...values, works: selectWork })
+      )}
       noValidate
     >
       <div className="pt-8 space-y-6">
@@ -53,7 +66,7 @@ export const UserForm = ({ user, submit }: Props) => {
                 <button className="btn w-32 uppercase border border-solid border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-primary-100">
                   Remover
                 </button>
-                <button className="btn w-32 uppercase bg-primary-600 text-primary hover:bg-primary-700">
+                <button className="btn justify-center w-32 uppercase bg-primary-600 text-primary hover:bg-primary-700">
                   Upload
                 </button>
               </div>
@@ -83,19 +96,30 @@ export const UserForm = ({ user, submit }: Props) => {
           <DivRawInput
             label="Profissão"
             description="Adicione sua(s) área(s) de atuação (Limite de 3)"
-            error={errors?.work}
           >
-            <PowerSelect
-              list={["Professor", "Estudante", "Desenvolvedor", "QA"]}
-              text="Profissão"
-              disabled={!canEdit}
-              {...register("language")}
-            />
-            {/* <MultipleChoice
-              list={["Professor", "Estudante", "Desenvolvedor", "QA"]}
-              disabled={!canEdit}
-              {...register("work")}
-            /> */}
+            <div className="flex gap-3 justify-end">
+              {!canEdit && !selectWork.length && (
+                <Label
+                  value="Sem nenhuma profissão"
+                  className="py-3 opacity-80"
+                />
+              )}
+              {Boolean(selectWork.length) && (
+                <ListLabels
+                  list={works.filter(({ value }) => selectWork.includes(value))}
+                />
+              )}
+              {canEdit && (
+                <button
+                  onClick={openModal}
+                  disabled={!canEdit}
+                  className="btn gap-2 font-medium bg-primary-600 text-primary hover:bg-primary-500"
+                >
+                  Adicionar
+                  <MdAdd />
+                </button>
+              )}
+            </div>
           </DivRawInput>
 
           <DivRawInput
@@ -104,9 +128,10 @@ export const UserForm = ({ user, submit }: Props) => {
             error={errors.language}
           >
             <PowerSelect
-              list={["Português", "Inglês"]}
+              list={listLanguage}
               text="Liguagens"
               disabled={!canEdit}
+              className="disabled:opacity-100"
               {...register("language")}
             />
           </DivRawInput>
@@ -117,9 +142,10 @@ export const UserForm = ({ user, submit }: Props) => {
             error={errors.appearance}
           >
             <PowerSelect
-              list={["Light", "Dark"]}
+              list={listAppearance}
               text="Tema"
               disabled={!canEdit}
+              className="disabled:opacity-100"
               {...register("appearance")}
             />
           </DivRawInput>
@@ -129,10 +155,21 @@ export const UserForm = ({ user, submit }: Props) => {
             description="Mantenha sua conta segura habilitando 2FA via e-mail ou usando uma senha temporária (TOTP)"
             error={errors.two_auth}
           >
-            <Checkbox disabled={!canEdit} {...register("two_auth")} />
+            <Checkbox
+              disabled={!canEdit}
+              {...register("two_auth")}
+              className="disabled:opacity-100"
+            />
           </DivRawInput>
         </div>
       </div>
+
+      <ModalWorks
+        title="Selecionar áreas"
+        listValuesSelect={selectWork}
+        updateSelect={setSelectWork}
+        listValues={works}
+      />
 
       <div className="py-5 sm:py-0 w-full fixed left-0 bottom-0 bg-primary-100 sm:static">
         <div className="container sm:w-full flex gap-4 justify-end">

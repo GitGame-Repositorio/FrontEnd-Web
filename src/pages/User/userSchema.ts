@@ -2,12 +2,11 @@ import { z } from "zod";
 import { schemeEmail } from "../../common/zodScheme";
 
 export const userSchema = z.object({
-  name: z.string().default(""),
+  name: z.string().optional().nullable(),
   email: schemeEmail,
-  language: z.string(),
-  work: z.string().default(""),
-  appearance: z.string(),
-  two_auth: z.boolean(),
+  language: z.string().optional(),
+  appearance: z.string().optional(),
+  two_auth: z.boolean().optional(),
 });
 
 export type UserSchemeType = z.infer<typeof userSchema>;

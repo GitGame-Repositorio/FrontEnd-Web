@@ -8,28 +8,21 @@ import { User as UserType } from "../../@types/auth";
 import { api } from "../../api";
 
 const submit = async (fields: UserType) => {
-  const { name, email } = fields;
-  await api.patch("/user/me", { name, email });
+  const { works, ...update } = fields;
+  await api.patch("/user/me", update);
+  works.length && (await api.post("/user/me/works", { works }));
   window.location.reload();
 };
 
 export const User = () => {
   const { user } = useAuth();
 
-  const values = {
-    phone: "11111",
-    appearance: "Light",
-    work: "Estudante",
-    language: "Português",
-    two_auth: false,
-  };
-
   if (!user) return <Loading />;
 
   return (
     <div className="bg-primary-100 text-primary-800">
       <HeaderGame namePage="Configurações" />
-      <UserForm user={{ ...user, ...values }} submit={submit} />
+      <UserForm user={user} submit={submit} />
     </div>
   );
 };
