@@ -1,6 +1,6 @@
 import { useAuth } from "../../AuthContext";
 
-import { HeaderGame } from "../../common/HeaderGame";
+import { HeaderGame } from "../../common/Header/HeaderGame";
 import { UserForm } from "./UserForm";
 import { Loading } from "../Loading";
 
@@ -8,17 +8,20 @@ import { User as UserType } from "../../@types/auth";
 import { api } from "../../api";
 
 export const User = () => {
-  const { user, reloadUser } = useAuth();
+  const { user, imgPerfil, reloadUser } = useAuth();
 
   const submit = async (fields: UserType) => {
     const { works, picture, ...update } = fields;
     await api.patch("/user/me", update);
+
     works.length && (await api.post("/user/me/works", { works }));
-    if (picture && user?.picture !== picture) {
+
+    if (picture && imgPerfil !== picture) {
       const formData = new FormData();
       formData.append("picture", picture);
       await api.post("/user/me/picture", formData);
     }
+
     reloadUser();
   };
 

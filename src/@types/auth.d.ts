@@ -5,8 +5,8 @@ export type User = {
   password: string;
   name: string | null;
   phone: string;
-  appearance: "light" | "dark";
-  work: string;
+  appearance: "LIGHT" | "DARK";
+  works: string[];
   language: string;
   two_auth: boolean;
   admin: Privilegies;

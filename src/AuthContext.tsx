@@ -8,12 +8,15 @@ import {
 } from "react";
 import { api } from "./api";
 import { User } from "./@types/auth.d";
+import { VITE_API_URL } from "./env";
 
 type AuthContext = {
   user?: User;
   isAdmin: boolean;
+  imgPerfil: string;
   isLogged: boolean;
   isLoading: boolean;
+  reloadUser: () => void;
   logout: () => Promise<void>;
   login: (token: string) => void;
 };
@@ -59,6 +62,7 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
 
   const isLogged = user?.type === "logged";
   const isAdmin = !!user?.admin;
+  const imgPerfil = VITE_API_URL + user?.picture;
 
   useEffect(() => {
     const main = async () => {
@@ -84,7 +88,9 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
         logout,
         isAdmin,
         isLogged,
+        imgPerfil,
         isLoading,
+        reloadUser: getUser,
       }}
     >
       {children}

@@ -144,7 +144,7 @@ input[type="number"] {
 
 @layer components {
   .btn {
-    @apply py-3 px-6 cursor-pointer rounded-xl duration-500 ease-in-out flex items-center;
+    @apply py-3 px-6 cursor-pointer rounded-lg duration-500 ease-in-out flex items-center;
   }
 
   .btn-presentation {

@@ -1,22 +1,26 @@
 import { ComponentType, useState } from "react";
 import { ModalProps } from "./Modal";
 
-type ModalType = {
-  modal: ComponentType<ModalProps>;
+export type ModalType = {
+  modal: ComponentType;
 };
 
-export const useModal = ({ modal: ModalComponent }: ModalType) => {
+type EventButton = React.SyntheticEvent<HTMLButtonElement, Event>;
+
+export const useModal = ({ modal: ModalComponent }: ModalProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
-  const openModal = () => {
+  const openModal = (event: EventButton) => {
+    event?.preventDefault();
     setIsVisible(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (event: EventButton) => {
+    event?.preventDefault();
     setIsVisible(false);
   };
 
-  const Modal = ({ ...rest }: ModalProps) => {
+  const Modal = ({ ...rest }: ModalProps): T => {
     return (
       <ModalComponent
         callbackClose={closeModal}

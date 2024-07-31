@@ -4,8 +4,10 @@ import { twMerge } from "tailwind-merge";
 
 import theme from "../../../service/tailwindTheme";
 
+type ItemProps = { name: string; value: string };
+
 type Props = {
-  list: string[];
+  list: ItemProps[];
   text: string;
 };
 
@@ -28,8 +30,8 @@ export const PowerSelect = forwardRef(
           </option>
 
           {list.map((item) => (
-            <option className="bg-primary-400" value={item}>
-              {item}
+            <option className="bg-primary-400" value={item.value}>
+              {item.name}
             </option>
           ))}
         </select>

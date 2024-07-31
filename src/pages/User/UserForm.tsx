@@ -12,7 +12,6 @@ import { PowerSelect } from "../../common/Input/inputCustom/PowerSelect";
 import { Checkbox } from "../../common/Input/inputCustom/Checkbox";
 import { DivButton } from "../auth/components/DivButton";
 import { UserSchemeType, userSchema } from "./userSchema";
-import { VITE_API_URL } from "../../env";
 
 import theme from "../../service/tailwindTheme";
 import { ModalMultipleChoice } from "../../common/modal/modalCustom/ModalMultipleChoice";
@@ -20,6 +19,7 @@ import { useModal } from "../../common/modal/useModal";
 import { listAppearance, listLanguage, works } from "./service";
 import { ListLabels } from "../../common/ListLabels";
 import { Label } from "../../common/Label";
+import { useAuth } from "../../AuthContext";
 
 type Props = {
   user: User;
@@ -49,10 +49,10 @@ export const UserForm = ({ user, submit }: Props) => {
 
   const objFile = useRef<File>();
 
-  const imgUrl = VITE_API_URL + user?.picture;
-  const [imageSrc, setImageSrc] = useState(imgUrl);
+  const { imgPerfil } = useAuth();
+  const [imageSrc, setImageSrc] = useState(imgPerfil);
 
-  const [canEdit, setCanEdit] = useState(true);
+  const [canEdit, setCanEdit] = useState(false);
   const { Modal: ModalWorks, openModal } = useModal({
     modal: ModalMultipleChoice,
   });
@@ -87,7 +87,7 @@ export const UserForm = ({ user, submit }: Props) => {
       <div className="pt-8 space-y-6">
         <div className="space-y-5">
           <h2 className="text-xl font-bold">Foto de Perfil</h2>
-          <div className="flex gap-8 items-center">
+          <div className="flex gap-3 sm:gap-8 items-center">
             <img
               src={imageSrc}
               alt="Perfil"
@@ -95,11 +95,11 @@ export const UserForm = ({ user, submit }: Props) => {
             />
 
             {canEdit && (
-              <div className="font-medium leading-tight flex gap-4">
+              <div className="font-medium leading-tight flex gap-2 sm:gap-4">
                 <button
-                  className="btn w-32 uppercase border border-solid border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-primary-100"
+                  className="btn uppercase border border-solid border-primary-600 text-primary-600 hover:bg-primary-600 hover:text-primary-100"
                   onClick={() => {
-                    setImageSrc(imgUrl);
+                    setImageSrc(imgPerfil);
                     objFile.current = undefined;
                   }}
                 >
@@ -141,7 +141,7 @@ export const UserForm = ({ user, submit }: Props) => {
             label="Profissão"
             description="Adicione sua(s) área(s) de atuação (Limite de 3)"
           >
-            <div className="flex gap-3 justify-end">
+            <div className="flex flex-wrap gap-3 justify-end">
               {!canEdit && !selectWork.length && (
                 <Label
                   value="Sem nenhuma profissão"
@@ -213,6 +213,7 @@ export const UserForm = ({ user, submit }: Props) => {
         listValuesSelect={selectWork}
         updateSelect={setSelectWork}
         listValues={works}
+        limitSelect={3}
       />
 
       <div className="py-5 sm:py-0 w-full fixed left-0 bottom-0 bg-primary-100 sm:static">

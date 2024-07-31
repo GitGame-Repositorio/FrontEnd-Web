@@ -3,8 +3,8 @@ import { MdExitToApp, MdOutlineSettings } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { LuSaveAll } from "react-icons/lu";
 
-import theme from "../service/tailwindTheme";
-import { useAuth } from "../AuthContext";
+import theme from "../../service/tailwindTheme";
+import { useAuth } from "../../AuthContext";
 
 export const MenuActionUser = () => {
   const { user, logout, isAdmin, isLogged } = useAuth();
@@ -29,11 +29,15 @@ export const MenuActionUser = () => {
           </>
         )}
 
-        <Link to="/user" className={styleItemMenu}>
-          <MdOutlineSettings size={22} color={colorIcons} />
-          Configurações
-        </Link>
-        <hr className="h-px w-full bg-primary-500" />
+        {isLogged && (
+          <>
+            <Link to="/user" className={styleItemMenu}>
+              <MdOutlineSettings size={22} color={colorIcons} />
+              Configurações
+            </Link>
+            <hr className="h-px w-full bg-primary-500" />
+          </>
+        )}
 
         {!isLogged && (
           <>

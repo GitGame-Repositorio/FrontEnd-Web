@@ -2,43 +2,49 @@ import { GoArrowLeft } from "react-icons/go";
 import { Link } from "react-router-dom";
 
 import { MenuActionUser as MenuAction } from "./MenuActionUser";
-import theme from "../service/tailwindTheme";
-import { useAuth } from "../AuthContext";
-import { VITE_API_URL } from "../env";
+import theme from "../../service/tailwindTheme";
+import { useAuth } from "../../AuthContext";
+import { ReactElement } from "react";
 
 type HeaderGameProps = {
   namePage: string;
   notRedirect?: boolean;
+  children?: ReactElement;
 };
 
-export const HeaderGame = ({ namePage, notRedirect }: HeaderGameProps) => {
-  const { user } = useAuth();
-  const imgUrl = VITE_API_URL + user?.picture;
+export const HeaderGame = ({
+  namePage,
+  notRedirect,
+  children,
+}: HeaderGameProps) => {
+  const { user, imgPerfil } = useAuth();
 
   return (
     <header className="bg-primary-600 text-primary-100 py-4">
-      <div className="container flex justify-between items-center w-full gap-4">
+      <div className="container flex flex-wrap justify-between items-center w-full gap-4 order-2">
         <Link
-          to={!notRedirect ? "/all_capters" : ""}
-          className="flex items-center gap-6"
+          to={!notRedirect ? "/all-capters" : ""}
+          className="flex items-center gap-3 sm:gap-6 order-1"
         >
           {!notRedirect && (
             <GoArrowLeft size={26} color={theme.colors.primary[100]} />
           )}
-          <h1 className="font-bold text-2xl">{namePage}</h1>
+          <h1 className="font-bold text-base sm:text-2xl">{namePage}</h1>
         </Link>
 
-        <div className="flex items-center gap-4 relative">
+        {children}
+
+        <div className="flex items-center gap-2 sm:gap-4 relative order-2 md:order-3">
           {user?.name ||
             (user?.type == "anonymous" && (
-              <p className="text-base font-bold hidden md:block">
+              <p className="text-xl sm:text-base font-bold hidden md:block">
                 {user?.name || "Anonimo"}
               </p>
             ))}
 
           <label htmlFor="toggle">
             <img
-              src={imgUrl}
+              src={imgPerfil}
               alt="Perfil"
               className="h-12 w-12 rounded-full cursor-pointer img-menu-action"
             />

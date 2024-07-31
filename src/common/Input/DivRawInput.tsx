@@ -4,7 +4,7 @@ import { FieldError } from "react-hook-form";
 type DivProps = {
   label: string;
   description: string;
-  error: FieldError | undefined;
+  error?: FieldError | undefined;
   children: ReactElement;
 };
 
@@ -20,9 +20,11 @@ export const DivRawInput = ({
         <h2 className="text-xl">{label}</h2>
         <p className="text-sm">{description}</p>
       </span>
-      <div className="flex flex-col items-end">
+      <div className="flex flex-col items-end relative">
         {children}
-        {error && <p className="text-tertiary">{error.message}</p>}
+        {error && (
+          <p className="text-tertiary absolute -bottom-6">{error.message}</p>
+        )}
       </div>
     </div>
   );
