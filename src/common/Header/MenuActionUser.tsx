@@ -15,10 +15,9 @@ export const MenuActionUser = () => {
   const colorIcons = theme.colors.primary[600];
 
   return (
-    <div
-      className={`absolute top-[2.58rem] right-0 menu-action items-end h-52`}
-    >
-      <div className="min-w-50 h-max z-10 flex flex-col text-start gap-2 py-4 px-3 font-bold bg-primary-200 rounded-2xl border border-solid border-primary-500 text-primary-800">
+    <div className="absolute top-[2.58rem] right-0 sm:-right-4 menu-action flex flex-col min-w-50">
+      <div className="h-5 sm:h-9 top-[2.58rem] right-0"></div>
+      <div className="h-max z-10 flex flex-col text-start gap-2 py-4 px-3 font-bold bg-primary-200 rounded-2xl border border-solid border-primary-500 text-primary-800">
         {isAdmin && user?.admin?.canManageContentGame && (
           <>
             <Link to="/dashboard" className={styleItemMenu}>
