@@ -18,13 +18,12 @@ export const HeaderGame = ({
   children,
 }: HeaderGameProps) => {
   const { user, imgPerfil } = useAuth();
-
   return (
     <header className="bg-primary-600 text-primary-100 py-4">
-      <div className="container flex flex-wrap justify-between items-center w-full gap-4 order-2">
+      <div className="container flex flex-wrap lg:flex-nowrap justify-between items-center w-full gap-4 order-2">
         <Link
           to={!notRedirect ? "/all-capters" : ""}
-          className="flex items-center gap-3 sm:gap-6 order-1"
+          className="flex items-center gap-3 sm:gap-6"
         >
           {!notRedirect && (
             <GoArrowLeft size={26} color={theme.colors.primary[100]} />
@@ -34,19 +33,18 @@ export const HeaderGame = ({
 
         {children}
 
-        <div className="flex items-center gap-2 sm:gap-4 relative order-2 md:order-3">
-          {user?.name ||
-            (user?.type == "anonymous" && (
-              <p className="text-xl sm:text-base font-bold hidden md:block">
-                {user?.name || "Anonimo"}
-              </p>
-            ))}
+        <div className="w-1/2 2md:w-1/12 lg:w-1/6 order-2 2md:order-3 items-center gap-2 sm:gap-4 relative flex justify-end">
+          {(user?.name || user?.type == "anonymous") && (
+            <p className="text-base w-full font-semibold text-end 2md:max-lg:hidden text-overflow">
+              {user?.name || "Anonimo"}
+            </p>
+          )}
 
           <label htmlFor="toggle">
             <img
               src={imgPerfil}
               alt="Perfil"
-              className="h-12 w-12 rounded-full cursor-pointer img-menu-action"
+              className="min-w-12 max-w-12 min-h-12 max-h-12 rounded-full cursor-pointer img-menu-action"
             />
 
             <input

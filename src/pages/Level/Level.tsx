@@ -4,7 +4,7 @@ import { Level as LevelType, OrderLevel } from "../../@types/game.d";
 import { NotFoundPage } from "../NotFoundPage";
 import { Activity } from "./components/Activity";
 import { Subject } from "./components/Subject";
-import { HeaderLevel } from "../../common/HeaderLevel";
+import { HeaderLevel } from "../../common/Header/HeaderLevel";
 import { useModal } from "../../common/modal/useModal";
 import { ModalReport } from "../../common/modal/modalCustom/ModalReport";
 import { ContentProgress, LevelProgress } from "../../@types/progress.d";

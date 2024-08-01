@@ -9,6 +9,9 @@ export default {
         primary: "Space-Grotesk, sans-serif",
         secondary: "Inter, system-ui, Avenir, Helvetica, Arial, sans-serif",
       },
+      screens: {
+        "2md": "800px",
+      },
       spacing: {
         15: "3.75rem",
         18: "4.5rem",
@@ -19,7 +22,7 @@ export default {
         "2.5xl": ["1.6875rem", "2.125rem"],
       },
       borderWidth: {
-        '3': '3px'
+        3: "3px",
       },
       colors: {
         primary: {

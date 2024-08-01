@@ -8,7 +8,7 @@ import {
 
 import { Card } from "../../common/Card";
 import { Search } from "../../common/Search";
-import { HeaderGame } from "../../common/HeaderGame";
+import { HeaderGame } from "../../common/Header/HeaderGame";
 import { Report } from "../../@types/game";
 
 import listReport from "./data.json";

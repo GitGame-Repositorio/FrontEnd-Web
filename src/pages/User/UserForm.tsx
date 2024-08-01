@@ -74,14 +74,15 @@ export const UserForm = ({ user, submit }: Props) => {
   return (
     <form
       className="min-h-screen container flex flex-col justify-between gap-12 pb-24 sm:pb-12"
-      onSubmit={handleSubmit((values) =>
+      onSubmit={handleSubmit((values) => {
         submit({
           ...values,
           works: selectWork,
           picture: objFile.current,
           two_auth: undefined,
-        })
-      )}
+        });
+        setCanEdit(false);
+      })}
       noValidate
     >
       <div className="pt-8 space-y-6">
