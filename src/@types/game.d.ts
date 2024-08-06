@@ -1,16 +1,11 @@
-import { CapterProgress, LevelProgress } from "./progress";
+import { ChapterProgress, LevelProgress } from "./progress";
 
-export type GroupCapter = {
-  titleGroup: string;
-  listCapter: Capter[];
-};
-
-export type Capter = {
+export type Chapter = {
   id: string;
   title: string;
   numberOrder: number;
   level: Level[];
-  playerProgress: CapterProgress[];
+  playerProgress: ChapterProgress[];
 };
 
 export type OrderLevel = {
@@ -25,20 +20,27 @@ export type Level = {
   id: string;
   title: string;
   numberOrder: number;
-  id_capter: string;
-  capter: Capter;
+  id_chapter: string;
+  chapter: Chapter;
   orderLevel: OrderLevel[];
   levelProgress: LevelProgress[];
+};
+
+type Assessment = {
+  id: string;
+  title: string;
+  objective: Objective;
 };
 
 export type Activity = {
   id_assessment: string;
   id_orderLevel: string;
+  assessment: Assessment;
 };
 
 export type Exam = {
   id_assessment: string;
-  id_capter: string;
+  id_chapter: string;
   description: string;
 };
 

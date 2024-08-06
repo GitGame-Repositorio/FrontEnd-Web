@@ -5,9 +5,9 @@ export enum StatusProgress {
   BLOCK = "BLOCK",
 }
 
-export type CapterProgress = {
+export type ChapterProgress = {
   id: string;
-  id_capter: string;
+  id_chapter: string;
   id_user: string;
   status: StatusProgress;
   exam_complete: boolean;
@@ -16,10 +16,10 @@ export type CapterProgress = {
 
 export type LevelProgress = {
   id: string;
-  id_capter_progress: string;
+  id_chapter_progress: string;
   id_level: string;
   status: StatusProgress;
-  capterProgress: CapterProgress;
+  chapterProgress: ChapterProgress;
   contentProgress: ContentProgress[];
 };
 

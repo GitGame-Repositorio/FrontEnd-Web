@@ -1,9 +1,18 @@
-type OrderProps = {
+type OrderNumberProps = {
   numberOrder: number;
 };
 
-export const organizateOrder = (data: OrderProps, dataPrev: OrderProps) =>
-  data.numberOrder - dataPrev.numberOrder;
+type OrderProps = {
+  order: number;
+};
+
+export const organizeOrder = (
+  data: OrderNumberProps,
+  dataPrev: OrderNumberProps
+) => data.numberOrder - dataPrev.numberOrder;
+
+export const organizeOrderNumber = (data: OrderProps, dataPrev: OrderProps) =>
+  data.order - dataPrev.order;
 
 export const bgForStatus = {
   TO_DO: "bg-primary-400",

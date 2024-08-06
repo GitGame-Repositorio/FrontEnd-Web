@@ -12,7 +12,7 @@ import { useAuth } from "./AuthContext";
 import { Login } from "./pages/auth/Login";
 import { Register } from "./pages/auth/Register";
 import { User } from "./pages/User/User";
-import { AllCapters } from "./pages/AllCapters/AllCapters";
+import { AllChapters } from "./pages/AllChapters/AllChapters";
 import { ForgotPassword } from "./pages/auth/ForgotPassword";
 import { VerifyCode } from "./pages/auth/VerifyCode";
 import { ChangePassword } from "./pages/auth/ChangePassword";
@@ -65,7 +65,7 @@ const gameRouters: RouteObject[] = [
   },
   {
     path: "/all-capters",
-    element: <AllCapters />,
+    element: <AllChapters />,
   },
   {
     path: "/level/:id",

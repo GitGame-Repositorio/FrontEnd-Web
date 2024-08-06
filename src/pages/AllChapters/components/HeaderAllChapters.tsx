@@ -5,7 +5,7 @@ type PropsHeader = {
   percentComplete: number | undefined;
 };
 
-export const HeaderAllCapters = ({ percentComplete }: PropsHeader) => {
+export const HeaderAllChapters = ({ percentComplete }: PropsHeader) => {
   const textStatus = "text-primary-950 text-base font-bold";
   const colorStatus = "h-6 w-6 rounded-full";
 

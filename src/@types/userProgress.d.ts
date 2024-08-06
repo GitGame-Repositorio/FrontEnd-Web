@@ -1,11 +1,11 @@
-import { CapterProgress } from "./progress";
+import { ChapterProgress } from "./progress";
 
-export type CapterRemap = {
-  percentCapter: number;
-  capterProgress: CapterProgress;
+export type ChapterRemap = {
+  percentChapter: number;
+  chapterProgress: ChapterProgress;
 };
 
 export type UserProgress = {
   completeGamePercentage: number;
-  allCapterRemap: CapterRemap[];
+  allChapterRemap: ChapterRemap[];
 };
