@@ -42,9 +42,9 @@ const RenderList = ({ obj, updateObj }: RenderListProps) => {
 
   if (type === "section") {
     return (
-      <div>
+      <div className="flex flex-col gap-0.5">
         <p className="mb-0.5 font-bold">{name}</p>
-        <ul>
+        <ul className="flex flex-col gap-1.5">
           {listValue.map((listObj) => (
             <RenderList obj={listObj} updateObj={updateObj} />
           ))}
@@ -61,9 +61,9 @@ const RenderList = ({ obj, updateObj }: RenderListProps) => {
     : MdOutlineCheckBoxOutlineBlank;
 
   return (
-    <li>
+    <li className="flex">
       <label
-        className={`inline-flex items-center gap-2 cursor-pointer ${classOpacity}`}
+        className={`w-full cursor-pointer px-0.5 rounded-md hover:bg-primary-200 inline-flex items-center cursor-pointer gap-2 ${classOpacity}`}
       >
         <input
           type="checkbox"
@@ -129,14 +129,8 @@ export const ModalMultipleChoice = ({
   updateSelect,
   ...rest
 }: ModalMultipleChoiceProps) => {
-  const [cloneList, setCloneList] = useState<PropsFilter[]>([]);
-
-  useEffect(
-    () =>
-      setCloneList(
-        listValues.map((obj) => generateUpdates(generateID(obj, "")))
-      ),
-    []
+  const [cloneList, setCloneList] = useState<PropsFilter[]>(
+    listValues.map((obj) => generateUpdates(generateID(obj, "")))
   );
 
   const update = (newObj: PropsFilter) => {
@@ -149,7 +143,7 @@ export const ModalMultipleChoice = ({
   const { callbackClose } = rest;
 
   return (
-    <Modal {...rest} className="w-80 font-medium">
+    <Modal {...rest} className="w-80 font-medium flex flex-col gap-3">
       <p>{title}</p>
 
       <hr className="line-custom" />
@@ -158,10 +152,10 @@ export const ModalMultipleChoice = ({
         const isLastSection = cloneList.length <= index + 1;
         const canViewLine = obj.type === "section" && !isLastSection;
         return (
-          <>
+          <div className="flex flex-col gap-2">
             <RenderList obj={obj} updateObj={update} />
             {canViewLine && <hr className="h-px w-full bg-primary-300" />}
-          </>
+          </div>
         );
       })}
 

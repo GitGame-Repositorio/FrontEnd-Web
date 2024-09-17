@@ -61,7 +61,7 @@ export const UserForm = ({ user, submit }: Props) => {
   const { imgPerfil } = useAuth();
   const [imageSrc, setImageSrc] = useState(imgPerfil);
 
-  const [canEdit, setCanEdit] = useState(true);
+  const [canEdit, setCanEdit] = useState(false);
   const { Modal: ModalWorks, openModal } = useModal<ModalMultipleChoiceProps>({
     modal: ModalMultipleChoice,
   });
