@@ -27,6 +27,7 @@ export const StatisticsContent = () => {
     `/statistics/content?id_level=${idLevel}`,
     [idLevel]
   );
+
   return (
     <>
       <StatisticsUserContent />
