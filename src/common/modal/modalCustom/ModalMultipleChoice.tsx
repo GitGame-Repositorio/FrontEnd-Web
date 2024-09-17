@@ -5,42 +5,148 @@ import {
 import { DivButton } from "../../../pages/auth/components/DivButton";
 import { Modal } from "../Modal";
 import theme from "../../../service/tailwindTheme";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export type ModalMultipleChoiceProps = {
   title: string;
-  isVisible: boolean;
-  limitSelect: number;
-  listValuesSelect: string[];
-  listValues: PropsObjValues[];
-  arroz: string;
-  callbackClose: () => void;
-  updateSelect: (value: string[]) => void;
+  listValues: PropsFilter[];
+  updateSelect: (list: PropsFilter[]) => void;
 };
 
-type PropsObjValues = {
+type PropsObjItem = {
+  id?: string;
+  update?: (value: PropsFilter) => PropsFilter;
   name: string;
+  type: "item";
   value: string;
+  select: boolean;
+  notInteract?: boolean;
+};
+
+type PropsObjMultiple = {
+  type: "section";
+  listValue: PropsFilter[] | PropsObjItem[];
+  handleSelect: (newObj: PropsFilter, list: PropsFilter[]) => PropsFilter[];
+  func?: (record: object) => boolean;
+};
+
+export type PropsFilter = PropsObjItem | PropsObjMultiple;
+
+type RenderListProps = {
+  obj: PropsFilter;
+  updateObj: (value: PropsFilter) => void;
+};
+
+const RenderList = ({ obj, updateObj }: RenderListProps) => {
+  const { name, type, listValue } = obj;
+
+  if (type === "section") {
+    return (
+      <div>
+        <p className="mb-0.5 font-bold">{name}</p>
+        <ul>
+          {listValue.map((listObj) => (
+            <RenderList obj={listObj} updateObj={updateObj} />
+          ))}
+        </ul>
+      </div>
+    );
+  }
+
+  const isChecked = obj.select;
+  const classOpacity = obj.notInteract ? "opacity-50" : "";
+
+  const CheckBox = isChecked
+    ? MdOutlineCheckBox
+    : MdOutlineCheckBoxOutlineBlank;
+
+  return (
+    <li>
+      <label
+        className={`inline-flex items-center gap-2 cursor-pointer ${classOpacity}`}
+      >
+        <input
+          type="checkbox"
+          className="hidden"
+          checked={isChecked}
+          disabled={obj.notInteract}
+          onChange={() =>
+            updateObj(obj?.update({ ...obj, select: !isChecked }))
+          }
+        />
+        <CheckBox
+          size={20}
+          className="cursor-pointer"
+          color={theme.colors.primary[600]}
+        />
+        {name}
+      </label>
+    </li>
+  );
+};
+
+const generateID = (obj: PropsFilter, preID: string) => {
+  const { listValue: list, type, name } = obj;
+  const id = preID ? preID + "/" + name : name;
+  if (type === "section") {
+    const listValue: any = list.map((item) => generateID(item, id));
+    return { ...obj, listValue, id };
+  }
+  return { ...obj, id };
+};
+
+const generateUpdates = (
+  obj: PropsFilter | PropsObjItem,
+  preObj: PropsFilter | undefined
+) => {
+  const update = (newObj: PropsFilter) => {
+    const list = preObj?.listValue;
+    return preObj
+      ? preObj?.update({
+          ...preObj,
+          listValue:
+            preObj?.handleSelect?.(newObj, list) ||
+            list?.map((obj) => (newObj.id === obj.id ? newObj : obj)),
+        })
+      : newObj;
+  };
+
+  const objModify = { ...obj, update };
+
+  if (obj.type === "section") {
+    const listValue: PropsObjItem[] = obj.listValue.map((item) =>
+      generateUpdates(item, objModify)
+    );
+    return { ...objModify, listValue };
+  }
+
+  return objModify;
 };
 
 export const ModalMultipleChoice = ({
   title,
   listValues,
-  listValuesSelect,
   updateSelect,
-  limitSelect,
   ...rest
 }: ModalMultipleChoiceProps) => {
-  const [selectItem, setSelectItem] = useState<string[]>(listValuesSelect);
-  const { callbackClose } = rest;
+  const [cloneList, setCloneList] = useState<PropsFilter[]>([]);
 
-  const updateList = (value: string) => {
-    const newList = selectItem.includes(value)
-      ? selectItem.filter((item: string) => item !== value)
-      : [...selectItem, value];
-    if (limitSelect && newList.length > limitSelect) return null;
-    setSelectItem(newList);
+  useEffect(
+    () =>
+      setCloneList(
+        listValues.map((obj) => generateUpdates(generateID(obj, "")))
+      ),
+    []
+  );
+
+  const update = (newObj: PropsFilter) => {
+    const newList = cloneList.map((obj) =>
+      generateUpdates(obj.id === newObj.id ? newObj : obj)
+    );
+    setCloneList(newList);
   };
+
+  const { callbackClose } = rest;
 
   return (
     <Modal {...rest} className="w-80 font-medium">
@@ -48,36 +154,16 @@ export const ModalMultipleChoice = ({
 
       <hr className="line-custom" />
 
-      <ul>
-        {listValues.map(({ name, value }: PropsObjValues) => {
-          const isChecked = selectItem.includes(value);
-          const classOpacity =
-            !isChecked && selectItem.length >= limitSelect ? "opacity-50" : "";
-          const CheckBox = isChecked
-            ? MdOutlineCheckBox
-            : MdOutlineCheckBoxOutlineBlank;
-          return (
-            <li key={`modal-${value}`}>
-              <label
-                className={`inline-flex items-center gap-2 cursor-pointer ${classOpacity}`}
-              >
-                <input
-                  type="checkbox"
-                  className="hidden"
-                  checked={isChecked}
-                  onChange={() => updateList(value)}
-                />
-                <CheckBox
-                  size={20}
-                  className="cursor-pointer"
-                  color={theme.colors.primary[600]}
-                />
-                {name}
-              </label>
-            </li>
-          );
-        })}
-      </ul>
+      {cloneList.map((obj, index) => {
+        const isLastSection = cloneList.length <= index + 1;
+        const canViewLine = obj.type === "section" && !isLastSection;
+        return (
+          <>
+            <RenderList obj={obj} updateObj={update} />
+            {canViewLine && <hr className="h-px w-full bg-primary-300" />}
+          </>
+        );
+      })}
 
       <DivButton
         linkCancel="#"
@@ -89,7 +175,7 @@ export const ModalMultipleChoice = ({
         }}
         propsButtonMain={{
           onClick: () => {
-            updateSelect(selectItem);
+            updateSelect(cloneList);
             callbackClose();
           },
         }}

@@ -14,9 +14,18 @@ import { DivButton } from "../auth/components/DivButton";
 import { UserSchemeType, userSchema } from "./userSchema";
 
 import theme from "../../service/tailwindTheme";
-import { ModalMultipleChoice } from "../../common/modal/modalCustom/ModalMultipleChoice";
+import {
+  ModalMultipleChoice,
+  ModalMultipleChoiceProps,
+  PropsFilter,
+} from "../../common/modal/modalCustom/ModalMultipleChoice";
 import { useModal } from "../../common/modal/useModal";
-import { listAppearance, listLanguage, works } from "./service";
+import {
+  createListSelectWorks,
+  listAppearance,
+  listLanguage,
+  works,
+} from "./service";
 import { ListLabels } from "../../common/ListLabels";
 import { Label } from "../../common/Label";
 import { useAuth } from "../../AuthContext";
@@ -52,8 +61,8 @@ export const UserForm = ({ user, submit }: Props) => {
   const { imgPerfil } = useAuth();
   const [imageSrc, setImageSrc] = useState(imgPerfil);
 
-  const [canEdit, setCanEdit] = useState(false);
-  const { Modal: ModalWorks, openModal } = useModal({
+  const [canEdit, setCanEdit] = useState(true);
+  const { Modal: ModalWorks, openModal } = useModal<ModalMultipleChoiceProps>({
     modal: ModalMultipleChoice,
   });
 
@@ -70,6 +79,13 @@ export const UserForm = ({ user, submit }: Props) => {
     "bg-primary-200 border border-solid border-primary-600 focus:outline-primary-400";
 
   const [selectWork, setSelectWork] = useState<string[]>(user.works);
+
+  const updateSelectWork = (list: PropsFilter[]) => {
+    console.log(list);
+    const listFilter = list[0]?.listValue?.filter((obj) => obj.select);
+    const listRemap = listFilter?.map((obj) => obj.value);
+    setSelectWork(listRemap);
+  };
 
   return (
     <form
@@ -211,10 +227,8 @@ export const UserForm = ({ user, submit }: Props) => {
 
       <ModalWorks
         title="Selecionar áreas"
-        listValuesSelect={selectWork}
-        updateSelect={setSelectWork}
-        listValues={works}
-        limitSelect={3}
+        listValues={createListSelectWorks(selectWork)}
+        updateSelect={updateSelectWork}
       />
 
       <div className="py-5 sm:py-0 w-full fixed left-0 bottom-0 bg-primary-100 sm:static">
