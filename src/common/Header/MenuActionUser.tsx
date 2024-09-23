@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MdExitToApp, MdOutlineSettings } from "react-icons/md";
+import { MdExitToApp, MdOutlineSave, MdOutlineSettings, MdSave } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { LuSaveAll } from "react-icons/lu";
 
@@ -41,8 +41,8 @@ export const MenuActionUser = () => {
         {!isLogged && (
           <>
             <Link to="/add-email" onClick={() => {}} className={styleItemMenu}>
-              <LuSaveAll size={22} color={colorIcons} />
-              Salvar Remoto
+              <MdOutlineSave size={22} color={colorIcons} />
+              Salvar Progresso
             </Link>
             <hr className="h-px w-full bg-primary-500" />
           </>

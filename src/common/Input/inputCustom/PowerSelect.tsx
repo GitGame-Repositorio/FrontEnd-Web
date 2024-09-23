@@ -9,14 +9,17 @@ type ItemProps = { name: string; value: string };
 type Props = {
   list: ItemProps[];
   text: string;
+  classNameDiv: string;
 };
 
 type PowerSelectProps = InputHTMLAttributes<HTMLInputElement> & Props;
 
 export const PowerSelect = forwardRef(
-  ({ className, list, text, ...rest }: PowerSelectProps, ref) => {
+  ({ className, classNameDiv, list, text, ...rest }: PowerSelectProps, ref) => {
     return (
-      <div className="flex items-center relative w-max">
+      <div
+        className={twMerge("flex items-center relative w-max", classNameDiv)}
+      >
         <select
           className={twMerge(
             "h-12 bg-primary-200 pl-4 pr-10 rounded-lg text-primary-800 focus:outline focus:outline-primary-400 placeholder:text-primary-600 appearance-none border border-solid border-primary-600 font-bold cursor-pointer",
