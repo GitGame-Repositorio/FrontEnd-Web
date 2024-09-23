@@ -5,17 +5,17 @@ export type ModalType<T = {}> = {
   modal: ComponentType<T>;
 };
 
-type EventButton = React.SyntheticEvent<HTMLButtonElement, Event>;
+type EventButton = React.SyntheticEvent<HTMLElement, Event>;
 
 export const useModal = <T,>({ modal: ModalComponent }: ModalProps<T>) => {
   const [isVisible, setIsVisible] = useState(false);
 
-  const openModal = (event: EventButton) => {
+  const openModal = (event?: EventButton) => {
     event?.preventDefault();
     setIsVisible(true);
   };
 
-  const closeModal = (event: EventButton): void => {
+  const closeModal = (event?: EventButton): void => {
     event?.preventDefault();
     setIsVisible(false);
   };

@@ -25,12 +25,12 @@ type PropsObjItem = {
 
 type PropsObjMultiple = {
   type: "section";
-  listValue: PropsFilter[] | PropsObjItem[];
+  listValue: PropsObjMultiple[] & PropsObjItem[];
   handleSelect: (newObj: PropsFilter, list: PropsFilter[]) => PropsFilter[];
   func?: (record: object) => boolean;
 };
 
-export type PropsFilter = PropsObjItem | PropsObjMultiple;
+export type PropsFilter = PropsObjItem & PropsObjMultiple;
 
 type RenderListProps = {
   obj: PropsFilter;
