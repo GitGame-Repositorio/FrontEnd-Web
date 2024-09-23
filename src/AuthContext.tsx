@@ -9,6 +9,7 @@ import {
 import { api } from "./api";
 import { User } from "./@types/auth.d";
 import { VITE_API_URL } from "./env";
+import { useRefresh, useRefreshStore } from "./common/useRefresh";
 
 type AuthContext = {
   user?: User;
@@ -16,6 +17,7 @@ type AuthContext = {
   imgPerfil: string;
   isLogged: boolean;
   isLoading: boolean;
+  reloadPage: { register: string; refresh: () => void };
   reloadUser: () => void;
   logout: () => Promise<void>;
   login: (token: string) => void;
@@ -54,6 +56,8 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
     }
   };
 
+  const objRefresh = useRefreshStore();
+
   const logout = async () => {
     Cookies.set("token", "");
     setUser(undefined);
@@ -90,6 +94,7 @@ export const AuthContextProvider = ({ children }: ContextProps) => {
         isLogged,
         imgPerfil,
         isLoading,
+        reloadPage: objRefresh,
         reloadUser: getUser,
       }}
     >
