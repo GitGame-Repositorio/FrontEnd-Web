@@ -5,9 +5,14 @@ import { Report } from "../../../../@types/game.d";
 import { useResource } from "../../../../common/useResource";
 import { PropsFilter as PropsFilter } from "../../../../common/modal/modalCustom/ModalMultipleChoice";
 import { ContentLogic } from "./ContentLogic";
+import { CardReport } from "../card/CardReport";
+import { ListCard } from "../card/ListCard";
+import { useAuth } from "../../../../AuthContext";
 
 export const ReportsContent = () => {
-  const reports = useResource<Report[]>("/reports");
+  const { reloadPage } = useAuth();
+
+  const reports = useResource<Report[]>("/reports", [reloadPage.register]);
 
   const [filter, setFilter] = useState([
     {
@@ -67,6 +72,13 @@ export const ReportsContent = () => {
       filter={filter}
       record={reports}
       updateFilter={setFilter}
+      createList={(list: Report[]) => (
+        <ListCard
+          list={list}
+          card={CardReport}
+          className="flex flex-col gap-3"
+        />
+      )}
       name="Problemas relatados"
     />
   );

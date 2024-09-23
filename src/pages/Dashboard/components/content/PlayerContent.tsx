@@ -1,21 +1,33 @@
-import { Search } from "../../../../common/Search";
+import { useState } from "react";
+
 import { useResource } from "../../../../common/useResource";
 import { User } from "../../../../@types/auth";
-import { CardUser } from "../CardUser";
+import { Loading } from "../../../Loading";
+import { ContentLogic } from "./ContentLogic";
+import { ListCard } from "../card/ListCard";
+import { classNameGrid } from "../../service/style";
+import { CardPlayer } from "../card/cardUser/CardPlayer";
+import { objFilterWorks } from "../../service/data";
+import { useAuth } from "../../../../AuthContext";
 
 export const PlayerContent = () => {
-  const players = useResource<User[]>("/player");
+  const { reloadPage } = useAuth();
+
+  const players = useResource<User[]>("/player", [reloadPage.register]);
+
+  const [filter, setFilter] = useState([objFilterWorks]);
+
+  if (!players) return <Loading />;
+
   return (
-    <>
-      <div className="space-y-3">
-        <h2 className="text-2xl font-bold text-primary-800">Todos Jogadores</h2>
-        <Search />
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {players?.map((player: User) => {
-          return <CardUser key={player.id} {...player} />;
-        })}
-      </div>
-    </>
+    <ContentLogic
+      filter={filter}
+      record={players}
+      updateFilter={setFilter}
+      createList={(list: User[]) => (
+        <ListCard card={CardPlayer} list={list} className={classNameGrid} />
+      )}
+      name="Todos Jogadores"
+    />
   );
 };

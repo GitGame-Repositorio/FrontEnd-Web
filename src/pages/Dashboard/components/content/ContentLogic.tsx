@@ -1,43 +1,29 @@
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 
-import { CardReport } from "../CardReport";
+import { PropsFilter } from "../../../../common/modal/modalCustom/ModalMultipleChoice";
 import { Filter } from "../../../../common/Filter";
 import { Search } from "../../../../common/Search";
-import { PropsFilter } from "../../../../common/modal/modalCustom/ModalMultipleChoice";
-
-type Record = Report;
-
-const filterMap = (record: Record, filterList: PropsFilter[]) => {
-  const list: PropsFilter[] = filterList.filter((obj: PropsFilter) =>
-    obj.type === "section" && !obj.func
-      ? filterMap(record, obj.listValue)
-      : obj.func(record)
-  );
-  return list.length === filterList.length;
-};
-
-const recordRemap = (listRecord: Record[], filterList: PropsFilter[]) => {
-  return listRecord.filter((record) => filterMap(record, filterList));
-};
+import { Record } from "../../type/dashboard";
+import { recordRemap } from "../../service/logicFilter";
 
 export const ContentLogic = ({
   name,
-  record,
   filter,
+  record,
+  createList,
   updateFilter,
 }: {
   name: string;
-  record: Report[];
+  record: Record[];
   filter: PropsFilter[];
+  createList: (list: Record[]) => ReactElement;
   updateFilter: (filter: PropsFilter[]) => void;
 }) => {
-  const [list, setList] = useState<Report[]>([]);
-
-  // console.log(filter);
+  const [list, setList] = useState<Record[]>([]);
 
   useEffect(() => {
     setList(recordRemap(record, filter));
-  }, [filter]);
+  }, [filter, record]);
 
   return (
     <>
@@ -55,11 +41,7 @@ export const ContentLogic = ({
           </Search>
         </div>
       </div>
-      <div className="flex flex-col gap-3">
-        {list?.map((report: Report) => {
-          return <CardReport key={report.id} {...report} />;
-        })}
-      </div>
+      {createList(list)}
     </>
   );
 };
