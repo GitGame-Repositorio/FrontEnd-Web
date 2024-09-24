@@ -1,5 +1,8 @@
-import { MdDeleteOutline, MdOutlineEdit, MdOutlineRestoreFromTrash, MdRestoreFromTrash } from "react-icons/md";
-import { useState } from "react";
+import {
+  MdDeleteOutline,
+  MdOutlineEdit,
+  MdRestoreFromTrash,
+} from "react-icons/md";
 
 import { useModal } from "../../../../common/modal/useModal";
 import theme from "../../../../service/tailwindTheme";
@@ -30,8 +33,7 @@ const listStatus = [
 ];
 
 export const CardReport = (record: Report) => {
-  const [report, setReport] = useState(record);
-  const { id, title, description, status } = report;
+  const { id, title, description, status } = record;
 
   const { reloadPage } = useAuth();
 
@@ -47,9 +49,7 @@ export const CardReport = (record: Report) => {
 
   const editStatus = async (statusList: string[]) => {
     const [status] = statusList;
-    const newReport = await api.patch(`/reports/${id}`, { status });
-    setReport({ ...report, status });
-    return newReport;
+    await api.patch(`/reports/${id}`, { status });
   };
 
   return (

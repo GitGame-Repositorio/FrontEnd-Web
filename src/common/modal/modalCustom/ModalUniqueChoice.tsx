@@ -19,7 +19,6 @@ type PropsObjValues = {
 };
 
 export const ModalUniqueChoice = ({
-  title,
   listValues,
   listValuesSelect,
   updateSelect,
@@ -34,10 +33,6 @@ export const ModalUniqueChoice = ({
 
   return (
     <Modal {...rest} className="w-80 font-medium">
-      <p>{title}</p>
-
-      <hr className="line-custom" />
-
       <ul>
         {listValues.map(({ name, value }: PropsObjValues) => {
           const isChecked = selectItem.includes(value);

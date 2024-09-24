@@ -64,15 +64,13 @@ export const ModalAddAdmin = ({ ...rest }: ModalProps) => {
   });
 
   return (
-    <Modal {...rest} className="space-y-3">
+    <Modal {...rest} title="Adicionar administrador" className="space-y-1">
       <Search className="font-medium border border-solid border-primary-600">
         <Filter list={filter} callbackUpdate={setFilter} />
       </Search>
       <div className="space-y-1">
         <p className="font-medium text-sm">Usuários</p>
-        {!players.length ? (
-          <MessageDenied msg="Sem players para adicionar" />
-        ) : !listPlayers.length ? (
+        {!listPlayers.length ? (
           <MessageDenied msg="Usuário não encontrado" />
         ) : (
           <ul className="appearance-none space-y-2">{listElements}</ul>

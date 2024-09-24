@@ -124,9 +124,8 @@ const generateUpdates = (
 };
 
 export const ModalMultipleChoice = ({
-  title,
-  listValues,
   updateSelect,
+  listValues,
   ...rest
 }: ModalMultipleChoiceProps) => {
   const [cloneList, setCloneList] = useState<PropsFilter[]>(
@@ -144,10 +143,6 @@ export const ModalMultipleChoice = ({
 
   return (
     <Modal {...rest} className="w-80 font-medium flex flex-col gap-3">
-      <p>{title}</p>
-
-      <hr className="line-custom" />
-
       {cloneList.map((obj, index) => {
         const isLastSection = cloneList.length <= index + 1;
         const canViewLine = obj.type === "section" && !isLastSection;

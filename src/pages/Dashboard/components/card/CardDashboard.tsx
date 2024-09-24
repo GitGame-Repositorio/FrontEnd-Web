@@ -28,7 +28,10 @@ export const CardDashboard = ({
   type,
 }: CardDashboardProps) => {
   return (
-    <Card className={objBgPrimary[type]} onClick={onClick}>
+    <Card
+      className={`${objBgPrimary[type]} selection:bg-transparent`}
+      onClick={onClick}
+    >
       <>
         <div className="flex justify-between gap-2 mb-2.5">
           <Icon size={24} color={theme.colors.primary[400]} />

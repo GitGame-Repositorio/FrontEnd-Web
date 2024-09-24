@@ -1,7 +1,4 @@
-import { ReactElement } from "react";
 import { Modal, ModalProps } from "../Modal";
-import { MdClose } from "react-icons/md";
-import theme from "../../../service/tailwindTheme";
 import { DivButton } from "../../Button/DivButton";
 import { ButtonOutline } from "../../Button/ButtonCustomn/ButtonOutline";
 import { Button } from "../../Button/ButtonCustomn/Button";
@@ -14,7 +11,6 @@ export type ModalChoiceProps = {
 
 export const ModalChoice = ({
   text,
-  title,
   callbackSuccess,
   ...rest
 }: ModalChoiceProps & ModalProps) => {
@@ -24,20 +20,7 @@ export const ModalChoice = ({
     "text-primary-500 border-primary-500 hover:bg-primary-500 hover:text-primary-100";
 
   return (
-    <Modal {...rest} className="w-96 font-medium gap-5">
-      <div className="space-y-2.5">
-        <div className="flex justify-between">
-          <p className="text-sm">{title}</p>
-          <MdClose
-            size={22}
-            className="cursor-pointer"
-            color={theme.colors.primary[600]}
-            onClick={callbackClose}
-          />
-        </div>
-        <hr className="line-custom" />
-      </div>
-
+    <Modal {...rest} className="w-96 font-medium gap-4">
       <p className="font-normal text-center">{text}</p>
 
       <DivButton>

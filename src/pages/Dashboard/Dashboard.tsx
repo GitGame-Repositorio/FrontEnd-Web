@@ -49,7 +49,7 @@ export const Dashboard = () => {
     <main className="pb-8">
       <HeaderGame namePage="Dashboard" />
       <div className="container space-y-6">
-        <div className="flex gap-6 mt-8 overflow-hidden min-h-36">
+        <div className="flex gap-6 mt-8 cursor-grab overflow-hidden min-h-36">
           <CardDashboard
             icon={MdWarningAmber}
             onClick={() => canManageCRUDReports && updateSection("reports")}

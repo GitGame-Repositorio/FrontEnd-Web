@@ -83,7 +83,7 @@ export const StatisticsUserContent = () => {
           value={`${statistics?.countUserFinishingGame} Jogadores`}
         />
         <CardStatisticContent
-          name="Porcentagem geral de todos os usuários"
+          name="Porcentagem geral de usuários que finalizaram o jogo"
           value={statistics?.percentUserFinishingGame + "%"}
         />
       </div>
@@ -107,6 +107,10 @@ export const StatisticsGameContent = ({
   name,
 }: PropsGameContent) => {
   const [number, setNumber] = useState(1);
+
+  useEffect(() => {
+    setNumber(1);
+  }, [allStatistics]);
 
   const statistic: OptionStatisticType = allStatistics?.find((obj) =>
     funcFilter(obj, number)

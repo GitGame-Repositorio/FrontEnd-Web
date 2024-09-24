@@ -21,6 +21,7 @@ import { useModal } from "../../../../common/modal/useModal";
 import { ModalChoice } from "../../../../common/modal/modalCustom/ModalChoice";
 import { useAuth } from "../../../../AuthContext";
 import { api } from "../../../../api";
+import { MdClose } from "react-icons/md";
 
 export type ModalChoiceProps = {
   text: string;
@@ -98,11 +99,20 @@ export const ModalUserEdit = ({
         className="space-y-4"
       >
         <div className="space-y-3">
-          <InputText
-            className="outline-0 text-base h-6 placeholder:text-primary-800 placeholder:font-medium p-0"
-            placeholder="Sem Nome"
-            {...register("name")}
-          />
+          <div className="flex items-center justify-between gap-2 w-full">
+            <InputText
+              className="outline-0 text-base h-5 placeholder:text-primary-800 placeholder:font-medium p-0"
+              placeholder="Sem Nome"
+              {...register("name")}
+              required={false}
+            />
+            <MdClose
+              size={22}
+              className="cursor-pointer"
+              color={theme.colors.primary[600]}
+              onClick={callbackClose}
+            />
+          </div>
 
           <hr className="line-custom" />
 
@@ -115,12 +125,18 @@ export const ModalUserEdit = ({
 
             <ContentUser title="Profissão">
               <div className="flex gap-2 peer-checked:hidden">
-                {user.works.map((item) => (
-                  <Label
-                    value={item}
-                    className="px-2 py-0 font-medium text-sm border-0 rounded-md"
-                  />
-                ))}
+                {user.works.length ? (
+                  user.works.map((item) => (
+                    <Label
+                      value={item}
+                      className="px-2 py-0 font-medium text-sm border-0 rounded-md"
+                    />
+                  ))
+                ) : (
+                  <p className="font-medium">
+                    Sem nenhuma profissão registrada
+                  </p>
+                )}
               </div>
             </ContentUser>
 

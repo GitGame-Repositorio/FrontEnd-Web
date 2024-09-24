@@ -1,36 +1,81 @@
+import { useForm } from "react-hook-form";
 import { useAuth } from "../../../AuthContext";
 import { api } from "../../../api";
+import { DivCustomButton } from "../../Button/DivCustomButton";
+import { DivInput } from "../../Input/DivInput";
+import { InputText } from "../../Input/inputCustom/InputText";
 import { Modal, ModalProps } from "../Modal";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { Report } from "../../../@types/game";
 
-export const ModalReport = ({ ...rest }: ModalProps) => {
-  const { user } = useAuth()
+const scheme = z.object({
+  title: z.string().max(255),
+  description: z.string(),
+});
 
-  const callbackSend = async () => {
-    const text = document.querySelector("#report-problem")?.textContent
-    const response = await api.post("/reports", { text, player_id: user?.id })
-    const report = await response.data
-    if (report.id) {
-      console.log("sucesso")
-    }
-  }
+type PropsReport = z.infer<typeof scheme>;
+
+export type ModalReportProps = {
+  idOrderLevel: string;
+} & ModalProps;
+
+export const ModalReport = ({ idOrderLevel, ...rest }: ModalReportProps) => {
+  const { callbackClose } = rest;
+  const { user } = useAuth();
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<PropsReport>({
+    resolver: zodResolver(scheme),
+  });
+
+  const callbackSend = async (fields: Partial<Report>) => {
+    await api.post("/reports", {
+      ...fields,
+      id_user: user?.id,
+      id_order_level: idOrderLevel,
+    });
+    callbackClose?.();
+  };
+
+  const inputClass = "bg-primary-200 placeholder:font-medium text-sm";
+  const labelClass = "text-base";
+  const divClass = "space-y-1";
 
   return (
-    <Modal {...rest}>
-      <h1 className="text-2xl font-medium">Encontrou algum error?</h1>
-      <p>Pedimos que descreva sobre, para que assim possa ser corrigido</p>
-      <textarea
-        placeholder="Relate o problema aqui..."
-        className="input input-textarea resize-none"
-        id="report-problem"
-      ></textarea>
-      <div className="flex sm:justify-end">
-        <button
-          className="px-8 py-2 rounded bg-primary-600 text-primary-100 text-base font-bold"
-          onClick={callbackSend}
+    <Modal {...rest} title="Reportar erro">
+      <form className="space-y-5" onSubmit={handleSubmit(callbackSend)}>
+        <DivInput
+          error={errors.title}
+          label="Título"
+          className={divClass}
+          labelClassName={labelClass}
         >
-          Enviar
-        </button>
-      </div>
+          <InputText
+            className={inputClass}
+            placeholder="Digite o titulo aqui"
+            {...register("title")}
+          />
+        </DivInput>
+
+        <DivInput
+          error={errors.description}
+          label="Digite abaixo o problema"
+          className={divClass}
+          labelClassName={labelClass}
+        >
+          <textarea
+            placeholder="Digite o problema..."
+            className={`input input-textarea resize-none ${inputClass}`}
+            {...register("description")}
+          ></textarea>
+        </DivInput>
+
+        <DivCustomButton textMain="Enviar" callbackClose={callbackClose} />
+      </form>
     </Modal>
   );
 };
