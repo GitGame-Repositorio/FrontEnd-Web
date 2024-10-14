@@ -27,6 +27,7 @@ export const PlayerContent = () => {
       createList={(list: User[]) => (
         <ListCard card={CardPlayer} list={list} className={classNameGrid} />
       )}
+      orderProps={["name", "email"]}
       name="Todos Jogadores"
     />
   );

@@ -55,7 +55,7 @@ export const Dashboard = () => {
             onClick={() => canManageCRUDReports && updateSection("reports")}
             type={choseType("reports", canManageCRUDReports)}
             title="Problemas relatados"
-            value="245"
+            value="5"
           />
 
           <CardDashboard
@@ -63,7 +63,7 @@ export const Dashboard = () => {
             onClick={() => canManageCRUDPlayer && updateSection("players")}
             type={choseType("players", canManageCRUDPlayer)}
             title="Quantidade de jogadores totais"
-            value="1.035"
+            value="3"
           />
 
           <CardDashboard
@@ -71,7 +71,7 @@ export const Dashboard = () => {
             onClick={() => canViewAllAdmin && updateSection("admins")}
             type={choseType("admins", canViewAllAdmin)}
             title="Administradores"
-            value="1.035"
+            value="2"
           />
 
           <CardDashboard
@@ -79,7 +79,7 @@ export const Dashboard = () => {
             onClick={() => updateSection("statistic")}
             type={choseType("statistic", true)}
             title="Estatísticas de exercícios"
-            value="1.035"
+            value="5"
           />
         </div>
         <div className="bg-primary-200 p-8 rounded-xl space-y-8">{content}</div>

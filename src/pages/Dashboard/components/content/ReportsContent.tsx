@@ -79,6 +79,7 @@ export const ReportsContent = () => {
           className="flex flex-col gap-3"
         />
       )}
+      orderProps={["title", "description"]}
       name="Problemas relatados"
     />
   );

@@ -10,7 +10,6 @@ import { CardAdmin } from "../card/cardUser/CardAdmin";
 import { MdAdd } from "react-icons/md";
 import { useModal } from "../../../../common/modal/useModal";
 import { ModalAddAdmin } from "../modal/ModalAddAdmin";
-import { useRefresh } from "../../../../common/useRefresh";
 import { useAuth } from "../../../../AuthContext";
 
 export const AdminContent = () => {
@@ -36,6 +35,7 @@ export const AdminContent = () => {
           <ListCard card={CardAdmin} list={list} className={classNameGrid} />
         )}
         name="Todos Administradores"
+        orderProps={["name", "email"]}
       />
       <div className="flex justify-end">
         <button

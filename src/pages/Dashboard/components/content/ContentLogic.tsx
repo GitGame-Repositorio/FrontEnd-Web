@@ -3,38 +3,46 @@ import { ReactElement, useEffect, useState } from "react";
 import { PropsFilter } from "../../../../common/modal/modalCustom/ModalMultipleChoice";
 import { Filter } from "../../../../common/Filter";
 import { Search } from "../../../../common/Search";
-import { Record } from "../../type/dashboard";
+import { ListKey, Record } from "../../type/dashboard";
 import { recordRemap } from "../../service/logicFilter";
+
+type Props = {
+  name: string;
+  record: Record[];
+  orderProps: ListKey;
+  filter: PropsFilter[];
+  createList: (list: Record[]) => ReactElement;
+  updateFilter: (filter: PropsFilter[]) => void;
+};
 
 export const ContentLogic = ({
   name,
   filter,
   record,
+  orderProps,
   createList,
   updateFilter,
-}: {
-  name: string;
-  record: Record[];
-  filter: PropsFilter[];
-  createList: (list: Record[]) => ReactElement;
-  updateFilter: (filter: PropsFilter[]) => void;
-}) => {
+}: Props) => {
   const [list, setList] = useState<Record[]>([]);
+  const [search, setSearch] = useState("");
+
+  const updateList = () =>
+    setList(recordRemap(record, filter, search, orderProps));
 
   useEffect(() => {
-    setList(recordRemap(record, filter));
-  }, [filter, record]);
+    updateList();
+  }, [filter, record, search]);
 
   return (
     <>
       <div className="space-y-3">
         <h2 className="text-2xl font-bold text-primary-800">{name}</h2>
         <div>
-          <Search>
+          <Search text={search} setText={setSearch}>
             <Filter
               list={filter}
               callbackUpdate={(listFilter) => {
-                setList(recordRemap(record, filter));
+                updateList();
                 return updateFilter(listFilter);
               }}
             />
