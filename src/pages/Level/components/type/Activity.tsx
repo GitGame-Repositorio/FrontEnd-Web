@@ -2,14 +2,12 @@ import { TaskOneSelect } from "./activity/TaskOneSelect";
 import { TaskActivity } from "../../type/activity";
 import { Content } from "../../../../@types/game";
 import { useContent } from "../../context/ContentContext";
-import { activityScheme, ActivityScheme } from "../../service/scheme";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
 import { TitleEdit } from "./common/TitleEdit";
 import { SectionNewItem } from "./activity/SectionNewItem";
 import { ButtonMenuFloat } from "../ButtonMenuFloat";
-import { EditItem, HandleEditItem } from "./common/EditItem";
+import { EditItem } from "./common/EditItem";
 import { useState } from "react";
+import { useFormContent } from "../../context/FormContent";
 
 const objComponentActivity = {
   multipleOption: TaskOneSelect,
@@ -21,14 +19,14 @@ type Props = {
   allowComplete: () => void;
 };
 
-export const ActivityEdit = (content: Content) => {
+export const ActivityEdit = () => {
   const {
     register,
     formState: { errors },
-  } = useForm<ActivityScheme>({
-    resolver: yupResolver(activityScheme),
-    defaultValues: content,
-  });
+  } = useFormContent();
+
+  const { dataFormat } = useContent();
+  const { rows, cols } = dataFormat;
 
   const [listComponents, setListComponents] = useState([
     SectionNewItem,
@@ -47,7 +45,7 @@ export const ActivityEdit = (content: Content) => {
 
       <ButtonMenuFloat text="Layout" />
 
-      <div className="grid grid-cols-2 gap-6 flex-1">
+      <div className={`grid grid-cols-${cols} grid-rows-${rows} gap-6 flex-1`}>
         {listComponents?.map((component, index) => (
           <EditItem
             component={component}

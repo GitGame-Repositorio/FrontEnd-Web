@@ -1,36 +1,14 @@
-import { useForm } from "react-hook-form";
-import { useContent } from "../../../context/ContentContext";
-import { IdType, TaskActivity } from "../../../type/activity";
-import { ComponentProps } from "../common/EditItem";
-import { TitleEdit } from "../common/TitleEdit";
-import { InputText } from "../../../../../common/Input/inputCustom/InputText";
 import { useRef, useState } from "react";
-import { z } from "zod";
+import { InputText } from "../../../../../common/Input/inputCustom/InputText";
 import { InputTextLine } from "../../../../Dashboard/components/InputTextLine";
-import { DivInput } from "../../../../../common/Input/DivInput";
 import { Button } from "../../../../../common/Button/ButtonCustomn/Button";
+import { IdType, TaskActivity } from "../../../type/activity";
+import { useContent } from "../../../context/ContentContext";
+import { ComponentProps } from "../common/EditItem";
 
 type Props = {
   updateSelect: (value: IdType) => void;
   index: number;
-};
-
-const RenderOptionEdit = ({ index, name }) => {
-  return (
-    <li className="ml-5">
-      <label className="flex items-center gap-2 cursor-pointer w-max">
-        <div className="relative">
-          <input
-            type="radio"
-            name={`select${index}`}
-            className="appearance-none border-2 border-solid border-primary-600 p-1 rounded-full peer"
-          />
-          <div className="hidden peer-checked:flex p-[0.175rem] bg-primary-600 rounded-full absolute top-[34%] left-[25%]" />
-        </div>
-        <p className="font-medium">{name}</p>
-      </label>
-    </li>
-  );
 };
 
 type EditProps = {
@@ -38,12 +16,24 @@ type EditProps = {
 };
 
 const TaskOneSelectEdit = ({ identify }: EditProps) => {
+  const { updateData } = useContent();
+
   const [question, setQuestion] = useState("");
   const [input, setInput] = useState("");
   const [list, setList] = useState([]);
 
-  const optionCorrect = useRef();
-  const newId = useRef(0);
+  const resOption = useRef();
+  const newId = useRef<number>(0);
+
+  updateData(
+    {
+      id: identify,
+      question,
+      listAlternatives: list,
+      resolution: resOption.current,
+    },
+    identify
+  );
 
   return (
     <div className="h-full max-h-80 overflow-y-auto overflow-x-hidden w-full border-primary-600 border-2 border-solid rounded-2xl p-4 space-y-2">
@@ -60,7 +50,7 @@ const TaskOneSelectEdit = ({ identify }: EditProps) => {
               <div className="relative">
                 <input
                   type="radio"
-                  onChange={() => (optionCorrect.current = obj.id)}
+                  onChange={() => (resOption.current = obj.id)}
                   name={identify}
                   className="appearance-none border-2 border-solid border-primary-600 p-1 rounded-full peer"
                 />
@@ -111,7 +101,10 @@ export const TaskOneSelect = ({
   index,
 }: TaskActivity & Props & ComponentProps) => {
   const { canEdit } = useContent();
-  if (canEdit) return <TaskOneSelectEdit identify="arroz" />;
+  const number = useRef(0);
+  const identify = `current_${number.current++}`;
+  if (canEdit) return <TaskOneSelectEdit identify={identify} />;
+
   return (
     <div className="flex flex-col gap-2">
       <span>
@@ -127,7 +120,7 @@ export const TaskOneSelect = ({
               <div className="relative">
                 <input
                   type="radio"
-                  name={`select${index}`}
+                  name={identify}
                   className="appearance-none border-2 border-solid border-primary-600 p-1 rounded-full peer"
                 />
                 <div className="hidden peer-checked:flex p-[0.175rem] bg-primary-600 rounded-full absolute top-[34%] left-[25%]" />

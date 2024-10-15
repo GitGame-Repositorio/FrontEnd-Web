@@ -1,3 +1,4 @@
+import { UseFormReturn } from "react-hook-form";
 import { Content } from "../../../@types/game";
 
 export type ContentProps = {
@@ -5,12 +6,21 @@ export type ContentProps = {
   children: ReactElement;
 };
 
+type PropsFormat = {
+  cols: number;
+  rows: number;
+};
+
 export type ContentContext = {
   canEdit: boolean;
-  type: Content.type;
+  type: Content["type"];
+  updateData: (obj: object, id: string) => void;
+  updateDataFormat: (cols: number, rows: number) => void;
+  getData: () => object[];
   handleEdit: () => void;
   cancelEdit: () => void;
   setType: (value: Content.type) => void;
+  dataFormat: PropsFormat;
   content: Content;
 };
 

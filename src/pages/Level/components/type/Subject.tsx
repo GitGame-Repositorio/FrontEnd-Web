@@ -1,22 +1,16 @@
 import { Content, Subject as SubjectType } from "../../../../@types/game";
-import { yupResolver } from "@hookform/resolvers/yup";
 import ReactMarkdown from "react-markdown";
-import { useForm } from "react-hook-form";
-
-import { subjectScheme, SubjectScheme } from "../../service/scheme";
 import { useContent } from "../../context/ContentContext";
 import { DivInputCustom } from "../DivInputCustom";
 import { TitleEdit } from "./common/TitleEdit";
+import { useFormContent } from "../../context/FormContent";
 
-const SubjectEdit = (content: Content) => {
+const SubjectEdit = () => {
   const {
     watch,
     register,
     formState: { errors },
-  } = useForm<SubjectScheme>({
-    resolver: yupResolver(subjectScheme),
-    defaultValues: content,
-  });
+  } = useFormContent();
 
   const classDiv = "rounded-2xl inline-block p-4 bg-primary-200";
 
@@ -32,7 +26,7 @@ const SubjectEdit = (content: Content) => {
           ></textarea>
         </DivInputCustom>
 
-        <DivInputCustom label="Texto" className={classDiv}>
+        <DivInputCustom label="Texto Renderizado" className={classDiv}>
           <ReactMarkdown className="bg-primary-100 p-4 h-[90%] overflow-hidden rounded-xl">
             {watch("text")}
           </ReactMarkdown>

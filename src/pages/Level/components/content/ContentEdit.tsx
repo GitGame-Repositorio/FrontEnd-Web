@@ -1,21 +1,15 @@
-import { useForm } from "react-hook-form";
-import { Content } from "../../../../@types/game";
-import { api } from "../../../../api";
 import { Button } from "../../../../common/Button/ButtonCustomn/Button";
 import { ButtonOutline } from "../../../../common/Button/ButtonCustomn/ButtonOutline";
 import { ContentProps } from "../../type/content";
 import { PowerSelect } from "../../../../common/Input/inputCustom/PowerSelect";
 import { listTypePowerSelect } from "../../service/data";
-import { MdDelete, MdDeleteOutline } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
 import theme from "../../../../service/tailwindTheme";
 import { useContent } from "../../context/ContentContext";
 
-const submit = async ({ description, ...fields }: Content) => {
-  await api.post(`/content/${fields.id}`, fields);
-};
-
 export const ContentEdit = ({ children }: ContentProps) => {
   const { type, setType, cancelEdit } = useContent();
+
   return (
     <>
       <main className="py-8 space-y-4 flex-1 container flex flex-col justify-between">

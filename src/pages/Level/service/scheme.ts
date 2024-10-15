@@ -1,4 +1,4 @@
-import z, { object } from "zod";
+import z from "zod";
 
 export const subjectScheme = z.object({
   description: z.string(),

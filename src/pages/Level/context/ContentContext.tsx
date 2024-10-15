@@ -1,10 +1,12 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import { ContentContext, ContextProps } from "../type/content";
 import { Content, ContentType } from "../../../@types/game";
-import { useParams } from "react-router-dom";
 import { useResource } from "../../../common/useResource";
 import { NotFoundPage } from "../../NotFoundPage";
 import { Loading } from "../../Loading";
+import { api } from "../../../api";
 
 const contentContext = createContext({} as ContentContext);
 
@@ -13,7 +15,28 @@ export const ContentProvider = ({ children }: ContextProps) => {
   const content = useResource<Content>(`/content/${id}`, [id]);
 
   const [type, setType] = useState<ContentType>();
-  const [edit, setEdit] = useState(true);
+  const [edit, setEdit] = useState(false);
+  const [dataFormat, setDataFormat] = useState({ cols: 2, rows: 1 });
+  const dataTasks = useRef<string[] | object[]>([]);
+
+  const updateDataFormat = (cols: number, rows: number) => {
+    setDataFormat({ cols, rows });
+  };
+
+  const updateData = (obj: object, id: string) => {
+    const objFind = dataTasks.current?.find((item) => item?.id === id);
+
+    if (!objFind) dataTasks.current = [...dataTasks.current, obj];
+
+    dataTasks.current = dataTasks.current?.map((item) =>
+      item.id === obj.id ? obj : item
+    );
+  };
+
+  const getData = () => {
+    return dataTasks.current;
+  };
+
   const handleEdit = () => setEdit(!edit);
 
   useEffect(() => {
@@ -37,6 +60,11 @@ export const ContentProvider = ({ children }: ContextProps) => {
         setType,
         content,
         type,
+        getData,
+        setEdit,
+        dataFormat,
+        updateData,
+        updateDataFormat,
       }}
     >
       {children}

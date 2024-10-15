@@ -3,6 +3,7 @@ import { objTypeForComponent, objTypeForName } from "./service/data";
 import { ContentEdit } from "./components/content/ContentEdit";
 import { ContentProvider, useContent } from "./context/ContentContext";
 import { ContentView } from "./components/content/ContentView";
+import { FormContentProvider } from "./context/FormContent";
 
 export const ContentGame = () => {
   const { canEdit, type, content } = useContent();
@@ -25,7 +26,9 @@ export const ContentGame = () => {
 export const Content = () => {
   return (
     <ContentProvider>
-      <ContentGame />
+      <FormContentProvider>
+        <ContentGame />
+      </FormContentProvider>
     </ContentProvider>
   );
 };
