@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form";
-import { useAuth } from "../../../AuthContext";
-import { api } from "../../../api";
-import { DivCustomButton } from "../../Button/DivCustomButton";
-import { DivInput } from "../../Input/DivInput";
-import { InputText } from "../../Input/inputCustom/InputText";
-import { Modal, ModalProps } from "../Modal";
+import { useAuth } from "../../../../AuthContext";
+import { api } from "../../../../api";
+import { DivCustomButton } from "../../../../common/Button/DivCustomButton";
+import { DivInput } from "../../../../common/Input/DivInput";
+import { InputText } from "../../../../common/Input/inputCustom/InputText";
+import { Modal, ModalProps } from "../../../../common/modal/Modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Report } from "../../../@types/game";
+import { Report } from "../../../../@types/game";
+import { useContent } from "../../context/ContentContext";
 
 const scheme = z.object({
   title: z.string().max(255),
@@ -16,11 +17,7 @@ const scheme = z.object({
 
 type PropsReport = z.infer<typeof scheme>;
 
-export type ModalReportProps = {
-  idOrderLevel: string;
-} & ModalProps;
-
-export const ModalReport = ({ idOrderLevel, ...rest }: ModalReportProps) => {
+export const ModalReport = ({ ...rest }: ModalProps) => {
   const { callbackClose } = rest;
   const { user } = useAuth();
 
@@ -32,11 +29,13 @@ export const ModalReport = ({ idOrderLevel, ...rest }: ModalReportProps) => {
     resolver: zodResolver(scheme),
   });
 
+  const { content } = useContent();
+
   const callbackSend = async (fields: Partial<Report>) => {
     await api.post("/reports", {
       ...fields,
       id_user: user?.id,
-      id_order_level: idOrderLevel,
+      id_content: content?.id,
     });
     callbackClose?.();
   };

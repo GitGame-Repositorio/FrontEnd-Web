@@ -12,6 +12,7 @@ import { InputText } from "../../common/Input/inputCustom/InputText.js";
 import { InputPassword } from "../../common/Input/inputCustom/InputPassword.js";
 import { schemaPassword, schemeEmail } from "../../common/zodScheme.js";
 import { useAuth } from "../../AuthContext.js";
+import { User } from "../../@types/auth.js";
 
 const schema = z
   .object({
@@ -35,17 +36,15 @@ export const Register = () => {
   } = useForm<RegisterScheme>({ resolver: zodResolver(schema) });
 
   const navigate = useNavigate();
-  const { login } = useAuth()
 
   const callbackRegister = async (fields: RegisterScheme) => {
     try {
-      const response = await api.post<RegisterScheme>("/register", {
+      const response = await api.post<User>("/register", {
         ...fields,
         confirm_password: undefined,
       });
-      const { token } = response.data
-      if (token) {
-        login(token)
+      const user = response.data;
+      if (user.id) {
         navigate("/login");
       }
     } catch (err) {

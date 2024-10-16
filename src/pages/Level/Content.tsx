@@ -26,9 +26,7 @@ export const ContentGame = () => {
 export const Content = () => {
   return (
     <ContentProvider>
-      <FormContentProvider>
-        <ContentGame />
-      </FormContentProvider>
+      <ContentGame />
     </ContentProvider>
   );
 };

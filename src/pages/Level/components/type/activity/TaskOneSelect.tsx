@@ -102,6 +102,7 @@ export const TaskOneSelect = ({
 }: TaskActivity & Props & ComponentProps) => {
   const { canEdit } = useContent();
   const number = useRef(0);
+
   const identify = `current_${number.current++}`;
   if (canEdit) return <TaskOneSelectEdit identify={identify} />;
 
@@ -120,7 +121,7 @@ export const TaskOneSelect = ({
               <div className="relative">
                 <input
                   type="radio"
-                  name={identify}
+                  name={`${index}_option`}
                   className="appearance-none border-2 border-solid border-primary-600 p-1 rounded-full peer"
                 />
                 <div className="hidden peer-checked:flex p-[0.175rem] bg-primary-600 rounded-full absolute top-[34%] left-[25%]" />

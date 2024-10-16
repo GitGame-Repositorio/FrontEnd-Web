@@ -38,21 +38,18 @@ export const StatisticsContent = () => {
           <StatisticsGameContent
             name="Capítulo"
             allStatistics={statisticsChapter || []}
-            funcFilter={(obj, num) => obj.numberOrder === num}
             updateID={setIdChapter}
           />
 
           <StatisticsGameContent
             name="Level"
             allStatistics={statisticsLevel || []}
-            funcFilter={(obj, num) => obj.numberOrder === num}
             updateID={setIdLevel}
           />
 
           <StatisticsGameContent
             name="Conteúdo"
             allStatistics={statisticsContent || []}
-            funcFilter={(obj, num) => obj.order === num}
           />
         </div>
       </MainContent>
@@ -93,7 +90,6 @@ export const StatisticsUserContent = () => {
 type OptionStatisticType = ChapterStatistics | LevelStatistics;
 
 type PropsGameContent = {
-  funcFilter: (obj: OptionStatisticType, num: number) => boolean;
   updateID?: (value: string) => void;
   allStatistics: OptionStatisticType[];
   name: string;
@@ -101,7 +97,6 @@ type PropsGameContent = {
 
 export const StatisticsGameContent = ({
   allStatistics,
-  funcFilter,
   updateID,
   name,
 }: PropsGameContent) => {
@@ -111,8 +106,8 @@ export const StatisticsGameContent = ({
     setNumber(1);
   }, [allStatistics]);
 
-  const statistic: OptionStatisticType = allStatistics?.find((obj) =>
-    funcFilter(obj, number)
+  const statistic: OptionStatisticType = allStatistics?.find(
+    (obj) => obj.numberOrder === number
   );
   updateID?.(statistic?.id);
 

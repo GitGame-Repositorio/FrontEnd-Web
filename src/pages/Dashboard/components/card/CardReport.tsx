@@ -47,8 +47,7 @@ export const CardReport = (record: Report) => {
       modal: ModalChoice,
     });
 
-  const editStatus = async (statusList: string[]) => {
-    const [status] = statusList;
+  const editStatus = async (status: string) => {
     await api.patch(`/reports/${id}`, { status });
   };
 
@@ -79,10 +78,12 @@ export const CardReport = (record: Report) => {
                 </button>
               </>
             ) : (
-              <button className="bg-primary-600 rounded-xl content-center min-w-11 min-h-10">
+              <button
+                className="bg-primary-600 rounded-xl content-center min-w-11 min-h-10"
+                onClick={openModalEdit}
+              >
                 <MdRestoreFromTrash
                   size={22}
-                  onClick={openModalEdit}
                   color={theme.colors.primary[50]}
                 />
               </button>
@@ -93,9 +94,9 @@ export const CardReport = (record: Report) => {
       </div>
       <ModalEdit
         listValues={listStatus}
-        listValuesSelect={[status]}
-        updateSelect={async (list: string[]) => {
-          await editStatus(list);
+        valueSelect={status}
+        updateSelect={async ({ value }: { value: string }) => {
+          await editStatus(value);
           reloadPage.refresh();
         }}
         title="Editar Status"
@@ -104,7 +105,7 @@ export const CardReport = (record: Report) => {
         title="Mover para lixeira"
         text="Deseja mesmo mover esse report para lixeira?"
         callbackSuccess={async () => {
-          await editStatus(["REMOVED"]);
+          await editStatus("REMOVED");
           reloadPage.refresh();
         }}
       />

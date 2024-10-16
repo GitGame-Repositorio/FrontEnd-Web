@@ -12,7 +12,9 @@ const contentContext = createContext({} as ContentContext);
 
 export const ContentProvider = ({ children }: ContextProps) => {
   const { id } = useParams();
-  const content = useResource<Content>(`/content/${id}`, [id]);
+  const [upd, setUpd] = useState(false);
+  const updateAll = () => setUpd(!upd);
+  const content = useResource<Content>(`/content/${id}`, [id, upd]);
 
   const [type, setType] = useState<ContentType>();
   const [edit, setEdit] = useState(false);
@@ -62,6 +64,7 @@ export const ContentProvider = ({ children }: ContextProps) => {
         type,
         getData,
         setEdit,
+        updateAll,
         dataFormat,
         updateData,
         updateDataFormat,

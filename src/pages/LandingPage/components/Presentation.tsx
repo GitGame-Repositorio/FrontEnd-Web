@@ -17,11 +17,11 @@ export const Presentation = () => {
           </p>
         </span>
         <div className="content-center">
-          <Link to="/all-capters">
+          <a href="/all-capters">
             <button className="btn border border-solid border-primary-600 text-primary-600 uppercase font-bold text-sm sm:text-base">
               Let’s Go To Play
             </button>
-          </Link>
+          </a>
         </div>
       </div>
     </div>

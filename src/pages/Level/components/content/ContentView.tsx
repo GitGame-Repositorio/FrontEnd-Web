@@ -1,9 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import {
-  ModalReport,
-  ModalReportProps,
-} from "../../../../common/modal/modalCustom/ModalReport";
+import { ModalReport } from "../modal/ModalReport";
 import { HeaderLevel } from "../../../../common/Header/HeaderLevel";
 import { useResource } from "../../../../common/useResource";
 import { useModal } from "../../../../common/modal/useModal";
@@ -17,6 +14,7 @@ import { useAuth } from "../../../../AuthContext";
 import { ButtonOutline } from "../../../../common/Button/ButtonCustomn/ButtonOutline";
 import { ContentProps } from "../../type/content";
 import { useContent } from "../../context/ContentContext";
+import { ModalProps } from "../../../../common/modal/Modal";
 
 const updateUrlContent = async (
   level: Level | undefined,
@@ -71,11 +69,9 @@ export const ContentView = ({ content, children }: ContentProps) => {
 
   const { handleEdit } = useContent();
 
-  const { Modal: ModalReportComponent, openModal } = useModal<ModalReportProps>(
-    {
-      modal: ModalReport,
-    }
-  );
+  const { Modal: ModalReportComponent, openModal } = useModal<ModalProps>({
+    modal: ModalReport,
+  });
 
   return (
     <>
@@ -124,7 +120,7 @@ export const ContentView = ({ content, children }: ContentProps) => {
         </div>
       </main>
 
-      <ModalReportComponent idcontent={content.id} />
+      <ModalReportComponent />
     </>
   );
 };

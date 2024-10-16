@@ -1,3 +1,5 @@
+import { Button } from "../Button/ButtonCustomn/Button";
+
 type HeaderProps = {
   chapter: number;
   level: number;
@@ -15,12 +17,9 @@ export const HeaderLevel = ({
     "py-2.5 px-4 rounded-lg bg-primary-600 text-primary font-medium";
   return (
     <header className="flex justify-between">
-      <button
-        onClick={onReportCallback}
-        className="btn bg-primary-600 text-primary font-medium"
-      >
+      <Button onClick={onReportCallback} className="w-max">
         RELATAR PROBLEMAS
-      </button>
+      </Button>
 
       <div className="flex gap-3">
         <div className={classDivButton}>Capitulo | {chapter}</div>

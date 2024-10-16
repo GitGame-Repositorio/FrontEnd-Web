@@ -10,7 +10,8 @@ const formContext = createContext({} as UseFormReturn);
 const contentScheme = subjectScheme.merge(activityScheme);
 
 export const FormContentProvider = ({ children }: ContextProps) => {
-  const { content, type, getData, setEdit, dataFormat } = useContent();
+  const { content, type, getData, setEdit, dataFormat, updateAll } =
+    useContent();
 
   const formControl = useForm<Content>({
     context: contentScheme,
@@ -23,6 +24,7 @@ export const FormContentProvider = ({ children }: ContextProps) => {
     if (type !== "activity") {
       await api.patch(`/content/${fields.id}`, fields);
       setEdit(false);
+      updateAll();
       return null;
     }
 
@@ -38,6 +40,7 @@ export const FormContentProvider = ({ children }: ContextProps) => {
 
     await api.patch(`/content/${fields.id}`, { ...fields, tasks: listData });
     setEdit(false);
+    updateAll();
   };
 
   return (

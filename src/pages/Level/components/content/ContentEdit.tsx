@@ -6,12 +6,13 @@ import { listTypePowerSelect } from "../../service/data";
 import { MdDeleteOutline } from "react-icons/md";
 import theme from "../../../../service/tailwindTheme";
 import { useContent } from "../../context/ContentContext";
+import { FormContentProvider } from "../../context/FormContent";
 
 export const ContentEdit = ({ children }: ContentProps) => {
   const { type, setType, cancelEdit } = useContent();
 
   return (
-    <>
+    <FormContentProvider>
       <main className="py-8 space-y-4 flex-1 container flex flex-col justify-between">
         {children}
         <div className="space-y-4 w-full">
@@ -39,6 +40,6 @@ export const ContentEdit = ({ children }: ContentProps) => {
           </div>
         </div>
       </main>
-    </>
+    </FormContentProvider>
   );
 };

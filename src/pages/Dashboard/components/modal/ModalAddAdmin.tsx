@@ -17,6 +17,7 @@ import { PropsFilter } from "../../../../common/modal/modalCustom/ModalMultipleC
 import { DivCustomButton } from "../../../../common/Button/DivCustomButton";
 import theme from "../../../../service/tailwindTheme";
 import { api } from "../../../../api";
+import { useAuth } from "../../../../AuthContext";
 
 const MessageDenied = ({ msg }: { msg: string }) => (
   <div className="flex items-center gap-2">
@@ -33,6 +34,8 @@ export const ModalAddAdmin = ({ ...rest }: ModalProps) => {
   const [filter, setFilter] = useState<PropsFilter[]>([objFilterWorks]);
   const players = useResource<User[]>("/player");
   const { callbackClose } = rest;
+
+  const { reloadPage } = useAuth();
 
   const [listSelect, setListSelect] = useState<string[]>([]);
   const handleListSelect = (id: string) => {
@@ -78,7 +81,10 @@ export const ModalAddAdmin = ({ ...rest }: ModalProps) => {
       </div>
       <DivCustomButton
         callbackClose={callbackClose}
-        callbackSuccess={() => sendRequisition(listSelect)}
+        callbackSuccess={async () => {
+          await sendRequisition(listSelect);
+          reloadPage.refresh();
+        }}
         textMain="OK"
       />
     </Modal>
