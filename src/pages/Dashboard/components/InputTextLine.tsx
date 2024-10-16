@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 export const InputTextLine = forwardRef(
   ({ className, ...props }: InputHTMLAttributes<HTMLInputElement>, ref) => {
     return (
-      <div className="relative">
+      <div className="relative w-full">
         <input
           max="250"
           className={twMerge(

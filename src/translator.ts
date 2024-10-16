@@ -5,4 +5,5 @@ export const vocabulary: { [key: string]: string } = {
   OPENED: "Aberto",
   CLOSED: "Fechado",
   RESOLVED: "Resolvido",
+  REMOVED: "Removido",
 };

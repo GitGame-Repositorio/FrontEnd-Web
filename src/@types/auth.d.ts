@@ -5,11 +5,12 @@ export type User = {
   password: string;
   name: string | null;
   phone: string;
-  appearance: "LIGHT" | "DARK";
   works: string[];
+  isAdmin: boolean;
   language: string;
   two_auth: boolean;
   admin: Privilegies;
+  appearance: "LIGHT" | "DARK";
   type: "anonymous" | "logged";
 };
 
@@ -19,9 +20,8 @@ export type Anonymous = {
 
 export type Admin = {
   id_userLogged: string;
-  second_password: string;
   privilegies: Privilegies;
-};
+} & User;
 
 export type Privilegies = {
   id: string;

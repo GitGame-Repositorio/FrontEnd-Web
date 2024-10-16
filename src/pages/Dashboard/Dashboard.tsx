@@ -82,7 +82,7 @@ export const Dashboard = () => {
             value="5"
           />
         </div>
-        <div className="bg-primary-200 p-8 rounded-xl space-y-8">{content}</div>
+        {content}
       </div>
     </main>
   );

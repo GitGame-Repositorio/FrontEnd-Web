@@ -125,7 +125,7 @@ input[type="number"] {
   }
 
   .div-game {
-    @apply bg-primary-100 text-primary-950 rounded-2xl inline-block p-4;
+    @apply bg-primary-200 text-primary-800 rounded-2xl inline-block p-4;
   }
 
   .form-style {
@@ -154,12 +154,8 @@ input[type="number"] {
     @apply border border-solid border-primary-600 bg-primary-100 outline-none uppercase py-2 px-4 rounded-lg text-base cursor-default;
   }
 
-  .input::selection {
-    @apply bg-primary-600;
-  }
-
   .input {
-    @apply h-12 w-full bg-primary-100 px-4 rounded-lg text-primary-950 focus:outline focus:outline-primary-600 placeholder:text-primary-600;
+    @apply h-12 w-full bg-primary-100 px-4 rounded-lg text-primary-800 focus:outline focus:outline-primary-600 placeholder:text-primary-600;
   }
 
   .input-icon {

@@ -100,12 +100,14 @@ export const ContentView = ({ content, children }: ContentProps) => {
         </div>
 
         <div className="flex justify-between gap-4">
-          {user?.admin.canManageContentGame && (
-            <Button className="w-max font-bold" onClick={handleEdit}>
-              Editar
-            </Button>
-          )}
-          <div className="flex justify-end gap-4">
+          <div>
+            {user?.admin?.canManageContentGame && (
+              <Button className="w-max font-bold" onClick={handleEdit}>
+                Editar
+              </Button>
+            )}
+          </div>
+          <div className="flex self-end gap-4">
             <ButtonOutline
               to="/all-capters"
               className="border-2 normal-case font-bold"

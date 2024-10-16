@@ -4,10 +4,17 @@ import { InputHTMLAttributes } from "react";
 
 import theme from "../service/tailwindTheme";
 
+type Props = {
+  text: string;
+  setText: (str: string) => void;
+};
+
 export const Search = ({
   className,
   children,
-}: InputHTMLAttributes<HTMLInputElement>) => {
+  setText,
+  text,
+}: InputHTMLAttributes<HTMLInputElement> & Props) => {
   return (
     <div className="flex gap-2">
       <div className="relative w-full">
@@ -17,6 +24,8 @@ export const Search = ({
             "h-12 w-full bg-primary-100 pl-4 pr-12 py-3 rounded-lg text-primary-800 focus:outline focus:outline-primary-800 placeholder:text-primary-400",
             className
           )}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
           placeholder="Pesquisar..."
         />
         <MdSearch

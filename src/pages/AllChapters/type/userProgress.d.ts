@@ -1,4 +1,4 @@
-import { ChapterProgress } from "./progress";
+import { ChapterRemap } from "./remap";
 
 export type ChapterRemap = {
   percentChapter: number;

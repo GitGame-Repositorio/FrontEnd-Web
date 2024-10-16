@@ -9,6 +9,7 @@ import { classNameGrid } from "../../service/style";
 import { CardPlayer } from "../card/cardUser/CardPlayer";
 import { objFilterWorks } from "../../service/data";
 import { useAuth } from "../../../../AuthContext";
+import { MainContent } from "../MainContent";
 
 export const PlayerContent = () => {
   const { reloadPage } = useAuth();
@@ -20,15 +21,17 @@ export const PlayerContent = () => {
   if (!players) return <Loading />;
 
   return (
-    <ContentLogic
-      filter={filter}
-      record={players}
-      updateFilter={setFilter}
-      createList={(list: User[]) => (
-        <ListCard card={CardPlayer} list={list} className={classNameGrid} />
-      )}
-      orderProps={["name", "email"]}
-      name="Todos Jogadores"
-    />
+    <MainContent>
+      <ContentLogic
+        filter={filter}
+        record={players}
+        updateFilter={setFilter}
+        createList={(list: User[]) => (
+          <ListCard card={CardPlayer} list={list} className={classNameGrid} />
+        )}
+        orderProps={["name", "email"]}
+        name="Todos Jogadores"
+      />
+    </MainContent>
   );
 };

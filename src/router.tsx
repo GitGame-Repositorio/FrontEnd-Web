@@ -19,6 +19,7 @@ import { ChangePassword } from "./pages/auth/ChangePassword";
 import { Loading } from "./pages/Loading";
 import { Level } from "./pages/Level/Level";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
+import { Content } from "./pages/Level/Content";
 
 const publicRoutes: RouteObject[] = [
   {
@@ -70,6 +71,10 @@ const gameRouters: RouteObject[] = [
   {
     path: "/level/:id",
     element: <Level />,
+  },
+  {
+    path: "/content/:id",
+    element: <Content />,
   },
 ];
 

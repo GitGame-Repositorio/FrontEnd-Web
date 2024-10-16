@@ -11,12 +11,13 @@ export const HeaderLevel = ({
   chapter,
   level,
 }: Partial<HeaderProps>) => {
-  const classDivButton = "py-2.5 px-4 rounded bg-primary-100 text-primary-800";
+  const classDivButton =
+    "py-2.5 px-4 rounded-lg bg-primary-600 text-primary font-medium";
   return (
     <header className="flex justify-between">
       <button
         onClick={onReportCallback}
-        className="btn bg-primary-100 text-primary-600"
+        className="btn bg-primary-600 text-primary font-medium"
       >
         RELATAR PROBLEMAS
       </button>

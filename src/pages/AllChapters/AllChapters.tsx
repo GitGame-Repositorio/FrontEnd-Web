@@ -4,8 +4,7 @@ import { useResource } from "../../common/useResource";
 import { useAuth } from "../../AuthContext";
 import { Loading } from "../Loading";
 
-import { Chapter } from "../../@types/game.d";
-import { UserProgress } from "../../@types/userProgress.d";
+import { UserProgress } from "./type/userProgress";
 import { StatusProgress } from "../../@types/progress.d";
 import { organizeOrder } from "./services/services";
 import { LevelSection } from "./components/LevelSection";
@@ -13,8 +12,8 @@ import { LevelSection } from "./components/LevelSection";
 export const AllChapters = () => {
   const { isLoading } = useAuth();
 
-  const chapterList = useResource<Chapter[]>("/chapter");
   const progress = useResource<UserProgress>("/progress/me");
+  const chapterList = progress?.allChapterRemap;
 
   const menuAction = useMenu();
 
@@ -34,21 +33,15 @@ export const AllChapters = () => {
           </h1>
         )}
         {chapterList?.sort(organizeOrder).map((chapter, index) => {
-          const progressFind = progress?.allChapterRemap?.find(
-            (data) => chapter.id === data?.chapterProgress?.id_chapter
-          );
-          const { chapterProgress } = progressFind || {};
+          const { title, status, level } = chapter;
 
           return (
-            <div
-              className="flex flex-col gap-6"
-              key={`${chapter.title}-${index}`}
-            >
+            <div className="flex flex-col gap-6" key={`${title}-${index}`}>
               <div className="flex justify-between gap-2">
                 <h1 className="text-2.5xl md:text-4xl font-bold text-start">
-                  {index + 1} - {chapter.title}
+                  {index + 1} - {title}
                 </h1>
-                {chapterProgress?.status === StatusProgress.COMPLETED && (
+                {status === StatusProgress.COMPLETED && (
                   <button className="btn py-2 bg-primary-600 hover:bg-primary-800 text-primary-100 font-bold">
                     Avaliação
                   </button>
@@ -56,10 +49,7 @@ export const AllChapters = () => {
               </div>
               <hr className="line-custom md:hidden" />
               <div className="space-y-6 pb-14">
-                <LevelSection
-                  levelList={chapter?.level}
-                  listProgress={chapterProgress?.levelProgress}
-                />
+                <LevelSection levelList={level} />
               </div>
             </div>
           );

@@ -25,7 +25,7 @@ export type LevelProgress = {
 
 export type ContentProgress = {
   id: string;
-  id_order_level: string;
+  id_content: string;
   id_level_progress: string;
   status: StatusProgress;
   complete: boolean;

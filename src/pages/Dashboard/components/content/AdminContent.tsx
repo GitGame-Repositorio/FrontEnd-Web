@@ -11,6 +11,7 @@ import { MdAdd } from "react-icons/md";
 import { useModal } from "../../../../common/modal/useModal";
 import { ModalAddAdmin } from "../modal/ModalAddAdmin";
 import { useAuth } from "../../../../AuthContext";
+import { MainContent } from "../MainContent";
 
 export const AdminContent = () => {
   const { reloadPage } = useAuth();
@@ -26,7 +27,7 @@ export const AdminContent = () => {
   if (!admins) return <Loading />;
 
   return (
-    <>
+    <MainContent>
       <ContentLogic
         filter={filter}
         record={admins}
@@ -47,6 +48,6 @@ export const AdminContent = () => {
         </button>
       </div>
       <ModalAdd />
-    </>
+    </MainContent>
   );
 };

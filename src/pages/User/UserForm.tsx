@@ -81,7 +81,6 @@ export const UserForm = ({ user, submit }: Props) => {
   const [selectWork, setSelectWork] = useState<string[]>(user.works);
 
   const updateSelectWork = (list: PropsFilter[]) => {
-    console.log(list);
     const listFilter = list[0]?.listValue?.filter((obj) => obj.select);
     const listRemap = listFilter?.map((obj) => obj.value);
     setSelectWork(listRemap);

@@ -29,13 +29,13 @@ export const Login = () => {
   } = useForm<LoginScheme>({ resolver: zodResolver(schema) });
 
   const navigate = useNavigate();
-  const { login } = useAuth()
+  const { login } = useAuth();
 
   const callbackLogin = async (fields: LoginScheme) => {
     try {
       const response = await api.post<LoginScheme>("/login", fields);
       const { token } = response.data;
-      await login(token)
+      await login(token);
       navigate("/all-capters");
     } catch (err) {
       const error = err as AxiosError;

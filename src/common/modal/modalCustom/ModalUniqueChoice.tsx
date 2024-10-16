@@ -7,10 +7,10 @@ import { useState } from "react";
 export type ModalUniqueChoiceProps = {
   title: string;
   isVisible: boolean;
-  listValuesSelect: string[];
+  valueSelect?: PropsObjValues;
   listValues: PropsObjValues[];
   callbackClose: () => void;
-  updateSelect: (value: string[]) => void;
+  updateSelect: (value: PropsObjValues) => void;
 };
 
 type PropsObjValues = {
@@ -19,23 +19,24 @@ type PropsObjValues = {
 };
 
 export const ModalUniqueChoice = ({
-  listValues,
-  listValuesSelect,
   updateSelect,
+  valueSelect,
+  listValues,
   ...rest
 }: ModalUniqueChoiceProps) => {
-  const [selectItem, setSelectItem] = useState<string[]>(listValuesSelect);
-  const { callbackClose } = rest;
+  const [selectItem, setSelectItem] = useState<PropsObjValues>(
+    valueSelect || { name: "", value: "" }
+  );
 
-  const updateList = (value: string) => {
-    setSelectItem([value]);
-  };
+  const { callbackClose } = rest;
 
   return (
     <Modal {...rest} className="w-80 font-medium">
       <ul>
-        {listValues.map(({ name, value }: PropsObjValues) => {
-          const isChecked = selectItem.includes(value);
+        {listValues.map((obj: PropsObjValues) => {
+          const { name, value } = obj;
+
+          const isChecked = selectItem?.value?.includes(value);
 
           const SelectBox = isChecked
             ? MdRadioButtonChecked
@@ -51,7 +52,7 @@ export const ModalUniqueChoice = ({
                   value={value}
                   className="hidden"
                   checked={isChecked}
-                  onChange={() => updateList(value)}
+                  onChange={() => setSelectItem(obj)}
                 />
                 <SelectBox
                   size={20}

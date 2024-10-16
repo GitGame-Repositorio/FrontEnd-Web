@@ -8,6 +8,7 @@ import { ContentLogic } from "./ContentLogic";
 import { CardReport } from "../card/CardReport";
 import { ListCard } from "../card/ListCard";
 import { useAuth } from "../../../../AuthContext";
+import { MainContent } from "../MainContent";
 
 export const ReportsContent = () => {
   const { reloadPage } = useAuth();
@@ -68,19 +69,21 @@ export const ReportsContent = () => {
   if (!reports) return <Loading />;
 
   return (
-    <ContentLogic
-      filter={filter}
-      record={reports}
-      updateFilter={setFilter}
-      createList={(list: Report[]) => (
-        <ListCard
-          list={list}
-          card={CardReport}
-          className="flex flex-col gap-3"
-        />
-      )}
-      orderProps={["title", "description"]}
-      name="Problemas relatados"
-    />
+    <MainContent>
+      <ContentLogic
+        filter={filter}
+        record={reports}
+        updateFilter={setFilter}
+        createList={(list: Report[]) => (
+          <ListCard
+            list={list}
+            card={CardReport}
+            className="flex flex-col gap-3"
+          />
+        )}
+        orderProps={["title", "description"]}
+        name="Problemas relatados"
+      />
+    </MainContent>
   );
 };

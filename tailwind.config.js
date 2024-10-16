@@ -5,6 +5,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      outlineWidth: {
+        "input-modal": "2px 0 0 0",
+      },
       fontFamily: {
         primary: "Space-Grotesk, sans-serif",
         secondary: "Inter, system-ui, Avenir, Helvetica, Arial, sans-serif",

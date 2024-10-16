@@ -2,7 +2,6 @@ import { ReactElement, useEffect, useState } from "react";
 import {
   ChapterStatistics,
   LevelStatistics,
-  PartialGameStatistics,
   PlayerStatistics,
 } from "../../../../@types/statistics";
 import { Search } from "../../../../common/Search";
@@ -10,8 +9,7 @@ import { useResource } from "../../../../common/useResource";
 import { MdArrowLeft, MdArrowRight } from "react-icons/md";
 
 import theme from "../../../../service/tailwindTheme";
-
-const divClassName = "bg-primary-200 flex flex-col gap-3";
+import { MainContent } from "../MainContent";
 
 export const StatisticsContent = () => {
   const [idChapter, setIdChapter] = useState("");
@@ -31,41 +29,42 @@ export const StatisticsContent = () => {
   return (
     <>
       <StatisticsUserContent />
-      <div className="flex flex-col gap-8">
-        <div className="bg-primary-200 flex flex-col gap-3">
-          <Search />
+      <MainContent>
+        <div className="flex flex-col gap-8">
+          <div className="space-y-3">
+            <Search />
+          </div>
+
+          <StatisticsGameContent
+            name="Capítulo"
+            allStatistics={statisticsChapter || []}
+            funcFilter={(obj, num) => obj.numberOrder === num}
+            updateID={setIdChapter}
+          />
+
+          <StatisticsGameContent
+            name="Level"
+            allStatistics={statisticsLevel || []}
+            funcFilter={(obj, num) => obj.numberOrder === num}
+            updateID={setIdLevel}
+          />
+
+          <StatisticsGameContent
+            name="Conteúdo"
+            allStatistics={statisticsContent || []}
+            funcFilter={(obj, num) => obj.order === num}
+          />
         </div>
-
-        <StatisticsGameContent
-          name="Capítulo"
-          allStatistics={statisticsChapter || []}
-          funcFilter={(obj, num) => obj.numberOrder === num}
-          updateID={setIdChapter}
-        />
-
-        <StatisticsGameContent
-          name="Level"
-          allStatistics={statisticsLevel || []}
-          funcFilter={(obj, num) => obj.numberOrder === num}
-          updateID={setIdLevel}
-        />
-
-        <StatisticsGameContent
-          name="Conteúdo"
-          allStatistics={statisticsContent || []}
-          funcFilter={(obj, num) => obj.order === num}
-        />
-      </div>
+      </MainContent>
     </>
   );
 };
 
 export const StatisticsUserContent = () => {
   const statistics = useResource<PlayerStatistics>("/statistics/allPlayers");
-  const divClassName = "bg-primary-200 flex flex-col gap-3";
   return (
-    <div className="flex flex-col gap-6">
-      <div className={divClassName}>
+    <MainContent>
+      <div className="space-y-3">
         <CardStatisticContent
           name="Quantidade de jogadores"
           value={`${statistics?.countUser} Jogadores`}
@@ -87,7 +86,7 @@ export const StatisticsUserContent = () => {
           value={statistics?.percentUserFinishingGame + "%"}
         />
       </div>
-    </div>
+    </MainContent>
   );
 };
 
@@ -137,7 +136,7 @@ export const StatisticsGameContent = ({
   } = statistic || {};
 
   return (
-    <div className={divClassName}>
+    <div className="space-y-3">
       <CardStatisticContent name={name} value={title}>
         <ChangeNumberOrder number={number} update={updateNumber} />
       </CardStatisticContent>

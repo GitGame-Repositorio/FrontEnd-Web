@@ -16,7 +16,7 @@ export const Presentation = () => {
             com Nosso Jogo Interativo de Git!
           </p>
         </span>
-        <div>
+        <div className="content-center">
           <Link to="/all-capters">
             <button className="btn border border-solid border-primary-600 text-primary-600 uppercase font-bold text-sm sm:text-base">
               Let’s Go To Play

@@ -26,7 +26,7 @@ export const ButtonPermission = ({
       </button>
       <ModalPermission
         listValues={list}
-        updateSelect={setList}
+        updateSelect={updateList}
         title="Permissões"
       />
     </>
