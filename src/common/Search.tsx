@@ -25,8 +25,8 @@ export const Search = ({
             className
           )}
           value={text}
-          onChange={(e) => setText(e.target.value)}
           placeholder="Pesquisar..."
+          onChange={(e) => setText(e.target.value)}
         />
         <MdSearch
           size={22}

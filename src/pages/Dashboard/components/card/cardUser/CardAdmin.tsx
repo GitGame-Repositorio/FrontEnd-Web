@@ -7,10 +7,6 @@ import { useModal } from "../../../../../common/modal/useModal";
 import { ModalUserEditProps } from "../../modal/ModalUser";
 import { useAuth } from "../../../../../AuthContext";
 
-// type Props = {
-//   refresh = () => void
-// }
-
 export const CardAdmin = (user: User) => {
   const edit = async (record: User) => {
     await api.patch(`/admin/${user.id}`, record);

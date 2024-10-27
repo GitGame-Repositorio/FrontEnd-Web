@@ -44,7 +44,7 @@ export const ModalAddAdmin = ({ ...rest }: ModalProps) => {
       : setListSelect([...listSelect, id]);
   };
 
-  if (!players) return <Loading />;
+  if (!players) return <></>;
 
   const listPlayers: User[] = recordRemap(
     players.filter((obj) => !obj.isAdmin),

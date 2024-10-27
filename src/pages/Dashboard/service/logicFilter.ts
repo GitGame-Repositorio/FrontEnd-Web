@@ -13,7 +13,6 @@ const filterMap = (record: Record, filterList: PropsFilter[]) => {
 const searchCalc = (obj: Record, orderProps: ListKey, textSearch: string) => {
   return orderProps
     ?.map((props, index) => {
-      console.log(props);
       const indexRes = obj[props]
         ?.toLowerCase()
         ?.indexOf(textSearch.toLowerCase());

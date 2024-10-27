@@ -14,7 +14,7 @@ import { useAuth } from "../../../../AuthContext";
 import { MainContent } from "../MainContent";
 
 export const AdminContent = () => {
-  const { reloadPage } = useAuth();
+  const { reloadPage, user } = useAuth();
 
   const admins = useResource<User[]>("/admin", [reloadPage.register]);
 
@@ -38,16 +38,20 @@ export const AdminContent = () => {
         name="Todos Administradores"
         orderProps={["name", "email"]}
       />
-      <div className="flex justify-end">
-        <button
-          className="uppercase btn bg-primary-600 text-primary font-medium text-base flex items-center gap-2.5"
-          onClick={openModal}
-        >
-          <MdAdd size={20} />
-          Adicionar
-        </button>
-      </div>
-      <ModalAdd />
+      {user?.admin?.canCreateAdmin && (
+        <>
+          <div className="flex justify-end">
+            <button
+              className="uppercase btn bg-primary-600 text-primary font-medium text-base flex items-center gap-2.5"
+              onClick={openModal}
+            >
+              <MdAdd size={20} />
+              Adicionar
+            </button>
+          </div>
+          <ModalAdd />
+        </>
+      )}
     </MainContent>
   );
 };

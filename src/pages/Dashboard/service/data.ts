@@ -11,6 +11,26 @@ export const listValuePermission = [
     },
     listValue: [
       {
+        name: "Criar Admin",
+        select: true,
+        value: "canCreateAdmin",
+      },
+      {
+        name: "Visualizar Admin",
+        select: true,
+        value: "canViewAllAdmin",
+      },
+      {
+        name: "Editar Privilégios de Admin",
+        select: true,
+        value: "canEditPrivilegiesAdmin",
+      },
+      {
+        name: "Deletar Admin",
+        select: true,
+        value: "canDeleteAdmin",
+      },
+      {
         name: "Gerenciar Player",
         select: true,
         value: "canManageCRUDPlayer",

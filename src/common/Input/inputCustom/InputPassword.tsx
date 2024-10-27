@@ -15,7 +15,7 @@ export const InputPassword = forwardRef(({ ...rest }, ref) => {
         {...rest}
       />
       <Icon
-        size={25}
+        size={24}
         color={theme.colors.primary[800]}
         className="-ml-8 cursor-pointer"
         onClick={() => setVisible(!visible)}
