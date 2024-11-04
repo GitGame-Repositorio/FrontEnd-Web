@@ -4,17 +4,16 @@ import {
   MdFormatListNumbered,
   MdAdminPanelSettings,
 } from "react-icons/md";
-
-import { Card } from "../../common/Card";
-import { HeaderGame } from "../../common/Header/HeaderGame";
-
 import { ReactElement, useState } from "react";
+
+import { HeaderGame } from "../../common/Header/HeaderGame";
 import { ReportsContent } from "./components/content/ReportsContent";
 import { PlayerContent } from "./components/content/PlayerContent";
 import { AdminContent } from "./components/content/AdminContent";
 import { StatisticsContent } from "./components/content/StatisticsContent";
-import { useAuth } from "../../AuthContext";
 import { CardDashboard } from "./components/card/CardDashboard";
+import { useAuth } from "../../AuthContext";
+import { DivHold } from "../../common/DivHold";
 
 type SectionKeys = "statistic" | "admins" | "players" | "reports";
 
@@ -49,7 +48,7 @@ export const Dashboard = () => {
     <main className="pb-8">
       <HeaderGame namePage="Dashboard" />
       <div className="container space-y-6">
-        <div className="flex gap-6 mt-8 cursor-grab overflow-hidden min-h-36">
+        <DivHold className="flex gap-6 mt-8 min-h-36">
           <CardDashboard
             icon={MdWarningAmber}
             onClick={() => canManageCRUDReports && updateSection("reports")}
@@ -81,7 +80,7 @@ export const Dashboard = () => {
             title="Estatísticas de exercícios"
             value="5"
           />
-        </div>
+        </DivHold>
         {content}
       </div>
     </main>

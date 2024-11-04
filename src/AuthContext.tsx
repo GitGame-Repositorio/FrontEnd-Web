@@ -1,15 +1,10 @@
 import Cookies from "js-cookie";
-import {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "./api";
 import { User } from "./@types/auth.d";
 import { VITE_API_URL } from "./env";
-import { useRefresh, useRefreshStore } from "./common/useRefresh";
+import { useRefreshStore } from "./common/useRefresh";
+import { CommonProps } from "./@types/utils";
 
 type AuthContext = {
   user?: User;
@@ -23,13 +18,9 @@ type AuthContext = {
   login: (token: string) => void;
 };
 
-type ContextProps = {
-  children: ReactNode;
-};
-
 const authContext = createContext({} as AuthContext);
 
-export const AuthContextProvider = ({ children }: ContextProps) => {
+export const AuthContextProvider = ({ children }: CommonProps) => {
   const [user, setUser] = useState<User>();
   const [isLoading, setIsLoading] = useState(true);
 

@@ -40,7 +40,7 @@ export const CardDashboard = ({
     );
   return (
     <Card
-      className={`${objBgPrimary[type]} selection:bg-transparent`}
+      className={`${objBgPrimary[type]} selection:bg-transparent select-none`}
       onClick={onClick}
     >
       <>
