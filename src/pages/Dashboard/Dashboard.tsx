@@ -34,7 +34,7 @@ export const Dashboard = () => {
   );
 
   const { user, reloadPage } = useAuth();
-  
+
   const statistic = useResource<DashboardStatistics>("/statistics/dashboard", [
     reloadPage.register,
   ]);
@@ -53,42 +53,48 @@ export const Dashboard = () => {
   const choseType = (text: SectionKeys, access: boolean | undefined) =>
     section === text ? "actual" : access ? "access" : "block";
 
+  const getValueForType = (obj) => (obj.props.type === "block" ? 0 : 1);
+  const orderForActive = (objA, objB) =>
+    getValueForType(objB) - getValueForType(objA);
+
   return (
     <main className="pb-8">
       <HeaderGame namePage="Dashboard" />
       <div className="container space-y-6">
         <DivHold className="flex gap-6 mt-8 min-h-36">
-          <CardDashboard
-            icon={MdWarningAmber}
-            onClick={() => canManageCRUDReports && updateSection("reports")}
-            type={choseType("reports", canManageCRUDReports)}
-            title="Problemas relatados"
-            value={statistic?.report}
-          />
+          {...[
+            <CardDashboard
+              icon={MdWarningAmber}
+              onClick={() => canManageCRUDReports && updateSection("reports")}
+              type={choseType("reports", canManageCRUDReports)}
+              title="Problemas relatados"
+              value={statistic?.report}
+            />,
 
-          <CardDashboard
-            icon={MdFormatListNumbered}
-            onClick={() => canManageCRUDPlayer && updateSection("players")}
-            type={choseType("players", canManageCRUDPlayer)}
-            title="Quantidade de jogadores totais"
-            value={statistic?.player}
-          />
+            <CardDashboard
+              icon={MdFormatListNumbered}
+              onClick={() => canManageCRUDPlayer && updateSection("players")}
+              type={choseType("players", canManageCRUDPlayer)}
+              title="Quantidade de jogadores totais"
+              value={statistic?.player}
+            />,
 
-          <CardDashboard
-            icon={MdAdminPanelSettings}
-            onClick={() => canViewAllAdmin && updateSection("admins")}
-            type={choseType("admins", canViewAllAdmin)}
-            title="Administradores"
-            value={statistic?.admin}
-          />
+            <CardDashboard
+              icon={MdAdminPanelSettings}
+              onClick={() => canViewAllAdmin && updateSection("admins")}
+              type={choseType("admins", canViewAllAdmin)}
+              title="Administradores"
+              value={statistic?.admin}
+            />,
 
-          <CardDashboard
-            icon={MdBarChart}
-            onClick={() => updateSection("statistic")}
-            type={choseType("statistic", true)}
-            title="Estatísticas de exercícios"
-            value="5"
-          />
+            <CardDashboard
+              icon={MdBarChart}
+              onClick={() => updateSection("statistic")}
+              type={choseType("statistic", true)}
+              title="Estatísticas de exercícios"
+              value="5"
+            />,
+          ].sort(orderForActive)}
         </DivHold>
         {content}
       </div>

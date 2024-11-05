@@ -90,10 +90,10 @@ export const ModalUserEdit = ({
   return (
     <Modal callbackClose={callbackClose} {...rest} className="max-w-screen-sm">
       <form
-        onSubmit={handleSubmit((fields: User) => {
-          callbackSuccess(fields);
-          callbackClose();
-          reloadUser();
+        onSubmit={handleSubmit(async (fields: User) => {
+          await callbackSuccess(fields);
+          await callbackClose();
+          await reloadUser();
           reloadPage.refresh();
         })}
         className="space-y-4"
