@@ -15,6 +15,12 @@ export type PartialGameStatistics = {
   countUserCompleat: number;
 };
 
+export type DashboardStatistics = {
+  report: number;
+  player: number;
+  admin: number;
+};
+
 export type ChapterStatistics = Chapter | PartialGameStatistics;
 export type LevelStatistics = Level | PartialGameStatistics;
 export type ContentStatistics = OrderLevel | PartialGameStatistics;

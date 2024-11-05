@@ -14,6 +14,9 @@ import { StatisticsContent } from "./components/content/StatisticsContent";
 import { CardDashboard } from "./components/card/CardDashboard";
 import { useAuth } from "../../AuthContext";
 import { DivHold } from "../../common/DivHold";
+import { useResource } from "../../common/useResource";
+import { DashboardStatistics } from "../../@types/statistics";
+import { Loading } from "../Loading";
 
 type SectionKeys = "statistic" | "admins" | "players" | "reports";
 
@@ -30,7 +33,13 @@ export const Dashboard = () => {
     sectionDashboard[section] || sectionDashboard.reports
   );
 
-  const { user } = useAuth();
+  const { user, reloadPage } = useAuth();
+  
+  const statistic = useResource<DashboardStatistics>("/statistics/dashboard", [
+    reloadPage.register,
+  ]);
+
+  if (!statistic) return <Loading />;
 
   const { canManageCRUDReports, canManageCRUDPlayer, canViewAllAdmin } =
     user?.admin || {};
@@ -54,7 +63,7 @@ export const Dashboard = () => {
             onClick={() => canManageCRUDReports && updateSection("reports")}
             type={choseType("reports", canManageCRUDReports)}
             title="Problemas relatados"
-            value="5"
+            value={statistic?.report}
           />
 
           <CardDashboard
@@ -62,7 +71,7 @@ export const Dashboard = () => {
             onClick={() => canManageCRUDPlayer && updateSection("players")}
             type={choseType("players", canManageCRUDPlayer)}
             title="Quantidade de jogadores totais"
-            value="3"
+            value={statistic?.player}
           />
 
           <CardDashboard
@@ -70,7 +79,7 @@ export const Dashboard = () => {
             onClick={() => canViewAllAdmin && updateSection("admins")}
             type={choseType("admins", canViewAllAdmin)}
             title="Administradores"
-            value="2"
+            value={statistic?.admin}
           />
 
           <CardDashboard
